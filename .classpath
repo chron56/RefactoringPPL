@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="libs/jfreechart-1.0.14/lib/jfreechart-1.0.14.jar"/>
+	<classpathentry kind="lib" path="libs/jfreechart-1.0.14/lib/jcommon-1.0.17.jar"/>
+	<classpathentry kind="lib" path="libs/Hecate.jar"/>
+	<classpathentry kind="lib" path="libs/ANTLR/antlr-runtime-4.4.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
