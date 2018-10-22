@@ -1,6 +1,3 @@
-
-# >> REFACTORING OF THE <<
-
 # Plutarch Parallel Lives
 
 
