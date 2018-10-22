@@ -15,6 +15,8 @@ import data.dataProccessing.Worker;
 
 public class GlobalDataKeeper {
 
+	
+	//test
 	private TreeMap<String,PPLSchema> allPPLSchemas = null;
 	private TreeMap<String,PPLTable> allTables = null;
 	private ArrayList<AtomicChange> atomicChanges = null;
