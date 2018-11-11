@@ -1,14 +1,11 @@
 package gui.tableElements.tableRenderers;
 
+import data.dataKeeper.GlobalDataKeeper;
 import gui.mainEngine.Gui;
 
-import java.awt.Color;
-import java.awt.Component;
-
-import javax.swing.JTable;
+import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
-
-import data.dataKeeper.GlobalDataKeeper;
+import java.awt.*;
 
 public class IDUTableRenderer extends DefaultTableCellRenderer{
 	
@@ -88,20 +85,6 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
         	}
         }
         else{
-
-        	/*
-        	if(selectedFromTree.contains(finalRows[row][0])){
-
-
-        		Color cl = new Color(255,69,0,100);
-        		
-        		c.setBackground(cl);
-        		
-        		return c;
-        	}
-        	
-        	 */
-        	
         	if (isSelected && hasFocus){
 
         		String description="";
@@ -111,28 +94,10 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
 	        		description=description+"Old Version Name:"+globalDataKeeper.getAllPPLTransitions().
 	        				get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()+"\n";
 	        		description=description+"New Version Name:"+globalDataKeeper.getAllPPLTransitions().
-	        				get(Integer.parseInt(table.getColumnName(column))).getNewVersionName()+"\n";		        		
-	        		if(globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
-	        				getTableChanges().getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column)))!=null){
-	        			description=description+"Transition Changes:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
-	        				getTableChanges().getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column))).size()+"\n";
-	        			description=description+"Additions:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
-	        					getNumberOfAdditionsForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
-	        			description=description+"Deletions:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
-	        					getNumberOfDeletionsForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
-	        			description=description+"Updates:"+globalDataKeeper.getAllPPLTables().get(finalRows[row][0]).
-	        					getNumberOfUpdatesForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
-	        			
-	        		}
-	        		else{
-	        			description=description+"Transition Changes:0"+"\n";
-	        			description=description+"Additions:0"+"\n";
-	        			description=description+"Deletions:0"+"\n";
-	        			description=description+"Updates:0"+"\n";
-	        			
-	        		}
-	        		
-	        		gui.setDescription(description);
+	        				get(Integer.parseInt(table.getColumnName(column))).getNewVersionName()+"\n";
+					description = Gui.getDescriptionTextFromTable(table, row, column, description, globalDataKeeper, finalRows);
+
+					gui.setDescription(description);
         		}
         		Color cl = new Color(255,69,0,100);
         		
@@ -155,14 +120,14 @@ public class IDUTableRenderer extends DefaultTableCellRenderer{
     			insersionColor=new Color(154,205,50,200);
     		}
     		else if(numericValue> 0&& numericValue<=segmentSize[1]){
-    			
+
     			insersionColor=new Color(176,226,255);
         	}
     		else if(numericValue>segmentSize[1] && numericValue<=2*segmentSize[1]){
     			insersionColor=new Color(92,172,238);
     		}
     		else if(numericValue>2*segmentSize[1] && numericValue<=3*segmentSize[1]){
-    			
+
     			insersionColor=new Color(28,134,238);
     		}
     		else{
