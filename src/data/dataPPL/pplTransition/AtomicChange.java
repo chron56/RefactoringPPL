@@ -22,8 +22,8 @@ public class AtomicChange {
 	}
 	
 	public String toString(){
-		String lala="AtomicChange: Table: "+affectedTable+"\tAttribute: "+affectedAttribute+"\tType: "+type+"\toldSchema: "+ oldSchema +"\tnewSchema: " +newSchema;
-		return lala;
+		String atomicChangeString="AtomicChange: Table: "+affectedTable+"\tAttribute: "+affectedAttribute+"\tType: "+type+"\toldSchema: "+ oldSchema +"\tnewSchema: " +newSchema;
+		return atomicChangeString;
 		
 	}
 	

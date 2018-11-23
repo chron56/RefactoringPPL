@@ -7,6 +7,10 @@ import java.util.ArrayList;
 
 public class TransitionHistory {
 
+	private ArrayList<TransitionStats> values;
+	private int totalUpdates;
+	private double totalTime;
+	
 	public TransitionHistory() {
 		this.values = new ArrayList<TransitionStats>();
 	}
@@ -48,9 +52,7 @@ public class TransitionHistory {
 		return this.totalTime;
 	}
 	
-	private ArrayList<TransitionStats> values;
-	private int totalUpdates;
-	private double totalTime;
+
 	
 	
 }

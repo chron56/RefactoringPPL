@@ -40,11 +40,11 @@ public class AtomicChangeConstruction {
 				
 				Collection<Attribute> tmpAffectedAttributes = currentTransitions.get(j).getAffAttributes();
 				
-				Iterator<Attribute> lala = tmpAffectedAttributes.iterator();
+				Iterator<Attribute> iterator = tmpAffectedAttributes.iterator();
 
-				while(lala.hasNext()){					
+				while(iterator.hasNext()){					
 					
-					Attribute tmpHecAttribute = (Attribute) lala.next();
+					Attribute tmpHecAttribute = (Attribute) iterator.next();
 					String tmpType;
 					
 					if(currentTransitions.get(j) instanceof Insersion){

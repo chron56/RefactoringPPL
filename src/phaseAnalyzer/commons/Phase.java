@@ -10,6 +10,16 @@ import data.dataPPL.pplTransition.PPLTransition;
 
 public class Phase {
 	
+	private int startPos;
+	private int endPos;
+	private String startSQLFile;
+	private String endSQLFile;
+	private ArrayList<Phase> subPhases = new ArrayList<Phase>();
+	private int totalUpdates;
+	private TransitionHistory transitionHistory;
+	private double sum=0;
+	private TreeMap<Integer,PPLTransition> phasePPLTransitions = new TreeMap<Integer,PPLTransition>();
+	
 	public Phase(TransitionHistory transitionHistory) {
 		this.transitionHistory = transitionHistory;
 		subPhases=new ArrayList<Phase>();
@@ -189,18 +199,5 @@ public class Phase {
 	public int getSize(){
 		return phasePPLTransitions.size();
 	}
-	
-	
-	
-	private int startPos;
-	private int endPos;
-	private String startSQLFile;
-	private String endSQLFile;
-	private ArrayList<Phase> subPhases = new ArrayList<Phase>();
-	private int totalUpdates;
-	private TransitionHistory transitionHistory;
-	private double sum=0;
-	private TreeMap<Integer,PPLTransition> phasePPLTransitions = new TreeMap<Integer,PPLTransition>();
-
 
 }

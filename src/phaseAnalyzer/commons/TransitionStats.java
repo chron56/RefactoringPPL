@@ -4,6 +4,31 @@
 package phaseAnalyzer.commons;
 
 public class TransitionStats {
+	
+	private int transitionId;
+	private int time;
+	private String oldVersionFile;
+	private String newVersionFile;
+	private int numOldTables;
+	private int numNewTables;
+	private int numOldAtributes;
+	private int numNewAttributes;
+	private int numTablesIns;
+	private int numTablesDel;
+	private int numAttrIns;
+	private int numAttrDel;
+	private int numAttrWithTypeAlt;
+	private int numAttrInKeyAlt;
+	private int numAttrInsInNewTables;
+	private int numAttrDelWithDelTables; 
+	
+	private int totalTableInsDel;
+	private int totalAttrInsDel;
+	private int totalAttrUpd;
+	private int totalAttrChange;
+	private int timeDistFromPrevious;
+	private int totalUpdatesInTr;
+	
 	public TransitionStats(int transitionId, int time, String oldVersionFile,
 			String newVersionFile, int numOldTables, int numNewTables,
 			int numOldAtributes, int numNewAttributes, int numTablesIns,
@@ -113,31 +138,5 @@ public class TransitionStats {
 		return shortDescr;
 	}
 	
-	private int transitionId;
-	private int time;
-	private String oldVersionFile;
-	private String newVersionFile;
-	private int numOldTables;
-	private int numNewTables;
-	private int numOldAtributes;
-	private int numNewAttributes;
-	private int numTablesIns;
-	private int numTablesDel;
-	private int numAttrIns;
-	private int numAttrDel;
-	private int numAttrWithTypeAlt;
-	private int numAttrInKeyAlt;
-	private int numAttrInsInNewTables;
-	private int numAttrDelWithDelTables; 
-	
-	private int totalTableInsDel;
-	private int totalAttrInsDel;
-	private int totalAttrUpd;
-	private int totalAttrChange;
-	private int timeDistFromPrevious;
-	private int totalUpdatesInTr;
-
-	
-
 }
 
