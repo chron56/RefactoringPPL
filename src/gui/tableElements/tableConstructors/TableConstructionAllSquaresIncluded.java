@@ -26,12 +26,9 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 	private int maxUpdates=1;
 	private Integer segmentSize[]=new Integer[3];
 	
-	public TableConstructionAllSquaresIncluded(GlobalDataKeeper globalDataKeeper){
-		
+	public TableConstructionAllSquaresIncluded(GlobalDataKeeper globalDataKeeper){	
 		allPPLSchemas=globalDataKeeper.getAllPPLSchemas();
 		allPPLTransitions=globalDataKeeper.getAllPPLTransitions();
-		
-		
 	}
 	
 	public String[] constructColumns(){

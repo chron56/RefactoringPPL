@@ -1,6 +1,7 @@
 package gui.mainEngine;
 
-//try to extract relationship beetween gui and pplSchema and pplTransition
+//try to extract relationship between gui and pplSchema and pplTransition
+import test.testEngine.testAgent;
 import gui.dialogs.CreateProjectJDialog;
 import gui.dialogs.EnlargeTable;
 import gui.dialogs.ParametersJDialog;
@@ -72,7 +73,8 @@ import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 import tableClustering.clusterValidator.engine.ClusterValidatorMainEngine;
 import data.dataKeeper.GlobalDataKeeper;
 import data.dataSorters.PldRowSorter;
-
+import java.io.PrintWriter;
+import java.io.File;
 
 public class Gui extends JFrame implements ActionListener{
 
@@ -174,7 +176,7 @@ public class Gui extends JFrame implements ActionListener{
 	private JButton undoButton;
 	private JMenu mnProject;
 	private JMenuItem mntmInfo;
-
+	private testAgent agent; //testing Giorgos
 	
 	/**
 	 * Launch the application.
@@ -202,7 +204,7 @@ public class Gui extends JFrame implements ActionListener{
 		
 		setResizable(false);
 		
-	
+		agent = new testAgent(); //testing Giorgos
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -2523,15 +2525,30 @@ private void makeZoomAreaTableForCluster() {
 		globalDataKeeper=new GlobalDataKeeper(datasetTxt,transitionsFile);
 		globalDataKeeper.setData();
 		System.out.println(globalDataKeeper.getAllPPLTables().size());
+		System.out.println(fileName);
 		
-        System.out.println(fileName);
-
+		String logSentence="load project test \n ";//testing Giorgos
+		logSentence += "Project Name:"+projectName + "\n";//testing Giorgos
+		logSentence += "Dataset txt:"+datasetTxt+ "\n";//testing Giorgos
+		logSentence += "Input Csv:"+inputCsv+ "\n";//testing Giorgos
+		logSentence += "Output Assessment1:"+outputAssessment1+ "\n";//testing Giorgos
+		logSentence += "Output Assessment2:"+outputAssessment2+ "\n";//testing Giorgos
+		logSentence += "Transitions File:"+transitionsFile+ "\n";//testing Giorgos
+		logSentence += globalDataKeeper.getAllPPLTables().size()+ "\n";//testing Giorgos
+		logSentence += fileName+ "\n";//testing Giorgos
+		
+		
+		
+		agent.testLog(logSentence); //testing Giorgos
+		
         fillTable();
         fillTree();
 
 		currentProject=fileName;
 		
 	}
+	
+
 	
 	public void fillTable() {
 		TableConstructionIDU table=new TableConstructionIDU(globalDataKeeper);
@@ -2590,7 +2607,11 @@ private void makeZoomAreaTableForCluster() {
 		System.out.println("Transitions:"+globalDataKeeper.getAllPPLTransitions().size());
 		System.out.println("Tables:"+globalDataKeeper.getAllPPLTables().size());
 
-
+		String logSentence="Schemas:"+globalDataKeeper.getAllPPLSchemas().size()+ "\n";//testing Giorgos
+		logSentence += "Transitions:"+globalDataKeeper.getAllPPLTransitions().size()+ "\n";//testing Giorgos
+		logSentence += "Tables:"+globalDataKeeper.getAllPPLTables().size()+ "\n";//testing Giorgos
+		agent.testLog(logSentence); //testing Giorgos
+		agent.closeLog();
 
 	}
 	
@@ -2703,7 +2724,6 @@ private void makeZoomAreaTableForCluster() {
 	
 	
 	public void fillTree(){
-		
 		 TreeConstructionGeneral tc=new TreeConstructionGeneral(globalDataKeeper);
 		 tablesTree=new JTree();
 		 tablesTree=tc.constructTree();
