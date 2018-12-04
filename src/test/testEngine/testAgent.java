@@ -1,26 +1,35 @@
 package test.testEngine;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class testAgent {
-	PrintWriter out;
-	
-	public testAgent() {
+	private File file;
+	private FileWriter fileWriter;
+
+	public testAgent(String fileName) {
 		try {
-			out = new PrintWriter ("file.txt");
-		} catch (FileNotFoundException e) {
+			this.file = new File(fileName);
+			this.fileWriter = new FileWriter(this.file, true);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	 public void testLog(String logSentence) { 
-		//File file = new File ("C:/Users/Me/Desktop/directory/file.txt");
-			out.write(logSentence);
-			//out.close();	
-	}
-	 
-	 public void closeLog() { 
 
-			out.close();	
+	public void writeLog(String logSentence) {
+		try {
+			this.fileWriter.write(logSentence);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void closeLog() {
+		try {
+			this.fileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
