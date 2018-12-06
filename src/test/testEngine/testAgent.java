@@ -1,35 +1,66 @@
 package test.testEngine;
-
-import java.io.File;
-import java.io.FileWriter;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 
 public class testAgent {
-	private File file;
-	private FileWriter fileWriter;
-
-	public testAgent(String fileName) {
+	PrintWriter out2;
+	
+	public testAgent() {
 		try {
-			this.file = new File(fileName);
-			this.fileWriter = new FileWriter(this.file, true);
-		} catch (IOException e) {
+			out2 = new PrintWriter ("file.txt");
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
+	
+	 public void testLog(String logSentence) { 	
+			out2.write(logSentence);	
+	}
+	 
+	public void testLog(Object e) { 
 
-	public void writeLog(String logSentence) {
 		try {
-			this.fileWriter.write(logSentence);
-		} catch (IOException e) {
-			e.printStackTrace();
+			byte array[] = convertToBytes(e);
+			
+			FileOutputStream fos= new FileOutputStream("filebytes.txt");
+			fos.write(array);
+			fos.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		
+	}
+	
+	private byte[] convertToBytes(Object object) throws IOException{
+		try (ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				ObjectOutput out = new ObjectOutputStream(bos)){
+				out.writeObject(object);
+				return bos.toByteArray();
 		}
 	}
+	 
+	
+	public  Object convertFromBytes(String file) throws IOException, ClassNotFoundException {
+		FileInputStream fileInputStream = new FileInputStream(file);
+		BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+		ObjectInputStream objectInputStream = new ObjectInputStream(bufferedInputStream);
+		Object object = objectInputStream.readObject();
+		objectInputStream.close();
+		return object;
+	}
+	
+	
+	 public void closeLog() { 
 
-	public void closeLog() {
-		try {
-			this.fileWriter.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+			out2.close();	
 	}
 }

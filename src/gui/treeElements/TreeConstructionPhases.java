@@ -1,59 +1,43 @@
 package gui.treeElements;
-
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
-
-import phaseAnalyzer.commons.Phase;
+import test.testEngine.testAgent;
 import data.dataKeeper.GlobalDataKeeper;
-import data.dataPPL.pplSQLSchema.PPLSchema;
-import data.dataPPL.pplTransition.PPLTransition;
-import data.dataPPL.pplTransition.TableChange;
+
 
 public class TreeConstructionPhases implements TreeConstruction {
 	
 	private GlobalDataKeeper dataKeeper=null;
+	private testAgent agent = null;
 
 	public TreeConstructionPhases(GlobalDataKeeper dataKeeper) {
 		this.dataKeeper=dataKeeper;
+		this.agent = new testAgent();
 	}
 	
 	@Override
 	public JTree constructTree() {
 		
-		DefaultMutableTreeNode top=new DefaultMutableTreeNode("Phases");
-		TreeMap<String, PPLSchema> schemas=new TreeMap<String, PPLSchema>();
-		
-				
-		ArrayList<Phase> phases=dataKeeper.getPhaseCollectors().get(0).getPhases();
-		
-		for(int i=0; i<phases.size(); i++){
-			
-			DefaultMutableTreeNode a=new DefaultMutableTreeNode("Phase "+i);
-			top.add(a);
-			TreeMap<Integer,PPLTransition> transitions=phases.get(i).getPhasePPLTransitions();
-			
-			for(Map.Entry<Integer, PPLTransition> tr:transitions.entrySet()){
-				DefaultMutableTreeNode a1=new DefaultMutableTreeNode(tr.getKey());
-				ArrayList<TableChange> tableChanges=tr.getValue().getTableChanges();
-				for(int j=0; j<tableChanges.size(); j++){
-					DefaultMutableTreeNode a2=new DefaultMutableTreeNode(tableChanges.get(j).getAffectedTableName());
-					a1.add(a2);
-				}
-				a.add(a1);
-
-				schemas.put(tr.getValue().getOldVersionName(),dataKeeper.getAllPPLSchemas().get(tr.getValue().getOldVersionName()));
-				schemas.put(tr.getValue().getNewVersionName(),dataKeeper.getAllPPLSchemas().get(tr.getValue().getNewVersionName()));
-			}
-			
+		JTree treeToConstruct = dataKeeper.getPhasesTree();
+		Object temp1;
+		try {
+			temp1 = agent.convertFromBytes("Datakeeperfilebytes.txt");
+			GlobalDataKeeper temp = (GlobalDataKeeper)temp1;
+			this.agent.testLog(temp);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {			
+			e.printStackTrace();
 		}
 		
-		JTree treeToConstruct = new JTree(top);
 		
 		return treeToConstruct;
 	}
+	
+
 
 }

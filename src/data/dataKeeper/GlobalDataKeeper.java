@@ -2,9 +2,15 @@ package data.dataKeeper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.TreeMap;
 
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
+
+import phaseAnalyzer.commons.Phase;
 import phaseAnalyzer.commons.PhaseCollector;
+import tableClustering.clusterExtractor.commons.Cluster;
 import tableClustering.clusterExtractor.commons.ClusterCollector;
 import data.dataPPL.pplSQLSchema.PPLSchema;
 import data.dataPPL.pplSQLSchema.PPLTable;
@@ -161,6 +167,84 @@ public class GlobalDataKeeper {
 		return this.clusterCollectors;
 	}
 	
+	//CHANGES
+	public JTree getPhasesWithClustersTree() {
+		DefaultMutableTreeNode top=new DefaultMutableTreeNode("Clusters");		
+		
+		ArrayList<Cluster> clusters=getClusterCollectors().get(0).getClusters();
+		
+		for(int i=0; i<clusters.size(); i++){
+			
+			DefaultMutableTreeNode a=new DefaultMutableTreeNode("Cluster "+i);
+			top.add(a);
+			ArrayList<String> tables=clusters.get(i).getNamesOfTables();
+			
+			for(String tableName:tables){
+				DefaultMutableTreeNode a1=new DefaultMutableTreeNode(tableName);
+				a.add(a1);
+				
+			}
+			
+		}
+		JTree treeToConstruct = new JTree(top);
+		
+		return treeToConstruct;
+	}
 	
+	public JTree getPhasesTree() {
+		DefaultMutableTreeNode top=new DefaultMutableTreeNode("Phases");
+		TreeMap<String, PPLSchema> schemas=new TreeMap<String, PPLSchema>();
+		
+				
+		ArrayList<Phase> phases=getPhaseCollectors().get(0).getPhases();
+		
+		for(int i=0; i<phases.size(); i++){
+			
+			DefaultMutableTreeNode a=new DefaultMutableTreeNode("Phase "+i);
+			top.add(a);
+			TreeMap<Integer,PPLTransition> transitions=phases.get(i).getPhasePPLTransitions();
+			
+			for(Map.Entry<Integer, PPLTransition> tree:transitions.entrySet()){
+				DefaultMutableTreeNode a1=new DefaultMutableTreeNode(tree.getKey());
+				ArrayList<TableChange> tableChanges=tree.getValue().getTableChanges();
+				for(int j=0; j<tableChanges.size(); j++){
+					DefaultMutableTreeNode a2=new DefaultMutableTreeNode(tableChanges.get(j).getAffectedTableName());
+					a1.add(a2);
+				}
+				a.add(a1);
+
+				schemas.put(tree.getValue().getOldVersionName(),getAllPPLSchemas().get(tree.getValue().getOldVersionName()));
+				schemas.put(tree.getValue().getNewVersionName(),getAllPPLSchemas().get(tree.getValue().getNewVersionName()));
+			}
+			
+		}
+		
+		JTree treeToConstruct = new JTree(top);
+		
+		return treeToConstruct;
+	}
+	
+	public JTree getGeneralTree() {
+		DefaultMutableTreeNode top=new DefaultMutableTreeNode("Versions");
+		TreeMap<String, PPLSchema> schemas=getAllPPLSchemas();
+		
+		for (Map.Entry<String,PPLSchema> pplSchemaIterator : schemas.entrySet()) {
+			
+			DefaultMutableTreeNode a=new DefaultMutableTreeNode(pplSchemaIterator.getKey());
+		    top.add(a);
+		    TreeMap<String, PPLTable> tables=pplSchemaIterator.getValue().getTables();
+		    
+			for (Map.Entry<String,PPLTable> pplT : tables.entrySet()) {
+				DefaultMutableTreeNode a1=new DefaultMutableTreeNode(pplT.getKey());
+				a.add(a1);
+			}
+		    
+		}
+		
+		JTree treeToConstruct = new JTree(top);
+		
+		return treeToConstruct;
+	}
+	//CHANGES
 	
 }

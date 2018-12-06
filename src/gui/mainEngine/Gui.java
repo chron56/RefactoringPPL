@@ -77,7 +77,6 @@ public class Gui extends JFrame implements ActionListener{
 	private Integer[] segmentSizeDetailedTable=new Integer[3];
     private final JMenu mnProject;
     private final JMenuItem mntmInfo;
-    private final testAgent agent; //testing Giorgos
     private MyTableModel detailedModel;
     private MyTableModel generalModel;
     private MyTableModel zoomModel;
@@ -151,8 +150,7 @@ public class Gui extends JFrame implements ActionListener{
 
         this.setResizable(false);
 
-        this.agent = new testAgent("test.txt"); //testing Giorgos
-		
+        
 		JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
 		
@@ -2413,7 +2411,7 @@ private void makeZoomAreaTableForCluster() {
 		logSentence += fileName+ "\n";//testing Giorgos
 
 
-        this.agent.writeLog(logSentence); //testing Giorgos
+ 
 
         this.fillTable();
         this.fillTree();
@@ -2497,8 +2495,7 @@ private void makeZoomAreaTableForCluster() {
         String logSentence = "Schemas:" + this.globalDataKeeper.getAllPPLSchemas().size() + "\n";//testing Giorgos
         logSentence += "Transitions:" + this.globalDataKeeper.getAllPPLTransitions().size() + "\n";//testing Giorgos
         logSentence += "Tables:" + this.globalDataKeeper.getAllPPLTables().size() + "\n";//testing Giorgos
-        this.agent.writeLog(logSentence); //testing Giorgos
-        this.agent.closeLog();
+
 
 	}
 	
