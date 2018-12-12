@@ -20,6 +20,7 @@ import org.antlr.v4.runtime.RecognitionException;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 import tableClustering.clusterValidator.engine.ClusterValidatorMainEngine;
+import test.testEngine.TestLoadProject;
 import test.testEngine.testAgent;
 
 import javax.swing.*;
@@ -37,6 +38,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Gui extends JFrame implements ActionListener{
 
@@ -123,6 +125,7 @@ public class Gui extends JFrame implements ActionListener{
     private Boolean preProcessingTime;
     private Boolean preProcessingChange;
     private boolean showingPld;
+	private TestLoadProject tlp= new TestLoadProject("FILE.txt");
 	
 	/**
 	 * Launch the application.
@@ -133,13 +136,15 @@ public class Gui extends JFrame implements ActionListener{
 				try {
 					Gui frame = new Gui();
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
 					//return;
 					e.printStackTrace();
 				}
 				
 			}
-		});
+			
+		}); 
 	}
 
 	/**
@@ -353,7 +358,11 @@ public class Gui extends JFrame implements ActionListener{
                     Gui.this.segmentSizeDetailedTable = table.getSegmentSize();
                     Gui.this.tabbedPane.setSelectedIndex(0);
                     Gui.this.makeDetailedTable(columns, rows, true);
-				}
+                    
+                    tlp.writeToFile("[BT4 1] Show Full Detailed LifeTime Table button listener Columns => "+Arrays.toString(columns));
+                    tlp.writeToFile("[BT4 2] Show Full Detailed LifeTime Table button listener Rows => "+Arrays.deepToString(rows));
+                    tlp.closeFile();
+                }
 				else{
 					JOptionPane.showMessageDialog(null, "Select a Project first");
 					return;
@@ -365,21 +374,25 @@ public class Gui extends JFrame implements ActionListener{
 		mntmShowGeneralLifetimeIDU.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
                 if (!(Gui.this.currentProject == null)) {
+                	tlp.updateOption();
+                	tlp.writeToFile("### "+tlp.getOption()+" ###\n");
                     Gui.this.zoomInButton.setVisible(true);
                     Gui.this.zoomOutButton.setVisible(true);
                     TableConstructionIDU table = new TableConstructionIDU(Gui.this.globalDataKeeper);
-					final String[] columns=table.constructColumns();
+					
+                    final String[] columns=table.constructColumns();
 					final String[][] rows=table.constructRows();
                     Gui.this.segmentSizeZoomArea = table.getSegmentSize();
                     System.out.println("Schemas: " + Gui.this.globalDataKeeper.getAllPPLSchemas().size());
 					System.out.println("C: "+columns.length+" R: "+rows.length);
-
+					tlp.writeToFile("[BT1 1] Show PLD button listener segmentSizeZoomArea => "+Arrays.toString(Gui.this.segmentSizeZoomArea));
                     Gui.this.finalColumnsZoomArea = columns;
+                    tlp.writeToFile("[BT1 2] Show PLD button listener finalColumnsZoomArea => "+Arrays.toString(Gui.this.finalColumnsZoomArea));
                     Gui.this.finalRowsZoomArea = rows;
+                    tlp.writeToFile("[BT1 3] Show PLD button listener finalRowsZoomArea => "+Arrays.deepToString(Gui.this.finalRowsZoomArea));
                     Gui.this.tabbedPane.setSelectedIndex(0);
                     Gui.this.makeGeneralTableIDU();
                     Gui.this.fillTree();
-					
 				}
 				else{
 					JOptionPane.showMessageDialog(null, "Select a Project first");
@@ -403,15 +416,18 @@ public class Gui extends JFrame implements ActionListener{
 					jD.setVisible(true);
 					
 					if(jD.getConfirmation()){
-
+						
                         Gui.this.timeWeight = jD.getTimeWeight();
                         Gui.this.changeWeight = jD.getChangeWeight();
                         Gui.this.preProcessingTime = jD.getPreProcessingTime();
                         Gui.this.preProcessingChange = jD.getPreProcessingChange();
                         Gui.this.numberOfPhases = jD.getNumberOfPhases();
-
+                        tlp.updateOption();
+                        tlp.writeToFile("### "+tlp.getOption()+" ###\n");
                         System.out.println(Gui.this.timeWeight + " " + Gui.this.changeWeight);
-
+                        tlp.writeToFile("[BT2 1] Show Phases PLD button listener timeWeight => "+Gui.this.timeWeight);
+                        tlp.writeToFile("[BT2 2] Show Phases PLD button listener changeWeight => "+Gui.this.changeWeight);
+                        tlp.writeToFile("[BT2 3] Show Phases PLD button listener numberOfPhases => "+Gui.this.numberOfPhases);
                         PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(Gui.this.inputCsv, Gui.this.outputAssessment1, Gui.this.outputAssessment2, Gui.this.timeWeight, Gui.this.changeWeight, Gui.this.preProcessingTime, Gui.this.preProcessingChange);
 	
 						mainEngine.parseInput();		
@@ -427,14 +443,18 @@ public class Gui extends JFrame implements ActionListener{
 							final String[] columns=table.constructColumns();
 							final String[][] rows=table.constructRows();
                             Gui.this.segmentSize = table.getSegmentSize();
+                            tlp.writeToFile("[BT2 4] Show Phases PLD button listener segmentSize => "+Gui.this.segmentSize);
                             System.out.println("Schemas: " + Gui.this.globalDataKeeper.getAllPPLSchemas().size());
 							System.out.println("C: "+columns.length+" R: "+rows.length);
-
+							tlp.writeToFile("[BT2 5] Show Phases PLD button listener => "+"Schemas: " + Gui.this.globalDataKeeper.getAllPPLSchemas().size()+" "+"C: "+columns.length+" R: "+rows.length);
                             Gui.this.finalColumns = columns;
                             Gui.this.finalRows = rows;
+                            tlp.writeToFile("[BT2 6] Show Phases PLD button listener finalColumns => "+Arrays.toString(Gui.this.finalColumns));
+                            tlp.writeToFile("[BT2 7] Show Phases PLD button listener finalRows => "+Arrays.deepToString(Gui.this.finalRows));
                             Gui.this.tabbedPane.setSelectedIndex(0);
                             Gui.this.makeGeneralTablePhases();
                             Gui.this.fillPhasesTree();
+                            
 						}
 						else{
 							JOptionPane.showMessageDialog(null, "Extract Phases first");
@@ -463,7 +483,8 @@ public class Gui extends JFrame implements ActionListener{
 					jD.setModal(true);
 					
 					jD.setVisible(true);
-					
+					tlp.updateOption();
+					tlp.writeToFile("### "+tlp.getOption()+" ###\n");
 					if(jD.getConfirmation()){
 
                         Gui.this.timeWeight = jD.getTimeWeight();
@@ -475,7 +496,13 @@ public class Gui extends JFrame implements ActionListener{
                         Gui.this.birthWeight = jD.geBirthWeight();
                         Gui.this.deathWeight = jD.getDeathWeight();
                         Gui.this.changeWeightCl = jD.getChangeWeightCluster();
-
+                        tlp.writeToFile("[BT3 1] Show Phases with Clusters PLD button listener timeWeight => "+Gui.this.timeWeight);
+                        tlp.writeToFile("[BT3 2] Show Phases with Clusters PLD button listener changeWeight => "+Gui.this.changeWeight);
+                        tlp.writeToFile("[BT3 3] Show Phases with Clusters PLD button listener numberOfPhases => "+Gui.this.numberOfPhases);
+                        tlp.writeToFile("[BT3 4] Show Phases with Clusters PLD button listener numberOfClusters => "+Gui.this.numberOfClusters);
+                        tlp.writeToFile("[BT3 5] Show Phases with Clusters PLD button listener birthWeight => "+Gui.this.birthWeight);
+                        tlp.writeToFile("[BT3 6] Show Phases with Clusters PLD button listener deathWeight => "+Gui.this.deathWeight);
+                        tlp.writeToFile("[BT3 7] Show Phases with Clusters PLD button listener changeWeightCl => "+Gui.this.changeWeightCl);
                         System.out.println(Gui.this.timeWeight + " " + Gui.this.changeWeight);
 
                         PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(Gui.this.inputCsv, Gui.this.outputAssessment1, Gui.this.outputAssessment2, Gui.this.timeWeight, Gui.this.changeWeight, Gui.this.preProcessingTime, Gui.this.preProcessingChange);
@@ -497,11 +524,14 @@ public class Gui extends JFrame implements ActionListener{
 							final String[] columns=table.constructColumns();
 							final String[][] rows=table.constructRows();
                             Gui.this.segmentSize = table.getSegmentSize();
+                            tlp.writeToFile("[BT3 8] Show Phases with Clusters PLD button listener segmentSize => "+Gui.this.segmentSize);
                             System.out.println("Schemas: " + Gui.this.globalDataKeeper.getAllPPLSchemas().size());
 							System.out.println("C: "+columns.length+" R: "+rows.length);
-
+							tlp.writeToFile("[BT3 9] Show Phases with Clusters PLD button listener => "+"Schemas: " + Gui.this.globalDataKeeper.getAllPPLSchemas().size()+"C: "+columns.length+" R: "+rows.length);
                             Gui.this.finalColumns = columns;
                             Gui.this.finalRows = rows;
+                            tlp.writeToFile("[BT3 10] Show Phases with Clusters PLD button listener finalColumns => "+Arrays.toString(Gui.this.finalColumns));
+                            tlp.writeToFile("[BT3 11] Show Phases with Clusters PLD button listener finalRows => "+Arrays.deepToString(Gui.this.finalRows));
                             Gui.this.tabbedPane.setSelectedIndex(0);
                             Gui.this.makeGeneralTablePhases();
                             Gui.this.fillClustersTree();
@@ -811,7 +841,7 @@ public class Gui extends JFrame implements ActionListener{
         PldRowSorter sorter = new PldRowSorter(this.finalRowsZoomArea, this.globalDataKeeper);
 
         this.finalRowsZoomArea = sorter.sortRows();
-
+        tlp.writeToFile("[P 5] makeGeneralTableIDU() finalRowsZoomArea => "+Arrays.deepToString( this.finalRowsZoomArea));
         this.showingPld = true;
         this.zoomInButton.setVisible(true);
         this.zoomOutButton.setVisible(true);
@@ -830,11 +860,13 @@ public class Gui extends JFrame implements ActionListener{
             rows[i][0] = this.finalRowsZoomArea[i][0];
 
         }
-
+		tlp.writeToFile("[P 6] makeGeneralTableIDU() finalColumnsZoomArea  to zoomModel => "+ Arrays.toString( this.finalColumnsZoomArea));
+		tlp.writeToFile("[P 7] makeGeneralTableIDU() rows to zoomModel => "+ Arrays.deepToString( rows));
         this.zoomModel = new MyTableModel(this.finalColumnsZoomArea, rows);
 
         final JvTable generalTable = new JvTable(this.zoomModel);
-
+       
+        tlp.writeObjectToFile(tlp.getOption()+"generalTable-makeGeneralTableIDU.txt", generalTable);
 		generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         if (this.rowHeight < 1) {
@@ -884,9 +916,10 @@ public class Gui extends JFrame implements ActionListener{
 				}
 			}
 		}
-
+       
         final IDUTableRenderer renderer = new IDUTableRenderer(Gui.this, this.finalRowsZoomArea, this.globalDataKeeper, this.segmentSize);
 
+       
 		generalTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
 		{
 
@@ -903,7 +936,7 @@ public class Gui extends JFrame implements ActionListener{
 
 		        c.setForeground(fr);
                 this.setOpaque(true);
-
+                //bottom table column selection
                 if (column == Gui.this.wholeColZoomArea && Gui.this.wholeColZoomArea != 0) {
 
 		        	String description="Transition ID:"+table.getColumnName(column)+"\n";
@@ -917,14 +950,28 @@ public class Gui extends JFrame implements ActionListener{
                     description = description + "Deletions:" + Gui.this.globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfDeletionsForOneTr() + "\n";
                     description = description + "Updates:" + Gui.this.globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfUpdatesForOneTr() + "\n";
 
-
                     Gui.this.descriptionText.setText(description);
+                    
+                    String descriptionStatic="Transition ID:"+table.getColumnName(5)+"\n";
+                    descriptionStatic = descriptionStatic + "Old Version Name:" + Gui.this.globalDataKeeper.getAllPPLTransitions().
+	        				get(Integer.parseInt(table.getColumnName(5))).getOldVersionName()+"\n";
+                    descriptionStatic = descriptionStatic + "New Version Name:" + Gui.this.globalDataKeeper.getAllPPLTransitions().
+                            get(Integer.parseInt(table.getColumnName(5))).getNewVersionName() + "\n";
+
+                    descriptionStatic = descriptionStatic + "Transition Changes:" + Gui.this.globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(5))).getNumberOfChangesForOneTr() + "\n";
+                    descriptionStatic = descriptionStatic + "Additions:" + Gui.this.globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(5))).getNumberOfAdditionsForOneTr() + "\n";
+                    descriptionStatic = descriptionStatic + "Deletions:" + Gui.this.globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(5))).getNumberOfDeletionsForOneTr() + "\n";
+                    descriptionStatic = descriptionStatic + "Updates:" + Gui.this.globalDataKeeper.getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(5))).getNumberOfUpdatesForOneTr() + "\n";
+                    
+                    tlp.writeToFile("On Bottom Table Column (5) description makeGeneralTableIDU  => "+ descriptionStatic);
+
 
 		        	Color cl = new Color(255,69,0,100);
 
 	        		c.setBackground(cl);
 	        		return c;
-		        } else if (Gui.this.selectedColumnZoomArea == 0) {
+	        		
+		        } else if (Gui.this.selectedColumnZoomArea == 0) { //bottom table row selection
 
 		        	if (isSelected){
 		        		Color cl = new Color(255,69,0,100);
@@ -936,10 +983,16 @@ public class Gui extends JFrame implements ActionListener{
                         description = description + "Death Version Name:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRowsZoomArea[row][0]).getDeath() + "\n";
                         description = description + "Death Version ID:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRowsZoomArea[row][0]).getDeathVersionID() + "\n";
                         description = description + "Total Changes:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRowsZoomArea[row][0]).getTotalChanges() + "\n";
-
-
                         Gui.this.descriptionText.setText(description);
+                        
+                        String descriptionStatic = "Table:" + Gui.this.finalRowsZoomArea[5][0] + "\n";
+                        descriptionStatic = descriptionStatic + "Birth Version Name:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRowsZoomArea[5][0]).getBirth() + "\n";
+                        descriptionStatic = descriptionStatic + "Birth Version ID:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRowsZoomArea[5][0]).getBirthVersionID() + "\n";
+                        descriptionStatic = descriptionStatic + "Death Version Name:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRowsZoomArea[5][0]).getDeath() + "\n";
+                        descriptionStatic = descriptionStatic + "Death Version ID:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRowsZoomArea[5][0]).getDeathVersionID() + "\n";
+                        descriptionStatic = descriptionStatic + "Total Changes:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRowsZoomArea[5][0]).getTotalChanges() + "\n";
 
+                        tlp.writeToFile("On Bottom Table row (5) description makeGeneralTableIDU  => "+ descriptionStatic);
 		        		return c;
 
 
@@ -958,10 +1011,11 @@ public class Gui extends JFrame implements ActionListener{
 		        		return c;
 		        	}
 
-
+                    //bottom table click cell  
                     if (isSelected && hasFocus){
 
 		        		String description="";
+		        		String descriptionStatic="";
 		        		if(!table.getColumnName(column).contains("Table name")){
                             description = "Table:" + Gui.this.finalRowsZoomArea[row][0] + "\n";
 
@@ -969,6 +1023,14 @@ public class Gui extends JFrame implements ActionListener{
 			        				get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()+"\n";
                             description = description + "New Version Name:" + Gui.this.globalDataKeeper.getAllPPLTransitions().
                                     get(Integer.parseInt(table.getColumnName(column))).getNewVersionName() + "\n";
+                            
+                            descriptionStatic = "Table:" + Gui.this.finalRowsZoomArea[5][0] + "\n";
+
+                            descriptionStatic = descriptionStatic + "Old Version Name:" + Gui.this.globalDataKeeper.getAllPPLTransitions().
+			        				get(Integer.parseInt(table.getColumnName(5))).getOldVersionName()+"\n";
+                            descriptionStatic = descriptionStatic + "New Version Name:" + Gui.this.globalDataKeeper.getAllPPLTransitions().
+                                    get(Integer.parseInt(table.getColumnName(5))).getNewVersionName() + "\n";
+                            
                             if (Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRowsZoomArea[row][0]).
 			        				getTableChanges().getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column)))!=null){
                                 description = description + "Transition Changes:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRowsZoomArea[row][0]).
@@ -980,6 +1042,14 @@ public class Gui extends JFrame implements ActionListener{
                                 description = description + "Updates:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRowsZoomArea[row][0]).
 			        					getNumberOfUpdatesForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
 
+                                descriptionStatic = descriptionStatic + "Transition Changes:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRowsZoomArea[5][0]).
+    			        				getTableChanges().getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(5))).size()+"\n";
+                                    descriptionStatic = descriptionStatic + "Additions:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRowsZoomArea[5][0]).
+    			        					getNumberOfAdditionsForOneTr(Integer.parseInt(table.getColumnName(5)))+"\n";
+                                    descriptionStatic = descriptionStatic + "Deletions:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRowsZoomArea[5][0]).
+    			        					getNumberOfDeletionsForOneTr(Integer.parseInt(table.getColumnName(5)))+"\n";
+                                    descriptionStatic = descriptionStatic + "Updates:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRowsZoomArea[5][0]).
+    			        					getNumberOfUpdatesForOneTr(Integer.parseInt(table.getColumnName(5)))+"\n";
 			        		}
 			        		else{
 			        			description=description+"Transition Changes:0"+"\n";
@@ -990,6 +1060,7 @@ public class Gui extends JFrame implements ActionListener{
 			        		}
 
                             Gui.this.descriptionText.setText(description);
+                            tlp.writeToFile("On Bottom Table cell (5,5) description makeGeneralTableIDU  => "+ descriptionStatic);
 		        		}
 		        		Color cl = new Color(255,69,0,100);
 
@@ -1174,11 +1245,12 @@ private void makeGeneralTablePhases() {
     this.generalModel = new MyTableModel(this.finalColumns, rows);
 
     final JvTable generalTable = new JvTable(this.generalModel);
-
+   
 	generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 	generalTable.setShowGrid(false);
 	generalTable.setIntercellSpacing(new Dimension(0, 0));
+    
 
 
     for(int i=0; i<generalTable.getColumnCount(); i++){
@@ -1192,7 +1264,7 @@ private void makeGeneralTablePhases() {
 
 		}
 	}
-
+   
 	generalTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
 	{
 
@@ -1208,6 +1280,7 @@ private void makeGeneralTablePhases() {
 	        Color fr=new Color(0,0,0);
 	        c.setForeground(fr);
 
+	        //top table column selection
             if (column == Gui.this.wholeCol && Gui.this.wholeCol != 0) {
 
 	        	String description=table.getColumnName(column)+"\n";
@@ -1225,14 +1298,30 @@ private void makeGeneralTablePhases() {
         				get(column-1).getTotalUpdatesOfPhase()+"\n";
 
                 Gui.this.descriptionText.setText(description);
-
+                
+                String descriptionStatic=table.getColumnName(5)+"\n";
+                descriptionStatic = descriptionStatic + "First Transition ID:" + Gui.this.globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+        				get(5-1).getStartPos()+"\n";
+                descriptionStatic = descriptionStatic + "Last Transition ID:" + Gui.this.globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+        				get(5-1).getEndPos()+"\n";
+                descriptionStatic = descriptionStatic + "Total Changes For This Phase:" + Gui.this.globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+        				get(5-1).getTotalUpdates()+"\n";
+                descriptionStatic = descriptionStatic + "Additions For This Phase:" + Gui.this.globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+        				get(5-1).getTotalAdditionsOfPhase()+"\n";
+                descriptionStatic = descriptionStatic + "Deletions For This Phase:" + Gui.this.globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+        				get(5-1).getTotalDeletionsOfPhase()+"\n";
+                descriptionStatic = descriptionStatic + "Updates For This Phase:" + Gui.this.globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+        				get(5-1).getTotalUpdatesOfPhase()+"\n";
+                
+                tlp.writeToFile("On Top Table Column (5) description makeGeneralTablePhases  => "+ descriptionStatic);
 	        	Color cl = new Color(255,69,0,100);
 
         		c.setBackground(cl);
         		return c;
+        		//top table row selection
 	        } else if (Gui.this.selectedColumn == 0) {
 	        	if (isSelected){
-
+	        		//row selection cluster case
                     if (Gui.this.finalRows[row][0].contains("Cluster")) {
                         String description = "Cluster:" + Gui.this.finalRows[row][0] + "\n";
                         description = description + "Birth Version Name:" + Gui.this.globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getBirthSqlFile() + "\n";
@@ -1241,10 +1330,20 @@ private void makeGeneralTablePhases() {
                         description = description + "Death Version ID:" + Gui.this.globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getDeath() + "\n";
                         description = description + "Tables:" + Gui.this.globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getNamesOfTables().size() + "\n";
                         description = description + "Total Changes:" + Gui.this.globalDataKeeper.getClusterCollectors().get(0).getClusters().get(row).getTotalChanges() + "\n";
-
+                        
                         Gui.this.descriptionText.setText(description);
+                        
+                        String descriptionStatic = "Cluster:" + Gui.this.finalRows[5][0] + "\n";
+                        descriptionStatic = descriptionStatic + "Birth Version Name:" + Gui.this.globalDataKeeper.getClusterCollectors().get(0).getClusters().get(5).getBirthSqlFile() + "\n";
+                        descriptionStatic = descriptionStatic + "Birth Version ID:" + Gui.this.globalDataKeeper.getClusterCollectors().get(0).getClusters().get(5).getBirth() + "\n";
+                        descriptionStatic = descriptionStatic + "Death Version Name:" + Gui.this.globalDataKeeper.getClusterCollectors().get(0).getClusters().get(5).getDeathSqlFile() + "\n";
+                        descriptionStatic = descriptionStatic + "Death Version ID:" + Gui.this.globalDataKeeper.getClusterCollectors().get(0).getClusters().get(5).getDeath() + "\n";
+                        descriptionStatic = descriptionStatic + "Tables:" + Gui.this.globalDataKeeper.getClusterCollectors().get(0).getClusters().get(5).getNamesOfTables().size() + "\n";
+                        descriptionStatic = descriptionStatic + "Total Changes:" + Gui.this.globalDataKeeper.getClusterCollectors().get(0).getClusters().get(5).getTotalChanges() + "\n";
+                        tlp.writeToFile("On Top Table row (5) [cluster] description makeGeneralTablePhases  => "+ descriptionStatic);
+                       
 	        		}
-	        		else{
+	        		else{// row selection table case
                         String description = "Table:" + Gui.this.finalRows[row][0] + "\n";
                         description = description + "Birth Version Name:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRows[row][0]).getBirth() + "\n";
                         description = description + "Birth Version ID:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRows[row][0]).getBirthVersionID() + "\n";
@@ -1252,6 +1351,15 @@ private void makeGeneralTablePhases() {
                         description = description + "Death Version ID:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRows[row][0]).getDeathVersionID() + "\n";
                         description = description + "Total Changes:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRows[row][0]).getTotalChanges() + "\n";
                         Gui.this.descriptionText.setText(description);
+                        
+                        String descriptionStatic = "Table:" + Gui.this.finalRows[row][0] + "\n";
+                        descriptionStatic = descriptionStatic + "Birth Version Name:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRows[row][0]).getBirth() + "\n";
+                        descriptionStatic = descriptionStatic + "Birth Version ID:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRows[row][0]).getBirthVersionID() + "\n";
+                        descriptionStatic = descriptionStatic + "Death Version Name:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRows[row][0]).getDeath() + "\n";
+                        descriptionStatic = descriptionStatic + "Death Version ID:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRows[row][0]).getDeathVersionID() + "\n";
+                        descriptionStatic = descriptionStatic + "Total Changes:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRows[row][0]).getTotalChanges() + "\n";
+                        tlp.writeToFile("On Top Table row (5) [table] description makeGeneralTablePhases  => "+ descriptionStatic);
+                       
 
 	        		}
 
@@ -1272,10 +1380,11 @@ private void makeGeneralTablePhases() {
 
 	        		return c;
 	        	}
-
+                //On top table cell selection
 	        	if (isSelected && hasFocus){
 
 	        		String description="";
+	        		//cell selection cluster case
 	        		if(!table.getColumnName(column).contains("Table name")){
 
                         if (Gui.this.finalRows[row][0].contains("Cluster")) {
@@ -1288,10 +1397,21 @@ private void makeGeneralTablePhases() {
 			        				get(column-1).getStartPos()+"\n";
                             description = description + "Last Transition ID:" + Gui.this.globalDataKeeper.getPhaseCollectors().get(0).getPhases().
 			        				get(column-1).getEndPos()+"\n\n";
-			        		description=description+"Total Changes For This Phase:"+tmpValue+"\n";
+			        		description=description+"totTotal Changes For This Phase:"+tmpValue+"\n";
+			        		
+			        		String descriptionStatic="";
+			        		descriptionStatic = Gui.this.finalRows[5][0] + "\n";
+			        		descriptionStatic = descriptionStatic + "Tables:" + Gui.this.globalDataKeeper.getClusterCollectors().get(0).getClusters().get(5).getNamesOfTables().size() + "\n\n";
 
+			        		descriptionStatic=descriptionStatic+table.getColumnName(5)+"\n";
+			        		descriptionStatic=descriptionStatic + "First Transition ID:" + Gui.this.globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+			        				get(5-1).getStartPos()+"\n";
+			        		descriptionStatic=descriptionStatic + "Last Transition ID:" + Gui.this.globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+			        				get(5-1).getEndPos()+"\n\n";
+			        		descriptionStatic=descriptionStatic+"Total Changes For This Phase:"+tmpValue+"\n";
+			        		tlp.writeToFile("On Top Table cell (5,5) [cluster] description makeGeneralTablePhases  => "+ descriptionStatic);
 		        		}
-		        		else{
+		        		else{//each cell table case
 		        			description=table.getColumnName(column)+"\n";
                             description = description + "First Transition ID:" + Gui.this.globalDataKeeper.getPhaseCollectors().get(0).getPhases().
 			        				get(column-1).getStartPos()+"\n";
@@ -1303,13 +1423,26 @@ private void makeGeneralTablePhases() {
                             description = description + "Death Version Name:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRows[row][0]).getDeath() + "\n";
                             description = description + "Death Version ID:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRows[row][0]).getDeathVersionID() + "\n";
 			        		description=description+"Total Changes For This Phase:"+tmpValue+"\n";
-
+			        		
+			        		String descriptionStatic="";
+			        		descriptionStatic=table.getColumnName(5)+"\n";
+			        		descriptionStatic = descriptionStatic + "First Transition ID:" + Gui.this.globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+			        				get(5-1).getStartPos()+"\n";
+			        		descriptionStatic = descriptionStatic + "Last Transition ID:" + Gui.this.globalDataKeeper.getPhaseCollectors().get(0).getPhases().
+			        				get(5-1).getEndPos()+"\n\n";
+			        		descriptionStatic = descriptionStatic + "Table:" + Gui.this.finalRows[5][0] + "\n";
+			        		descriptionStatic = descriptionStatic + "Birth Version Name:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRows[5][0]).getBirth() + "\n";
+			        		descriptionStatic = descriptionStatic + "Birth Version ID:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRows[5][0]).getBirthVersionID() + "\n";
+			        		descriptionStatic = descriptionStatic + "Death Version Name:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRows[5][0]).getDeath() + "\n";
+			        		descriptionStatic = descriptionStatic + "Death Version ID:" + Gui.this.globalDataKeeper.getAllPPLTables().get(Gui.this.finalRows[5][0]).getDeathVersionID() + "\n";
+			        		
+			        		tlp.writeToFile("On Top Table cell (5,5) [table] description makeGeneralTablePhases  => "+ descriptionStatic);
 		        		}
 
                         Gui.this.descriptionText.setText(description);
 
 	        		}
-
+	        		
 	        		Color cl = new Color(255,69,0,100);
 
 	        		c.setBackground(cl);
@@ -1366,14 +1499,13 @@ private void makeGeneralTablePhases() {
             }
 	    }
 	});
-
+	
 	generalTable.addMouseListener(new MouseAdapter() {
 		@Override
 		   public void mouseClicked(MouseEvent e) {
 
 			if (e.getClickCount() == 1) {
 				JTable target = (JTable)e.getSource();
-
                 Gui.this.selectedRowsFromMouse = target.getSelectedRows();
                 Gui.this.selectedColumn = target.getSelectedColumn();
                 Gui.this.LifeTimeTable.repaint();
@@ -1497,7 +1629,7 @@ private void makeGeneralTablePhases() {
 
 	});
 
-
+	tlp.writeObjectToFile(tlp.getOption()+"generalTable-makeGeneralTablePhases.txt", generalTable);
     this.LifeTimeTable = generalTable;
 
     this.tmpScrollPane.setViewportView(this.LifeTimeTable);
@@ -1899,6 +2031,7 @@ private void makeZoomAreaTableForCluster() {
 	        Color fr=new Color(0,0,0);
 	        c.setForeground(fr);
 
+	        //column tou panw pinaka
             if (column == Gui.this.wholeColZoomArea && Gui.this.wholeColZoomArea != 0) {
 
 	        	String description=table.getColumnName(column)+"\n";
@@ -2409,15 +2542,16 @@ private void makeZoomAreaTableForCluster() {
         logSentence += "Transitions File:" + this.transitionsFile + "\n";//testing Giorgos
         logSentence += this.globalDataKeeper.getAllPPLTables().size() + "\n";//testing Giorgos
 		logSentence += fileName+ "\n";//testing Giorgos
-
-
+		tlp.writeToFile(tlp.getOption());
+		tlp.writeToFile("[P 1] Projects Details => "+logSentence);
+		
  
 
         this.fillTable();
         this.fillTree();
 
         this.currentProject = fileName;
-
+        
 	}
 
     private class ColumnListener implements ListSelectionListener {
@@ -2440,9 +2574,14 @@ private void makeZoomAreaTableForCluster() {
 		final String[] columns=table.constructColumns();
 		final String[][] rows=table.constructRows();
         this.segmentSizeZoomArea = table.getSegmentSize();
-
+        tlp.writeToFile("[P 2] fillTable() segmentSizeZoomArea => "+Arrays.toString(this.segmentSizeZoomArea));
+        
         this.finalColumnsZoomArea = columns;
+        System.out.println(Arrays.toString( this.finalColumnsZoomArea));
+        tlp.writeToFile("[P 3] fillTable() finalColumnsZoomArea => "+Arrays.toString(this.finalColumnsZoomArea));
+        
         this.finalRowsZoomArea = rows;
+        tlp.writeToFile("[P 4] fillTable() finalRowsZoomArea => "+Arrays.deepToString(this.finalRowsZoomArea));
         this.tabbedPane.setSelectedIndex(0);
         this.makeGeneralTableIDU();
 
@@ -2475,15 +2614,20 @@ private void makeZoomAreaTableForCluster() {
         TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(this.globalDataKeeper, b, d, c);
         mainEngine2.extractClusters(this.numberOfClusters);
         this.globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
-		mainEngine2.print();
+        
+        mainEngine2.print();
 
         if (this.globalDataKeeper.getPhaseCollectors().size() != 0) {
             TableConstructionWithClusters tableP = new TableConstructionWithClusters(this.globalDataKeeper);
 			final String[] columnsP=tableP.constructColumns();
 			final String[][] rowsP=tableP.constructRows();
             this.segmentSize = tableP.getSegmentSize();
+            
+            tlp.writeToFile("[P 8] fillTable() segmentsize => "+ Arrays.toString(this.segmentSize));
             this.finalColumns = columnsP;
+            tlp.writeToFile("[P 9] fillTable() finalColumns => "+ Arrays.toString(this.finalColumns));
             this.finalRows = rowsP;
+            tlp.writeToFile("[P 10] fillTable() finalRows => "+ Arrays.deepToString(this.finalRows));
             this.tabbedPane.setSelectedIndex(0);
             this.makeGeneralTablePhases();
             this.fillClustersTree();
@@ -2496,7 +2640,7 @@ private void makeZoomAreaTableForCluster() {
         logSentence += "Transitions:" + this.globalDataKeeper.getAllPPLTransitions().size() + "\n";//testing Giorgos
         logSentence += "Tables:" + this.globalDataKeeper.getAllPPLTables().size() + "\n";//testing Giorgos
 
-
+        tlp.writeToFile("[P 11] Overview Output => "+ logSentence);
 	}
 	
 	public void optimize() throws IOException{
@@ -2608,12 +2752,14 @@ private void makeZoomAreaTableForCluster() {
         TreeConstructionGeneral tc = new TreeConstructionGeneral(this.globalDataKeeper);
         this.tablesTree = new JTree();
         this.tablesTree = tc.constructTree();
+        tlp.writeObjectToFile(tlp.getOption()+"tablesTree-fillTree.txt", this.tablesTree);
+        
         this.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent ae) {
 			    	TreePath selection = ae.getPath();
                 Gui.this.selectedFromTree.add(selection.getLastPathComponent().toString());
                 System.out.println(selection.getLastPathComponent() + " is selected");
-
+                tlp.writeToFile("On Trees table [general] selection is"+selection.getLastPathComponent());
 			    }
 		 });
 
@@ -2661,13 +2807,13 @@ private void makeZoomAreaTableForCluster() {
 
         TreeConstructionPhases tc = new TreeConstructionPhases(this.globalDataKeeper);
         this.tablesTree = tc.constructTree();
-
+        tlp.writeObjectToFile(tlp.getOption()+"tablesTree-fillPhasesTree.txt",this.tablesTree);
         this.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent ae) {
 			    	TreePath selection = ae.getPath();
                 Gui.this.selectedFromTree.add(selection.getLastPathComponent().toString());
                 System.out.println(selection.getLastPathComponent() + " is selected");
-
+                tlp.writeToFile("On Trees table [phases] selection is"+selection.getLastPathComponent());
 			    }
 		 });
 
@@ -2715,13 +2861,14 @@ private void makeZoomAreaTableForCluster() {
 
         TreeConstructionPhasesWithClusters tc = new TreeConstructionPhasesWithClusters(this.globalDataKeeper);
         this.tablesTree = tc.constructTree();
-
+        tlp.writeObjectToFile(tlp.getOption()+"tablesTree-fillClustersTree.txt", this.tablesTree);
+        
         this.tablesTree.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent ae) {
 			    	TreePath selection = ae.getPath();
                 Gui.this.selectedFromTree.add(selection.getLastPathComponent().toString());
                 System.out.println(selection.getLastPathComponent() + " is selected");
-
+                tlp.writeToFile("On Trees table [cluster] selectio is"+selection.getLastPathComponent());
 			    }
 		 });
 

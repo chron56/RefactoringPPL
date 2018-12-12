@@ -10,7 +10,7 @@ public class TreeConstructionPhasesWithClusters implements TreeConstruction {
 
 	public TreeConstructionPhasesWithClusters(GlobalDataKeeper dataKeeper) {
 		this.dataKeeper=dataKeeper;
-		this.agent = new testAgent();
+		//this.agent = new testAgent();
 	}
 	
 	@Override

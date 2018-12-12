@@ -10,14 +10,14 @@ public class TreeConstructionGeneral {
 	private testAgent agent = null;
 	public TreeConstructionGeneral(GlobalDataKeeper dataKeeper){
 		this.dataKeeper=dataKeeper;
-		this.agent = new testAgent();
+		//this.agent = new testAgent();
 	}
 	
 	public JTree constructTree(){
 		
 		
 		JTree treeToConstruct = dataKeeper.getGeneralTree();
-		this.agent.testLog(treeToConstruct);
+		//this.agent.testLog(treeToConstruct);
 		return treeToConstruct;
 		
 	}
