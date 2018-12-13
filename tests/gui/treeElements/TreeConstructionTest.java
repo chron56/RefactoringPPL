@@ -3,7 +3,12 @@ package gui.treeElements;
 import static org.junit.Assert.*;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
+
+import javax.swing.JTree;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -12,8 +17,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import test.testEngine.testAgent;
+
 public class TreeConstructionTest {
-	private static final File dir = new File("/");
+
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -24,7 +31,6 @@ public class TreeConstructionTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Assert.assertTrue("Unable to create " + dir.getAbsolutePath(), dir.exists());
 	}
 
 	@After
@@ -43,7 +49,15 @@ public class TreeConstructionTest {
 	}
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		try {
+
+			 BufferedReader expected= new BufferedReader(new FileReader("FILE.txt"));
+			BufferedReader actual = new BufferedReader(new FileReader("firstrun.txt"));
+			assertReaders(expected,actual);
+		} catch (IOException e) {			
+			e.printStackTrace();
+		}
+
 	}
 
 }
