@@ -30,7 +30,7 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 		
 	}
 	
-	public ClusterCollector newClusterCollector(ClusterCollector prevCollector,Double birthWeight, Double deathWeight ,Double changeWeight,int dbDuration){
+	private ClusterCollector newClusterCollector(ClusterCollector prevCollector,Double birthWeight, Double deathWeight ,Double changeWeight,int dbDuration){
 		
 		ClusterCollector newCollector = new ClusterCollector();
 		ArrayList<Cluster> newClusters = new ArrayList<Cluster>();
@@ -95,7 +95,7 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 	}
 	
 	
-	public ClusterCollector init(GlobalDataKeeper dataKeeper, ClusterCollector clusterCollector){
+	private ClusterCollector init(GlobalDataKeeper dataKeeper, ClusterCollector clusterCollector){
 		
 		TreeMap<String, PPLTable> tables=dataKeeper.getAllPPLTables();
 

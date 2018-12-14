@@ -2,22 +2,13 @@ package gui.treeElements;
 
 import static org.junit.Assert.*;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
-
-import javax.swing.JTree;
-
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import test.testEngine.testAgent;
 
 public class TreeConstructionTest {
 

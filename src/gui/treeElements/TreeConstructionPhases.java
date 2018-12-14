@@ -7,11 +7,9 @@ import data.dataKeeper.GlobalDataKeeper;
 public class TreeConstructionPhases implements TreeConstruction {
 	
 	private GlobalDataKeeper dataKeeper=null;
-	//private testAgent agent = null;
 
 	public TreeConstructionPhases(GlobalDataKeeper dataKeeper) {
 		this.dataKeeper=dataKeeper;
-		//this.agent = new testAgent();
 	}
 	
 	@Override

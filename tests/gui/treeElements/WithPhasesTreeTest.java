@@ -11,7 +11,6 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import data.dataKeeper.GlobalDataKeeper;
 import test.testEngine.testAgent;
 
 public class WithPhasesTreeTest {

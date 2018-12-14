@@ -19,9 +19,8 @@ import gui.treeElements.TreeConstructionPhasesWithClusters;
 import org.antlr.v4.runtime.RecognitionException;
 import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
 import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
-import tableClustering.clusterValidator.engine.ClusterValidatorMainEngine;
 import test.testEngine.TestLoadProject;
-import test.testEngine.testAgent;
+
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -359,7 +358,7 @@ public class Gui extends JFrame implements ActionListener{
                     Gui.this.tabbedPane.setSelectedIndex(0);
                     Gui.this.makeDetailedTable(columns, rows, true);
                     
-                    tlp.writeToFile("[BT4 1] Show Full Detailed LifeTime Table button listener Columns => "+Arrays.toString(columns));
+                    tlp.writeToFile("[BT4 1] Show Full Detailed LifeTime Table button listener Columns => "+Arrays.deepToString(columns));
                     tlp.writeToFile("[BT4 2] Show Full Detailed LifeTime Table button listener Rows => "+Arrays.deepToString(rows));
                     tlp.closeFile();
                 }
@@ -385,9 +384,9 @@ public class Gui extends JFrame implements ActionListener{
                     Gui.this.segmentSizeZoomArea = table.getSegmentSize();
                     System.out.println("Schemas: " + Gui.this.globalDataKeeper.getAllPPLSchemas().size());
 					System.out.println("C: "+columns.length+" R: "+rows.length);
-					tlp.writeToFile("[BT1 1] Show PLD button listener segmentSizeZoomArea => "+Arrays.toString(Gui.this.segmentSizeZoomArea));
+					tlp.writeToFile("[BT1 1] Show PLD button listener segmentSizeZoomArea => "+Arrays.deepToString(Gui.this.segmentSizeZoomArea));
                     Gui.this.finalColumnsZoomArea = columns;
-                    tlp.writeToFile("[BT1 2] Show PLD button listener finalColumnsZoomArea => "+Arrays.toString(Gui.this.finalColumnsZoomArea));
+                    tlp.writeToFile("[BT1 2] Show PLD button listener finalColumnsZoomArea => "+Arrays.deepToString(Gui.this.finalColumnsZoomArea));
                     Gui.this.finalRowsZoomArea = rows;
                     tlp.writeToFile("[BT1 3] Show PLD button listener finalRowsZoomArea => "+Arrays.deepToString(Gui.this.finalRowsZoomArea));
                     Gui.this.tabbedPane.setSelectedIndex(0);
@@ -449,7 +448,7 @@ public class Gui extends JFrame implements ActionListener{
 							tlp.writeToFile("[BT2 5] Show Phases PLD button listener => "+"Schemas: " + Gui.this.globalDataKeeper.getAllPPLSchemas().size()+" "+"C: "+columns.length+" R: "+rows.length);
                             Gui.this.finalColumns = columns;
                             Gui.this.finalRows = rows;
-                            tlp.writeToFile("[BT2 6] Show Phases PLD button listener finalColumns => "+Arrays.toString(Gui.this.finalColumns));
+                            tlp.writeToFile("[BT2 6] Show Phases PLD button listener finalColumns => "+Arrays.deepToString(Gui.this.finalColumns));
                             tlp.writeToFile("[BT2 7] Show Phases PLD button listener finalRows => "+Arrays.deepToString(Gui.this.finalRows));
                             Gui.this.tabbedPane.setSelectedIndex(0);
                             Gui.this.makeGeneralTablePhases();
@@ -530,7 +529,7 @@ public class Gui extends JFrame implements ActionListener{
 							tlp.writeToFile("[BT3 9] Show Phases with Clusters PLD button listener => "+"Schemas: " + Gui.this.globalDataKeeper.getAllPPLSchemas().size()+"C: "+columns.length+" R: "+rows.length);
                             Gui.this.finalColumns = columns;
                             Gui.this.finalRows = rows;
-                            tlp.writeToFile("[BT3 10] Show Phases with Clusters PLD button listener finalColumns => "+Arrays.toString(Gui.this.finalColumns));
+                            tlp.writeToFile("[BT3 10] Show Phases with Clusters PLD button listener finalColumns => "+Arrays.deepToString(Gui.this.finalColumns));
                             tlp.writeToFile("[BT3 11] Show Phases with Clusters PLD button listener finalRows => "+Arrays.deepToString(Gui.this.finalRows));
                             Gui.this.tabbedPane.setSelectedIndex(0);
                             Gui.this.makeGeneralTablePhases();
@@ -860,7 +859,7 @@ public class Gui extends JFrame implements ActionListener{
             rows[i][0] = this.finalRowsZoomArea[i][0];
 
         }
-		tlp.writeToFile("[P 6] makeGeneralTableIDU() finalColumnsZoomArea  to zoomModel => "+ Arrays.toString( this.finalColumnsZoomArea));
+		tlp.writeToFile("[P 6] makeGeneralTableIDU() finalColumnsZoomArea  to zoomModel => "+ Arrays.deepToString( this.finalColumnsZoomArea));
 		tlp.writeToFile("[P 7] makeGeneralTableIDU() rows to zoomModel => "+ Arrays.deepToString( rows));
         this.zoomModel = new MyTableModel(this.finalColumnsZoomArea, rows);
 
@@ -2569,16 +2568,16 @@ private void makeZoomAreaTableForCluster() {
 
     }
 	
-	public void fillTable() {
+	private void fillTable() {
         TableConstructionIDU table = new TableConstructionIDU(this.globalDataKeeper);
 		final String[] columns=table.constructColumns();
 		final String[][] rows=table.constructRows();
         this.segmentSizeZoomArea = table.getSegmentSize();
-        tlp.writeToFile("[P 2] fillTable() segmentSizeZoomArea => "+Arrays.toString(this.segmentSizeZoomArea));
+        tlp.writeToFile("[P 2] fillTable() segmentSizeZoomArea => "+Arrays.deepToString(this.segmentSizeZoomArea));
         
         this.finalColumnsZoomArea = columns;
         System.out.println(Arrays.toString( this.finalColumnsZoomArea));
-        tlp.writeToFile("[P 3] fillTable() finalColumnsZoomArea => "+Arrays.toString(this.finalColumnsZoomArea));
+        tlp.writeToFile("[P 3] fillTable() finalColumnsZoomArea => "+Arrays.deepToString(this.finalColumnsZoomArea));
         
         this.finalRowsZoomArea = rows;
         tlp.writeToFile("[P 4] fillTable() finalRowsZoomArea => "+Arrays.deepToString(this.finalRowsZoomArea));
@@ -2623,9 +2622,9 @@ private void makeZoomAreaTableForCluster() {
 			final String[][] rowsP=tableP.constructRows();
             this.segmentSize = tableP.getSegmentSize();
             
-            tlp.writeToFile("[P 8] fillTable() segmentsize => "+ Arrays.toString(this.segmentSize));
+            tlp.writeToFile("[P 8] fillTable() segmentsize => "+ Arrays.deepToString(this.segmentSize));
             this.finalColumns = columnsP;
-            tlp.writeToFile("[P 9] fillTable() finalColumns => "+ Arrays.toString(this.finalColumns));
+            tlp.writeToFile("[P 9] fillTable() finalColumns => "+ Arrays.deepToString(this.finalColumns));
             this.finalRows = rowsP;
             tlp.writeToFile("[P 10] fillTable() finalRows => "+ Arrays.deepToString(this.finalRows));
             this.tabbedPane.setSelectedIndex(0);
@@ -2643,112 +2642,10 @@ private void makeZoomAreaTableForCluster() {
         tlp.writeToFile("[P 11] Overview Output => "+ logSentence);
 	}
 	
-	public void optimize() throws IOException{
 
-        String lalaString="Birth Weight:"+"\tDeath Weight:"+"\tChange Weight:"+"\tTotal Cohesion:"+"\tTotal Separation:"+"\n";
-		int counter=0;
-		for(double wb=0.0; wb<=1.0; wb=wb+0.01){
-
-            for(double wd=(1.0-wb); wd>=0.0; wd=wd-0.01){
-
-                double wc=1.0-(wb+wd);
-                TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(this.globalDataKeeper, wb, wd, wc);
-                mainEngine2.extractClusters(this.numberOfClusters);
-                this.globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
-
-                ClusterValidatorMainEngine lala = new ClusterValidatorMainEngine(this.globalDataKeeper);
-					lala.run();
-
-                lalaString=lalaString+wb+"\t"+wd+"\t"+wc
-							+"\t"+lala.getTotalCohesion()+"\t"+lala.getTotalSeparation()+"\t"+(wb+wd+wc)+"\n";
-
-                counter++;
-					System.err.println(counter);
-
-
-            }
-
-
-        }
-
-		FileWriter fw;
-		try {
-			fw = new FileWriter("lala.csv");
-
-            BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(lalaString);
-			bw.close();
-
-        } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-        System.out.println(lalaString);
-
-
-    }
 	
-	public void getExternalValidityReport() throws IOException{
 
-        String lalaString="Birth Weight:"+"\tDeath Weight:"+"\tChange Weight:"+"\n";
-		int counter=0;
-
-        TableClusteringMainEngine mainEngine2 = new TableClusteringMainEngine(this.globalDataKeeper, 0.333, 0.333, 0.333);
-		mainEngine2.extractClusters(4);
-        this.globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
-
-        ClusterValidatorMainEngine lala = new ClusterValidatorMainEngine(this.globalDataKeeper);
-		lala.run();
-
-        lalaString=lalaString+"\n"+"0.333"+"\t"+"0.333"+"\t"+"0.333"
-				+"\n"+lala.getExternalEvaluationReport();
-
-        for(double wb=0.0; wb<=1.0; wb=wb+0.5){
-
-            for(double wd=(1.0-wb); wd>=0.0; wd=wd-0.5){
-
-                double wc=1.0-(wb+wd);
-                mainEngine2 = new TableClusteringMainEngine(this.globalDataKeeper, wb, wd, wc);
-					mainEngine2.extractClusters(4);
-                this.globalDataKeeper.setClusterCollectors(mainEngine2.getClusterCollectors());
-
-                lala = new ClusterValidatorMainEngine(this.globalDataKeeper);
-					lala.run();
-
-                lalaString=lalaString+"\n"+wb+"\t"+wd+"\t"+wc
-							+"\n"+lala.getExternalEvaluationReport();
-
-                counter++;
-					System.err.println(counter);
-
-
-            }
-
-
-        }
-
-		FileWriter fw;
-		try {
-			fw = new FileWriter("lala.csv");
-
-            BufferedWriter bw = new BufferedWriter(fw);
-			bw.write(lalaString);
-			bw.close();
-
-        } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-        System.out.println(lalaString);
-
-
-    }
-	
-	public void fillTree(){
+	private void fillTree(){
         TreeConstructionGeneral tc = new TreeConstructionGeneral(this.globalDataKeeper);
         this.tablesTree = new JTree();
         this.tablesTree = tc.constructTree();
@@ -2803,7 +2700,7 @@ private void makeZoomAreaTableForCluster() {
 
 	}
 	
-	public void fillPhasesTree(){
+	private void fillPhasesTree(){
 
         TreeConstructionPhases tc = new TreeConstructionPhases(this.globalDataKeeper);
         this.tablesTree = tc.constructTree();
@@ -2857,7 +2754,7 @@ private void makeZoomAreaTableForCluster() {
 
 	}
 	
-	public void fillClustersTree(){
+	private void fillClustersTree(){
 
         TreeConstructionPhasesWithClusters tc = new TreeConstructionPhasesWithClusters(this.globalDataKeeper);
         this.tablesTree = tc.constructTree();

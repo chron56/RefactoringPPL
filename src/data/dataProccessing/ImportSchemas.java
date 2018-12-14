@@ -99,7 +99,7 @@ public class ImportSchemas {
 	}
 
 
-	public  void makeTransitions(Transitions tl) throws IOException {
+	private  void makeTransitions(Transitions tl) throws IOException {
 		try {
 
 

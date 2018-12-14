@@ -5,7 +5,7 @@ import java.util.TreeMap;
 
 import data.dataPPL.pplSQLSchema.PPLSchema;
 import data.dataPPL.pplSQLSchema.PPLTable;
-import data.dataPPL.pplTransition.TableChange;
+
 
 public class PPLTablesConstruction {
 	
@@ -72,19 +72,7 @@ public class PPLTablesConstruction {
 		
 	}
 	
-	public void matchTableChanges(TreeMap<String,TableChange> allTableChanges){
-		
-		for (Map.Entry<String, TableChange> t : allTableChanges.entrySet()) {
-			
-			TableChange tmpTableChange = t.getValue();
-						
-			allPPLTables.get(t.getKey()).setTableChanges(tmpTableChange);
-			
 
-				
-		}
-		
-	}
 	
 	public TreeMap<String,PPLTable> getAllPPLTables(){
 		

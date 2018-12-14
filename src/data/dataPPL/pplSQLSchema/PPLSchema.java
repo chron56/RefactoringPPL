@@ -9,19 +9,12 @@ public class PPLSchema {
 
 	private String name;
 	private TreeMap<String, PPLTable> tables;
-
-	public PPLSchema(TreeMap<String, PPLTable> t) {
-		this.tables = t;
-	}	
+	
 	
 	public PPLSchema() {
 		this.tables = new TreeMap<String, PPLTable>();
 	}
-	
-	public PPLSchema(String name) {
-		this.tables = new TreeMap<String, PPLTable>();
-		this.name = name;
-	}
+
 
 	public PPLSchema(String tmpName,Schema tmpHecSchema){
 		

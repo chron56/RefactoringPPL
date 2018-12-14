@@ -1,6 +1,5 @@
 package gui.treeElements;
 import javax.swing.JTree;
-import test.testEngine.testAgent;
 import data.dataKeeper.GlobalDataKeeper;
 
 public class TreeConstructionPhasesWithClusters implements TreeConstruction {

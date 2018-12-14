@@ -93,18 +93,7 @@ public class PPLTable {
 		return this.attrs;
 	}
 	
-	public PPLAttribute getAttrAt(int i) {
-		int c = 0;
-		if (i >= 0 && i < attrs.size()){
-			for (Map.Entry<String, PPLAttribute> t : attrs.entrySet()) {
-				if (c == i) {
-					return t.getValue();
-				}
-				c++;
-			}
-		}
-		return null;
-	}
+
 	
 	public int getAge(){
 		

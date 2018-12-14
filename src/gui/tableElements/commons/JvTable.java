@@ -36,12 +36,7 @@ public class JvTable extends JTable {
         firePropertyChange("zoom", 1500, 5000);
     }
     
-    public void showGrid(boolean showGridBoolean){
-    	System.out.println("??"+showGridBoolean);
-    	super.setShowGrid(showGridBoolean);
-    	firePropertyChange("grid", !showGridBoolean, showGridBoolean);
 
-    }
 
     public void uniformlyDistributed(int columnWidth){
     	for(int i=0; i<super.getColumnCount(); i++){

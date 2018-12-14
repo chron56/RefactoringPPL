@@ -95,7 +95,7 @@ public class BottomUpPhaseExtractor implements IPhaseExtractor {
 		return preProcessedSolutionChanges;
 	}
 
-	public PhaseCollector newPhaseCollector(TransitionHistory transitionHistory, PhaseCollector prevCollector,float timeWeight,float changeWeight){
+	private PhaseCollector newPhaseCollector(TransitionHistory transitionHistory, PhaseCollector prevCollector,float timeWeight,float changeWeight){
 		PhaseCollector newCollector = new PhaseCollector();
 		ArrayList<Phase> newPhases = new ArrayList<Phase>();
 		ArrayList<Phase> oldPhases = prevCollector.getPhases();
@@ -256,7 +256,7 @@ public class BottomUpPhaseExtractor implements IPhaseExtractor {
 		return preProcessedCollector;
 	}
 	
-	public PhaseCollector init(TransitionHistory transitionHistory, PhaseCollector phaseCollector){
+	private PhaseCollector init(TransitionHistory transitionHistory, PhaseCollector phaseCollector){
 		for(TransitionStats v: transitionHistory.getValues()){
 			Phase p = new Phase(transitionHistory);
 			int pos = transitionHistory.getValues().indexOf(v);

@@ -8,8 +8,7 @@ public class MyTableModel extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private boolean DEBUG=false;
-	
+
 
 	private String[] columns=null;
 	
@@ -23,11 +22,7 @@ public class MyTableModel extends AbstractTableModel {
 		
 	}
 	
-	
-	public void setData(String[] tmpColumns, String [][] tmpRows){
-		columns=tmpColumns;
-		rows=tmpRows;
-	}
+
 	
 	public int getColumnCount() {
         return columns.length;
@@ -41,9 +36,7 @@ public class MyTableModel extends AbstractTableModel {
         return columns[col];
     }
 
-    public String getRowName(int row) {
-        return rows[row][0];
-    }
+
     
     public Object getValueAt(int row, int col) {
         return rows[row][col];
@@ -73,38 +66,5 @@ public class MyTableModel extends AbstractTableModel {
         //no matter where the cell appears onscreen.
         return false;
     }
-
-    public void setValueAt(String value, int row, int col) {
-        if (DEBUG) {
-            System.out.println("Setting value at " + row + "," + col
-                               + " to " + value
-                               + " (an instance of "
-                               + value.getClass() + ")");
-        }
-
-        rows[row][col] = value;
-        fireTableCellUpdated(row, col);
-
-        if (DEBUG) {
-            System.out.println("New value of data:");
-            printDebugData();
-        }
-    }
-
-    private void printDebugData() {
-        int numRows = getRowCount();
-        int numCols = getColumnCount();
-
-        for (int i=0; i < numRows; i++) {
-            System.out.print("    row " + i + ":");
-            for (int j=0; j < numCols; j++) {
-                System.out.print("  " + rows[i][j]);
-            }
-            System.out.println();
-        }
-        System.out.println("--------------------------");
-    }
-	
-	
 
 }

@@ -10,7 +10,7 @@ import data.dataPPL.pplSQLSchema.PPLTable;
 
 public class ClusterCohesionMetric implements InternalClusterMetrics {
 	
-	ClusterInfoKeeper clusterInfoKeeper = null;
+	private ClusterInfoKeeper clusterInfoKeeper = null;
 	private Double sumClusterCohesion = null;
 	
 	public ClusterCohesionMetric(ClusterInfoKeeper clusterInfoKeeper){

@@ -14,9 +14,6 @@ public class TransitionHistory {
 	public TransitionHistory() {
 		this.values = new ArrayList<TransitionStats>();
 	}
-	public TransitionHistory(ArrayList<TransitionStats> values) {
-		this.values = values;
-	}
 
 	
 	public int getTotalUpdates(){
