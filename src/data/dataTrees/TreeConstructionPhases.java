@@ -13,7 +13,7 @@ import data.dataPPL.pplTransition.TableChange;
 import phaseAnalyzer.commons.Phase;
 
 
-public class TreeConstructionPhases implements TreeConstruction {
+public class TreeConstructionPhases extends TreeConstruction {
 	
 	private ArrayList<Phase> phases ;
 	private TreeMap<String,PPLSchema> schemas;

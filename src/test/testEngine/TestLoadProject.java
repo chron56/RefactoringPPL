@@ -27,34 +27,7 @@ public class TestLoadProject {
 			e.printStackTrace();
 		}
 	}
-	/*public void updateOption() {
-		option++;
-	}
-	public String getOption() {
-		if(option==1) {
-			return "CLEProject-";
-		}
-		else {
-			return "ButtonT"+String.valueOf(option-1)+"-" ;
-		}
-		
-	}
 	
-	public void writeObjectToFile(String filename,Object obj) {
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ObjectOutput out;
-		try {
-			out = new ObjectOutputStream(bos);
-			out.writeObject(obj);
-			FileOutputStream fos= new FileOutputStream(filename);
-			fos.write(bos.toByteArray());
-			fos.close();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-	}
-	*/
 	public void writeString(String aString) {
 		writer.println(aString);
 		

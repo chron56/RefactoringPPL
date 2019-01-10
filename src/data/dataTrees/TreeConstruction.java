@@ -2,8 +2,8 @@ package data.dataTrees;
 
 import javax.swing.JTree;
 
-public interface TreeConstruction {
+public abstract class TreeConstruction {
 	
-	public JTree constructTree();
+	public abstract JTree constructTree();
 
 }

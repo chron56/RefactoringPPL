@@ -10,7 +10,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import data.dataPPL.pplSQLSchema.PPLSchema;
 import data.dataPPL.pplSQLSchema.PPLTable;
 
-public class TreeConstructionGeneral implements TreeConstruction {
+public class TreeConstructionGeneral extends TreeConstruction {
 
 	private  TreeMap<String,PPLSchema> schemas=new TreeMap<String,PPLSchema>();
 
