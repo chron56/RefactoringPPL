@@ -14,7 +14,7 @@ import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 
-public class Worker {
+public class DataImporter {
 	
 	private String filename=null;
 	private String transitionsFile=null;
@@ -25,7 +25,7 @@ public class Worker {
 	private TreeMap<String,TableChange> tableChanges = null;
 	private TreeMap<Integer,PPLTransition> allPPLTransitions = null;
 	
-	public Worker(String tmpFilename,String transitionsFile){
+	public DataImporter(String tmpFilename,String transitionsFile){
 		allPPLSchemas = new TreeMap<String,PPLSchema>();
 		allTables = new TreeMap<String,PPLTable>();
 		atomicChanges = new ArrayList<AtomicChange>();
@@ -36,7 +36,7 @@ public class Worker {
 		
 	}
 
-	public void work() throws IOException{
+	public void loadData() throws IOException{
 		
 		ImportSchemas filesToImportData=new ImportSchemas(filename,transitionsFile);
 		try {

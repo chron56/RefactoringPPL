@@ -1,17 +1,15 @@
-package gui.tableElements.tableConstructors;
+package data.dataTables;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
-
-import data.dataKeeper.GlobalDataKeeper;
 import data.dataPPL.pplSQLSchema.PPLSchema;
 import data.dataPPL.pplSQLSchema.PPLTable;
 import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 
-public class TableConstructionIDU implements PldConstruction {
+public class TableConstructionIDU extends PldConstruction {
 
 	private static TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
 	private ArrayList<PPLTable>	tables=new ArrayList<PPLTable>();
@@ -27,58 +25,16 @@ public class TableConstructionIDU implements PldConstruction {
 
 	private Integer segmentSize[]=new Integer[4];
 	
-	public TableConstructionIDU(GlobalDataKeeper globalDataKeeper){
-		
-		allPPLSchemas=globalDataKeeper.getAllPPLSchemas();
-		allPPLTransitions=globalDataKeeper.getAllPPLTransitions();
-		
-		
-	}
-	
-	public String[] constructColumns(){
-		
-		ArrayList<String> columnsList=new ArrayList<String>();
-		
-		schemaColumnId=new Integer[allPPLTransitions.size()][2];
-		
-		for(int i=0;i<allPPLTransitions.size();i++){
-			schemaColumnId[i][0]=i;
-			if(i==0){
-				schemaColumnId[i][1]=1;
-			}
-			else{
-				schemaColumnId[i][1]=schemaColumnId[i-1][1]+1;
-			}
-		}
-		
-		
-		columnsList.add("Table name");
-		
-		
-		for (Map.Entry<Integer,PPLTransition> pplTr : allPPLTransitions.entrySet()) {
-			
-				String label=Integer.toString(pplTr.getKey());
-				columnsList.add(label);
 
-		}
-		
-		columnsNumber=columnsList.size();
-		String[] tmpcolumns=new String[columnsList.size()];
-		
-		for(int j=0; j<columnsList.size(); j++ ){
-			
-			tmpcolumns[j]=columnsList.get(j);
-			
-		}
-		
-		return(tmpcolumns);
-		
-		
+	public TableConstructionIDU(TreeMap<String, PPLSchema> pplSchemas,TreeMap<Integer, PPLTransition> pplTransitions){	
+		allPPLSchemas=pplSchemas;
+		allPPLTransitions=pplTransitions;
 	}
 	
-	public String[][] constructRows(){
+
+	
+	public ArrayList<String[]> constructParticularRows(ArrayList<String[]> allRows ){
 		
-		ArrayList<String[]> allRows=new ArrayList<String[]>();
 	    ArrayList<String>	allTables=new ArrayList<String>();
 
 		
@@ -129,34 +85,7 @@ public class TableConstructionIDU implements PldConstruction {
 			i++;
 		}
 		
-		String[][] tmpRows=new String[allRows.size()][columnsNumber];
-		
-		for(int z=0; z<allRows.size(); z++){
-			
-			String[] tmpOneRow=allRows.get(z);
-			for(int j=0; j<tmpOneRow.length; j++ ){
-				
-				tmpRows[z][j]=tmpOneRow[j];
-				
-				
-			}
-			
-		}
-		
-		float maxI=(float) maxInsersions/4;
-		segmentSize[0]=(int) Math.rint(maxI);
-		
-		float maxU=(float) maxUpdates/4;
-		segmentSize[1]=(int) Math.rint(maxU);
-		
-		float maxD=(float) maxDeletions/4;
-		segmentSize[2]=(int) Math.rint(maxD);
-		
-		float maxTot=(float) maxTotalChangesForOneTr/4;
-		segmentSize[3]=(int) Math.rint(maxTot);
-		
-		return tmpRows;
-		
+		return allRows;	
 	}
 	
 	private String[] constructOneRow(PPLTable oneTable,int schemaVersion){
@@ -240,7 +169,7 @@ public class TableConstructionIDU implements PldConstruction {
 								insn++;
 								
 								if(insn>maxInsersions){
-									maxInsersions=insn;
+									setmaxInsersions(insn);
 								}
 								
 							}
@@ -249,7 +178,7 @@ public class TableConstructionIDU implements PldConstruction {
 								deln++;
 								
 								 if(deln>maxDeletions){
-										maxDeletions=deln;
+										setmaxDeletions(deln);;
 										
 								 }
 								 								 
@@ -266,7 +195,7 @@ public class TableConstructionIDU implements PldConstruction {
 								updn++;
 								
 								if(updn>maxUpdates){
-									maxUpdates=updn;
+									setmaxUpdates(updn);
 								}
 																
 							}
@@ -305,7 +234,7 @@ public class TableConstructionIDU implements PldConstruction {
 			}
 			
 			if (totalChangesForOneTransition>maxTotalChangesForOneTr) {
-				maxTotalChangesForOneTr=totalChangesForOneTransition;
+				setmaxTotalChangesForOneTr(totalChangesForOneTransition);
 			}
 			
 			insn=0;
@@ -329,10 +258,6 @@ public class TableConstructionIDU implements PldConstruction {
 		
 	}
 	
-	public Integer[] getSegmentSize(){
-		return segmentSize;
-	}
-	
 	private int getNumOfAttributesOfNextSchema(String schema,String table){
 		int num = 0;
 		PPLSchema sc=allPPLSchemas.get(schema);
@@ -345,5 +270,62 @@ public class TableConstructionIDU implements PldConstruction {
 		}
 		return num;
 	}
+	
+	public int getColumnSize(){
+		
+		return allPPLTransitions.size();
+	}
+	
+	public ArrayList<String> setColumnLabel(ArrayList<String> columnsList) {
+		for (Map.Entry<Integer,PPLTransition> pplTr : allPPLTransitions.entrySet()) {
+			String label=Integer.toString(pplTr.getKey());
+			columnsList.add(label);
+		}
+		return columnsList;
+	}
+
+	public void setColumnsNumber(int size){
+		columnsNumber = size;
+	}
+	
+	public void setColumnId(Integer[][] schemaColumnId) {
+		this.schemaColumnId=schemaColumnId.clone();
+	}
+	
+	public void setmaxInsersions(int insersions) {
+		maxInsersions=insersions;
+		
+	}
+	
+	public void setmaxDeletions(int deletions) {
+		maxDeletions=deletions;
+	}
+	
+	public void setmaxUpdates(int updates) {
+		maxUpdates=updates;
+	}
+	
+	public void setmaxTotalChangesForOneTr(int totalChangesForOneTransition) {
+		maxTotalChangesForOneTr=totalChangesForOneTransition;
+	}
+	
+	public Integer[] getSegmentSize() {
+		return segmentSize;
+	}
+	
+	public void setSegmentSize() {
+		float maxI=(float) maxInsersions/4;
+		segmentSize[0]=(int) Math.rint(maxI);
+		
+		float maxU=(float) maxUpdates/4;
+		segmentSize[1]=(int) Math.rint(maxU);
+		
+		float maxD=(float) maxDeletions/4;
+		segmentSize[2]=(int) Math.rint(maxD);
+		
+		float maxT=(float) maxTotalChangesForOneTr/4;
+		segmentSize[3]=(int) Math.rint(maxT);
+	}
+
 
 }

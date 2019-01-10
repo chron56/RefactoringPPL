@@ -3,10 +3,9 @@ package tableClustering.clusterExtractor.analysis;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
-
 import tableClustering.clusterExtractor.commons.Cluster;
 import tableClustering.clusterExtractor.commons.ClusterCollector;
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataPPL.pplSQLSchema.PPLSchema;
 import data.dataPPL.pplSQLSchema.PPLTable;
 
 
@@ -15,16 +14,15 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 	
 
 	@Override
-	public ClusterCollector extractAtMostKClusters(GlobalDataKeeper dataKeeper,
-			int numClusters, Double birthWeight, Double deathWeight, Double changeWeight) {
+	public ClusterCollector extractAtMostKClusters(TreeMap<String,PPLTable> tables, TreeMap<String, PPLSchema> pplSchemas, int numClusters, Double birthWeight, Double deathWeight, Double changeWeight) {
 		
 		ClusterCollector initSolution = new ClusterCollector();
-		this.init(dataKeeper, initSolution);
+		this.init(tables,initSolution);
 		
 		ClusterCollector currentSolution = new ClusterCollector();
-		currentSolution = this.newClusterCollector(initSolution, birthWeight, deathWeight, changeWeight,dataKeeper.getAllPPLSchemas().size()-1);
+		currentSolution = this.newClusterCollector(initSolution, birthWeight, deathWeight, changeWeight,pplSchemas.size()-1);
 		while (currentSolution.getClusters().size() > numClusters){
-			currentSolution = this.newClusterCollector(currentSolution, birthWeight, deathWeight, changeWeight,dataKeeper.getAllPPLSchemas().size()-1);
+			currentSolution = this.newClusterCollector(currentSolution, birthWeight, deathWeight, changeWeight,pplSchemas.size()-1);
 		}
 		return currentSolution;
 		
@@ -95,10 +93,7 @@ public class AgglomerativeClusterExtractor implements ClusterExtractor{
 	}
 	
 	
-	private ClusterCollector init(GlobalDataKeeper dataKeeper, ClusterCollector clusterCollector){
-		
-		TreeMap<String, PPLTable> tables=dataKeeper.getAllPPLTables();
-
+	private ClusterCollector init(TreeMap<String,PPLTable> tables, ClusterCollector clusterCollector){
 		
 		for (Map.Entry<String,PPLTable> pplTable : tables.entrySet()) {
 			Cluster c = new Cluster(pplTable.getValue().getBirthVersionID(),pplTable.getValue().getDeath(),pplTable.getValue().getDeathVersionID(),pplTable.getValue().getDeath(),pplTable.getValue().getTotalChanges());

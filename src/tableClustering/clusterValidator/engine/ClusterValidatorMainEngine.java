@@ -65,7 +65,7 @@ public class ClusterValidatorMainEngine {
 	}
 
 	private void initializeClusterInfoKeepers() {
-		ArrayList<Cluster> clusters = globalDataKeeper.getClusterCollectors().get(0).getClusters();
+		ArrayList<Cluster> clusters = globalDataKeeper.getClusters();
 		
 		Iterator<Cluster> clusterIterator = clusters.iterator();
 		int classIndex =0;

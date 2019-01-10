@@ -1,17 +1,15 @@
-package gui.tableElements.tableConstructors;
+package data.dataTables;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
-
-import data.dataKeeper.GlobalDataKeeper;
 import data.dataPPL.pplSQLSchema.PPLSchema;
 import data.dataPPL.pplSQLSchema.PPLTable;
 import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 
-public class TableConstructionZoomArea implements PldConstruction {
+public class TableConstructionZoomArea extends PldConstruction {
 
 	private static TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
 	private static TreeMap<String,PPLSchema> selectedPPLSchemas=new TreeMap<String,PPLSchema>();
@@ -19,7 +17,6 @@ public class TableConstructionZoomArea implements PldConstruction {
 	private TreeMap<String,PPLTable> selectedTables = new TreeMap<String,PPLTable>();
 	private ArrayList<String> sSelectedTables = new ArrayList<String>();
 	private TreeMap<Integer,PPLTransition> pplTransitions = new TreeMap<Integer,PPLTransition>();
-	private GlobalDataKeeper globalDataKeeper = new GlobalDataKeeper();
 	private int selectedColumn;
 
 	private int columnsNumber=0;
@@ -31,93 +28,48 @@ public class TableConstructionZoomArea implements PldConstruction {
 
 	private Integer segmentSize[]=new Integer[4];
 	
-	public TableConstructionZoomArea(GlobalDataKeeper globalDataKeeper,ArrayList<String> sSelectedTables,int selectedColumn){
-		this.globalDataKeeper=globalDataKeeper;
-		allPPLSchemas=globalDataKeeper.getAllPPLSchemas();
+	public TableConstructionZoomArea(ArrayList<String> sSelectedTables,int selectedColumn){
 		this.sSelectedTables=sSelectedTables;
 		this.selectedColumn=selectedColumn;
-		fillSelectedPPLTransitions();
-		fillSelectedPPLSchemas();
-		fillSelectedTables();
 	}
 	
 	
 	
-	private void fillSelectedPPLTransitions() {
+	public void fillSelectedPPLTransitions(TreeMap<Integer, PPLTransition> pplTransitions,TreeMap<Integer, PPLTransition> phasePplTransitions ) {
 		
 		if(selectedColumn==0){
-			pplTransitions=globalDataKeeper.getAllPPLTransitions();
+			this.pplTransitions=pplTransitions;
 		}
 		else{
-			pplTransitions=globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(selectedColumn-1).getPhasePPLTransitions();
+			this.pplTransitions=phasePplTransitions;
 
 		}
 		
 	}
 	
-	private void fillSelectedPPLSchemas(){
-		
+	public void fillSelectedPPLSchemas(TreeMap<String, PPLSchema> pplSchemas){
+		allPPLSchemas=pplSchemas;
 		for (Map.Entry<Integer,PPLTransition> pplTr : pplTransitions.entrySet()) {
 			
-			selectedPPLSchemas.put(pplTr.getValue().getOldVersionName(), allPPLSchemas.get(pplTr.getValue().getOldVersionName()));
+			selectedPPLSchemas.put(pplTr.getValue().getOldVersionName(), pplSchemas.get(pplTr.getValue().getOldVersionName()));
 			
 		}
 		
 	}
 	
-	private void fillSelectedTables(){
+	public void fillSelectedTables(TreeMap<String, PPLTable> AllPPLTables){
 		
 		for(int i=0; i<sSelectedTables.size(); i++){
-			selectedTables.put(sSelectedTables.get(i),this.globalDataKeeper.getAllPPLTables().get(sSelectedTables.get(i)) );
+			selectedTables.put(sSelectedTables.get(i),AllPPLTables.get(sSelectedTables.get(i)) );
 		}
 		
 	}
 	
-	public String[] constructColumns(){
-		
-		ArrayList<String> columnsList=new ArrayList<String>();
-		
-		schemaColumnId=new Integer[pplTransitions.size()][2];
-		
-		for(int i=0;i<pplTransitions.size();i++){
-			schemaColumnId[i][0]=i;
-			if(i==0){
-				schemaColumnId[i][1]=1;
-			}
-			else{
-				schemaColumnId[i][1]=schemaColumnId[i-1][1]+1;
-			}
-		}
-		
-		columnsList.add("Table name");
-		
-		for (Map.Entry<Integer,PPLTransition> pplTr : pplTransitions.entrySet()) {
-			
-				String label=Integer.toString(pplTr.getKey());
-				columnsList.add(label);
 
-		}
-		
-		columnsNumber=columnsList.size();
-		String[] tmpcolumns=new String[columnsList.size()];
-		
-		for(int j=0; j<columnsList.size(); j++ ){
-			
-			tmpcolumns[j]=columnsList.get(j);
-			
-		}
-		
-		return(tmpcolumns);
-		
-	}
 	
-	public String[][] constructRows(){
-		
-		ArrayList<String[]> allRows=new ArrayList<String[]>();
+	public ArrayList<String[]> constructParticularRows(ArrayList<String[]> allRows ){
 	    ArrayList<String>	allTables=new ArrayList<String>();
-
-		int found=0;
-		
+		int found=0;	
 			for(Map.Entry<String, PPLTable> oneTable:selectedTables.entrySet()){
 				
 					String tmpTableName=oneTable.getKey();
@@ -150,33 +102,9 @@ public class TableConstructionZoomArea implements PldConstruction {
 				
 			}
 		
-		String[][] tmpRows=new String[allRows.size()][columnsNumber];
-		
-		for(int z=0; z<allRows.size(); z++){
-			
-			String[] tmpOneRow=allRows.get(z);
-			for(int j=0; j<tmpOneRow.length; j++ ){
-				
-				tmpRows[z][j]=tmpOneRow[j];
-				
-			}
-			
-		}
 		
 		
-		float maxI=(float) maxInsersions/4;
-		segmentSize[0]=(int) Math.rint(maxI);
-		
-		float maxU=(float) maxUpdates/4;
-		segmentSize[1]=(int) Math.rint(maxU);
-		
-		float maxD=(float) maxDeletions/4;
-		segmentSize[2]=(int) Math.rint(maxD);
-		
-		float maxTot=(float) maxTotalChangesForOneTr/4;
-		segmentSize[3]=(int) Math.rint(maxTot);
-		
-		return tmpRows;
+		return allRows;
 		
 	}
 	
@@ -343,11 +271,6 @@ public class TableConstructionZoomArea implements PldConstruction {
 		
 	}
 	
-	public Integer[] getSegmentSize(){
-
-		return segmentSize;
-	}
-	
 	private int getNumOfAttributesOfNextSchema(String schema,String table){
 		int num = 0;
 		PPLSchema sc=allPPLSchemas.get(schema);
@@ -361,5 +284,60 @@ public class TableConstructionZoomArea implements PldConstruction {
 		return num;
 	}
 
+	public int getColumnSize(){
+		return pplTransitions.size();
+	}
 
+	public ArrayList<String> setColumnLabel(ArrayList<String> columnsList) {
+		for (Map.Entry<Integer,PPLTransition> pplTr : pplTransitions.entrySet()) {
+			
+			String label=Integer.toString(pplTr.getKey());
+			columnsList.add(label);
+		}
+		
+		return columnsList;
+	}
+	
+	public void setColumnsNumber(int size){
+		columnsNumber = size;
+	}
+	
+	public void setColumnId(Integer[][] schemaColumnId) {
+		this.schemaColumnId=schemaColumnId.clone();
+	}
+	
+	public void setmaxInsersions(int insersions) {
+		maxInsersions=insersions;
+	}
+	
+	public void setmaxDeletions(int deletions) {
+		maxDeletions=deletions;
+	}
+	
+	public void setmaxUpdates(int updates) {
+		maxUpdates=updates;
+	}
+	
+	public void setmaxTotalChangesForOneTr(int totalChangesForOneTransition) {
+		maxTotalChangesForOneTr=totalChangesForOneTransition;
+	}
+	
+	public Integer[] getSegmentSize() {
+		return segmentSize;
+	}
+	
+	public void setSegmentSize() {
+		float maxI=(float) maxInsersions/4;
+		segmentSize[0]=(int) Math.rint(maxI);
+		
+		float maxU=(float) maxUpdates/4;
+		segmentSize[1]=(int) Math.rint(maxU);
+		
+		float maxD=(float) maxDeletions/4;
+		segmentSize[2]=(int) Math.rint(maxD);
+		
+		float maxT=(float) maxTotalChangesForOneTr/4;
+		segmentSize[3]=(int) Math.rint(maxT);
+	}
+	
 }

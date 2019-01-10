@@ -1,13 +1,14 @@
 package test.testEngine;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Enumeration;
+
+import javax.swing.JTree;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 public class TestLoadProject {
 	
@@ -25,11 +26,8 @@ public class TestLoadProject {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-        
-		
 	}
-	public void updateOption() {
+	/*public void updateOption() {
 		option++;
 	}
 	public String getOption() {
@@ -39,11 +37,6 @@ public class TestLoadProject {
 		else {
 			return "ButtonT"+String.valueOf(option-1)+"-" ;
 		}
-		
-	}
-	
-	public void writeToFile(String aString) {
-		writer.println(aString);
 		
 	}
 	
@@ -61,10 +54,34 @@ public class TestLoadProject {
 			e1.printStackTrace();
 		}
 	}
+	*/
+	public void writeString(String aString) {
+		writer.println(aString);
+		
+	}
+	
+	public void writeTable(String name, String[] columns,String[][] rows) {
+		writer.println("\n-----[ START "+name+" ]-----");
+		writer.println("Columns : " +Arrays.toString(columns));
+		writer.println("Rows : " +Arrays.deepToString(rows));
+		writer.println("\n-----[ END ]-----\n");
+	}
+	
+	public void writeTree(String name,JTree tree) {
+		DefaultMutableTreeNode root = (DefaultMutableTreeNode) tree.getModel().getRoot();
+        Enumeration e = root.preorderEnumeration();
+        writer.println("\n-----[ START "+name+" ]-----");
+        while(e.hasMoreElements()){
+           writer.print(e.nextElement());
+           writer.print(" ");
+        }
+        writer.println();
+        writer.println("\n-----[ END ]-----\n");
+	}
+	
 	public void closeFile() {
 		writer.flush();
-		writer.close();
-	
+		writer.close();	
 	}
 	
 

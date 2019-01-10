@@ -1,20 +1,18 @@
-package gui.tableElements.tableConstructors;
+package data.dataTables;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
-
 import phaseAnalyzer.commons.Phase;
 import tableClustering.clusterExtractor.commons.Cluster;
-import data.dataKeeper.GlobalDataKeeper;
 import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 
-public class TableConstructionWithClusters implements PldConstruction{
+public class TableConstructionWithClusters extends PldConstruction{
 	
-	private ArrayList<Phase> phases = new ArrayList<Phase>();
-	private ArrayList<Cluster> clusters = new ArrayList<Cluster>();
+	private ArrayList<Phase> phases ;
+	private ArrayList<Cluster> clusters ;
 
 
 	private int columnsNumber=0;
@@ -25,55 +23,18 @@ public class TableConstructionWithClusters implements PldConstruction{
 	private int maxTotalChangesForOneTr=1;
 	private Integer[] segmentSize=new Integer[4];
 	
-	public TableConstructionWithClusters(GlobalDataKeeper globalDataKeeper){
+	public TableConstructionWithClusters(ArrayList<Phase> phases,ArrayList<Cluster> clusters){
+
+		this.phases= new ArrayList<Phase>(phases);
+		this. clusters= new ArrayList<Cluster>(clusters);
 		
-		globalDataKeeper.getAllPPLSchemas();
-		phases=globalDataKeeper.getPhaseCollectors().get(0).getPhases();
-		clusters=globalDataKeeper.getClusterCollectors().get(0).getClusters();
-		
-		
-	}
-	
-	public String[] constructColumns(){
-		
-		ArrayList<String> columnsList=new ArrayList<String>();
-		
-		schemaColumnId=new Integer[phases.size()][2];
-		
-		for(int i=0;i<phases.size();i++){
-			schemaColumnId[i][0]=i;
-			if(i==0){
-				schemaColumnId[i][1]=1;
-			}
-			else{
-				schemaColumnId[i][1]=schemaColumnId[i-1][1]+1;
-			}
-		}
-		
-		columnsList.add("Table name");
-		
-		for(int i=0;i<phases.size(); i++){
-			String label="Phase "+i;
-			columnsList.add(label);
-		}
-		
-		columnsNumber=columnsList.size();
-		String[] tmpcolumns=new String[columnsList.size()];
-		
-		for(int j=0; j<columnsList.size(); j++ ){
-			
-			tmpcolumns[j]=columnsList.get(j);
-			
-		}
-		
-		return(tmpcolumns);
 		
 	}
 	
-	public String[][] constructRows(){
-		
-		ArrayList<String[]> allRows=new ArrayList<String[]>();
-			
+
+	
+	public ArrayList<String[]> constructParticularRows(ArrayList<String[]> allRows ){
+	
 		for(int j=0; j<clusters.size(); j++){
 			
 				
@@ -82,33 +43,8 @@ public class TableConstructionWithClusters implements PldConstruction{
 			tmpOneRow=new String[columnsNumber];
 				
 		}
-			
-		String[][] tmpRows=new String[allRows.size()][columnsNumber];
 		
-		for(int z=0; z<allRows.size(); z++){
-			
-			String[] tmpOneRow=allRows.get(z);
-			for(int j=0; j<tmpOneRow.length; j++ ){
-				
-				tmpRows[z][j]=tmpOneRow[j];
-				
-			}
-			
-		}
-		
-		float maxI=(float) maxInsersions/4;
-		segmentSize[0]=(int) Math.rint(maxI);
-		
-		float maxU=(float) maxUpdates/4;
-		segmentSize[1]=(int) Math.rint(maxU);
-		
-		float maxD=(float) maxDeletions/4;
-		segmentSize[2]=(int) Math.rint(maxD);
-		
-		float maxT=(float) maxTotalChangesForOneTr/4;
-		segmentSize[3]=(int) Math.rint(maxT);
-		
-		return tmpRows;
+		return allRows;
 		
 	}
 	
@@ -249,8 +185,61 @@ public class TableConstructionWithClusters implements PldConstruction{
 
 	}
 	
-	public Integer[] getSegmentSize(){
+	
+	public int getColumnSize(){
+
+		return phases.size();
+	}
+	
+	public ArrayList<String> setColumnLabel(ArrayList<String> columnsList) {
+		for(int i=0;i<phases.size(); i++){
+			String label="Phase "+i;
+			columnsList.add(label);
+		}
+		
+		return columnsList;
+	}
+	
+	public void setColumnsNumber(int size){
+		columnsNumber = size;
+	}
+	
+	public void setColumnId(Integer[][] schemaColumnId) {
+		this.schemaColumnId=schemaColumnId.clone();
+	}
+	
+	public void setmaxInsersions(int insersions) {
+		maxInsersions=insersions;
+	}
+	
+	public void setmaxDeletions(int deletions) {
+		maxDeletions=deletions;
+	}
+	
+	public void setmaxUpdates(int updates) {
+		maxUpdates=updates;
+	}
+	
+	public void setmaxTotalChangesForOneTr(int totalChangesForOneTransition) {
+		maxTotalChangesForOneTr=totalChangesForOneTransition;
+	}
+	
+	public Integer[] getSegmentSize() {
 		return segmentSize;
+	}
+	
+	public void setSegmentSize() {
+		float maxI=(float) maxInsersions/4;
+		segmentSize[0]=(int) Math.rint(maxI);
+		
+		float maxU=(float) maxUpdates/4;
+		segmentSize[1]=(int) Math.rint(maxU);
+		
+		float maxD=(float) maxDeletions/4;
+		segmentSize[2]=(int) Math.rint(maxD);
+		
+		float maxT=(float) maxTotalChangesForOneTr/4;
+		segmentSize[3]=(int) Math.rint(maxT);
 	}
 	
 }

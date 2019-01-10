@@ -4,8 +4,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
-
-import data.dataKeeper.GlobalDataKeeper;
 import data.dataPPL.pplTransition.PPLTransition;
 
 public class Phase {
@@ -169,9 +167,8 @@ public class Phase {
 		return newPhase;
 	}
 	
-	public void connectWithPPLTransitions(GlobalDataKeeper tmpGlobalDataKeeper){
-		
-		TreeMap<Integer,PPLTransition> allPPLTransitions=tmpGlobalDataKeeper.getAllPPLTransitions();
+	public void connectWithPPLTransitions(TreeMap<Integer, PPLTransition> allPPLTransitions){
+	
 		
 		boolean found = false;
 

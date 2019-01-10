@@ -1,20 +1,18 @@
-package gui.tableElements.tableConstructors;
+package data.dataTables;
 
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
-
-import data.dataKeeper.GlobalDataKeeper;
 import data.dataPPL.pplSQLSchema.PPLSchema;
 import data.dataPPL.pplSQLSchema.PPLTable;
 import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 
-public class TableConstructionAllSquaresIncluded implements PldConstruction {
+public class TableConstructionAllSquaresIncluded extends PldConstruction {
 	
 	
-	private static TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
+	private TreeMap<String,PPLSchema> allPPLSchemas=new TreeMap<String,PPLSchema>();
 	private ArrayList<PPLTable>	tables=new ArrayList<PPLTable>();
 	private TreeMap<Integer,PPLTransition> allPPLTransitions = new TreeMap<Integer,PPLTransition>();
 
@@ -26,83 +24,15 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 	private int maxUpdates=1;
 	private Integer segmentSize[]=new Integer[3];
 	
-	public TableConstructionAllSquaresIncluded(GlobalDataKeeper globalDataKeeper){	
-		allPPLSchemas=globalDataKeeper.getAllPPLSchemas();
-		allPPLTransitions=globalDataKeeper.getAllPPLTransitions();
+	public TableConstructionAllSquaresIncluded(TreeMap<String, PPLSchema> pplSchemas,TreeMap<Integer, PPLTransition> pplTransitions){	
+		allPPLSchemas=pplSchemas;
+		allPPLTransitions=pplTransitions;
 	}
 	
-	public String[] constructColumns(){
-		
-		ArrayList<String> columnsList=new ArrayList<String>();
-		
-		schemaColumnId=new Integer[allPPLSchemas.size()][2];
-		
-		for(int i=0;i<allPPLSchemas.size();i++){
-			schemaColumnId[i][0]=i;
-			if(i==0){
-				schemaColumnId[i][1]=1;
-			}
-			else{
-				schemaColumnId[i][1]=schemaColumnId[i-1][1]+4;
-			}
-		}
-		
-		columnsList.add("Table name");
-		
-		int i=0;
-		
-		for (Map.Entry<String,PPLSchema> pplSc : allPPLSchemas.entrySet()) {
-			
-			if(i<allPPLSchemas.size()-1){
-				String label="v"+pplSc.getValue().getName().replaceAll(".sql", "");
-				columnsList.add(label);
-			
-				for(int j=0; j<3; j++){
-					
-					switch(j){
-						
-						case 0: columnsList.add("I");
-								break;
-							
-						case 1: columnsList.add("U");
-								break;
-								
-						case 2: columnsList.add("D");
-								break;
-							
-						default:break;
-					}
-					
-					
-				}
-			
-			}
-			else{
-				String label="v"+pplSc.getValue().getName().replaceAll(".sql", "");
-				columnsList.add(label);
-			}
-			
-			i++;
-				
-		}
-		
-		columnsNumber=columnsList.size();
-		String[] tmpcolumns=new String[columnsList.size()];
-		
-		for(int j=0; j<columnsList.size(); j++ ){
-			
-			tmpcolumns[j]=columnsList.get(j);
-			
-		}
-		
-		return(tmpcolumns);
-		
-		
-	}
+
 	
-	public String[][] constructRows(){
+	public ArrayList<String[]> constructParticularRows(ArrayList<String[]> allRows ){
 		
-		ArrayList<String[]> allRows=new ArrayList<String[]>();
 	    ArrayList<String>	allTables=new ArrayList<String>();
 
 		
@@ -153,30 +83,9 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 			i++;
 		}
 		
-		String[][] tmpRows=new String[allRows.size()][columnsNumber];
 		
-		for(int z=0; z<allRows.size(); z++){
-			
-			String[] tmpOneRow=allRows.get(z);
-			for(int j=0; j<tmpOneRow.length; j++ ){
-				
-				tmpRows[z][j]=tmpOneRow[j];
-				
-				
-			}
-			
-		}
 		
-		float maxI=(float) maxInsersions/4;
-		segmentSize[0]=(int) Math.rint(maxI);
-		
-		float maxU=(float) maxUpdates/4;
-		segmentSize[1]=(int) Math.rint(maxU);
-		
-		float maxD=(float) maxDeletions/4;
-		segmentSize[2]=(int) Math.rint(maxD);
-		
-		return tmpRows;
+		return allRows;
 		
 	}
 	
@@ -331,9 +240,6 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 		
 	}
 	
-	public Integer[] getSegmentSize(){
-		return segmentSize;
-	}
 	
 	private int getNumOfAttributesOfNextSchema(String schema,String table){
 		int num = 0;
@@ -348,6 +254,84 @@ public class TableConstructionAllSquaresIncluded implements PldConstruction {
 		return num;
 	}
 	
-	
+	public int getColumnSize(){
 
+		return allPPLSchemas.size();
+	}
+	
+	public ArrayList<String> setColumnLabel(ArrayList<String> columnsList) {
+		int i=0;
+		
+		for (Map.Entry<String,PPLSchema> pplSc : allPPLSchemas.entrySet()) {
+			
+			if(i<allPPLSchemas.size()-1){
+				String label="v"+pplSc.getValue().getName().replaceAll(".sql", "");
+				columnsList.add(label);
+			
+				for(int j=0; j<3; j++){
+					
+					switch(j){
+						
+						case 0: columnsList.add("I");
+								break;
+							
+						case 1: columnsList.add("U");
+								break;
+								
+						case 2: columnsList.add("D");
+								break;
+							
+						default:break;
+					}
+					
+					
+				}
+			
+			}
+			else{
+				String label="v"+pplSc.getValue().getName().replaceAll(".sql", "");
+				columnsList.add(label);
+			}
+			
+			i++;
+				
+		}
+		return columnsList;
+	}
+
+	public void setColumnsNumber(int size){
+		columnsNumber = size;
+	}
+	
+	public void setColumnId(Integer[][] schemaColumnId) {
+		this.schemaColumnId=schemaColumnId.clone();
+	}
+	
+	public void setmaxInsersions(int insersions) {
+		maxInsersions=insersions;
+	}
+	
+	public void setmaxDeletions(int deletions) {
+		maxDeletions=deletions;
+	}
+	
+	public void setmaxUpdates(int updates) {
+		maxUpdates=updates;
+	}
+	
+	public Integer[] getSegmentSize() {
+		return segmentSize;
+	}
+	
+	public void setSegmentSize() {
+		float maxI=(float) maxInsersions/4;
+		segmentSize[0]=(int) Math.rint(maxI);
+		
+		float maxU=(float) maxUpdates/4;
+		segmentSize[1]=(int) Math.rint(maxU);
+		
+		float maxD=(float) maxDeletions/4;
+		segmentSize[2]=(int) Math.rint(maxD);
+
+	}
 }

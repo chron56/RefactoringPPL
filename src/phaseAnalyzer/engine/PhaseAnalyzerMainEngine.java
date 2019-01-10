@@ -3,20 +3,40 @@ package phaseAnalyzer.engine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import phaseAnalyzer.analysis.IPhaseExtractor;
 import phaseAnalyzer.analysis.PhaseExtractorFactory;
+import phaseAnalyzer.commons.Phase;
 import phaseAnalyzer.commons.PhaseCollector;
 import phaseAnalyzer.commons.TransitionHistory;
 import phaseAnalyzer.parser.IParser;
 import phaseAnalyzer.parser.ParserFactory;
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataPPL.pplTransition.PPLTransition;
 
-public class PhaseAnalyzerMainEngine {
+public class PhaseAnalyzerMainEngine implements IPhase{
+	private ParserFactory parserFactory;
+	private IParser parser;
+	private PhaseExtractorFactory phaseExtractorFactory;
+	private IPhaseExtractor phaseExtractor;
+	private TransitionHistory transitionHistory = new TransitionHistory();;
 	
-	public PhaseAnalyzerMainEngine(String inputCsv,String outputAssessment1,String outputAssessment2,Float tmpTimeWeight, Float tmpChangeWeight,
-														Boolean tmpPreProcessingTime,Boolean tmpPreProcessingChange){
+	private ArrayList<PhaseCollector> phaseCollectors;
+	private HashMap<String,ArrayList<PhaseCollector>> allPhaseCollectors;
+	private String inputCsv;
+
+	private float timeWeight;
+	private float changeWeight;
+	private boolean preProcessingTime;
+	private boolean preProcessingChange;
+	
+	public PhaseAnalyzerMainEngine(){
 		
+	}
+	
+	@Override
+	public void setPhaseCollectors(TreeMap<Integer, PPLTransition> transitions,int numPhases,String inputCsv,String outputAssessment1,String outputAssessment2,Float tmpTimeWeight, Float tmpChangeWeight,
+			Boolean tmpPreProcessingTime,Boolean tmpPreProcessingChange){
 		timeWeight=tmpTimeWeight;
 		changeWeight=tmpChangeWeight;
 		preProcessingTime=tmpPreProcessingTime;
@@ -30,12 +50,17 @@ public class PhaseAnalyzerMainEngine {
 		phaseExtractorFactory = new PhaseExtractorFactory();
 		phaseExtractor = phaseExtractorFactory.createPhaseExtractor("BottomUpPhaseExtractor");
 		
-		transitionHistory = new TransitionHistory();
+		
 		
 		allPhaseCollectors = new HashMap<String, ArrayList<PhaseCollector>>();
-		
+		this.parseInput();
+		this.extractPhases(numPhases);
+		this.connectTransitionsWithPhases(transitions);
 	}
+	
 
+	
+	@Override
 	public ArrayList<PhaseCollector> getPhaseCollectors(){
 		return phaseCollectors;
 	}
@@ -46,12 +71,11 @@ public class PhaseAnalyzerMainEngine {
 		PhaseCollector phaseCollector = new PhaseCollector();
 		phaseCollector = phaseExtractor.extractAtMostKPhases(transitionHistory, numPhases,timeWeight,changeWeight,preProcessingTime,preProcessingChange);
 		phaseCollectors.add(phaseCollector);
-		
 		allPhaseCollectors.put(inputCsv, phaseCollectors);
 	}
 
-	public void connectTransitionsWithPhases(GlobalDataKeeper tmpGlobalDataKeeper){
-		phaseCollectors.get(0).connectPhasesWithTransitions(tmpGlobalDataKeeper);
+	public void connectTransitionsWithPhases(TreeMap<Integer, PPLTransition> transitions){
+		phaseCollectors.get(0).connectPhasesWithTransitions(transitions);
 	}
 	
 	public void parseInput(){
@@ -60,20 +84,9 @@ public class PhaseAnalyzerMainEngine {
 		this.transitionHistory.consoleVerticalReport();
 	}
 	
-	private ParserFactory parserFactory;
-	private IParser parser;
-	private PhaseExtractorFactory phaseExtractorFactory;
-	private IPhaseExtractor phaseExtractor;
-	private TransitionHistory transitionHistory;
-	
-	private ArrayList<PhaseCollector> phaseCollectors;
-	private HashMap<String,ArrayList<PhaseCollector>> allPhaseCollectors;
-	private String inputCsv;
-
-	private float timeWeight;
-	private float changeWeight;
-	private boolean preProcessingTime;
-	private boolean preProcessingChange;
+	public ArrayList<Phase> getPhases(){
+		return getPhaseCollectors().get(0).getPhases();
+	}
 	
 	
 }
