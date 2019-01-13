@@ -3,114 +3,28 @@
   associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
   <package id="1" language="java" name="tableClustering.clusterExtractor.analysis" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/analysis" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="539" y="661"/>    
+    <position height="-1" width="-1" x="456" y="511"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="2" language="java" name="tableClustering.clusterExtractor.commons" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/commons" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1176" y="674"/>    
+    <position height="-1" width="-1" x="899" y="516"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
   <package id="3" language="java" name="tableClustering.clusterExtractor.engine" project="PlutarchParallelLives" 
     file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/engine" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="553" y="744"/>    
+    <position height="-1" width="-1" x="574" y="261"/>    
     <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
   </package>  
-  <package id="4" language="java" 
-    name="tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalClusterMetrics" 
-    project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/externalEvaluation/externalClusterMetrics" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1417" y="282"/>    
-    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
-  </package>  
-  <package id="5" language="java" 
-    name="tableClustering.clusterValidator.clusterValidityMetrics.externalEvaluation.externalTotalMetrics" 
-    project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/externalEvaluation/externalTotalMetrics" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="444" y="577"/>    
-    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
-  </package>  
-  <package id="6" language="java" 
-    name="tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalClusterMetrics" 
-    project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/internalEvaluation/internalClusterMetrics" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1419" y="565"/>    
-    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
-  </package>  
-  <package id="7" language="java" 
-    name="tableClustering.clusterValidator.clusterValidityMetrics.internalEvaluation.internalTotalMetrics" 
-    project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/clusterValidityMetrics/internalEvaluation/internalTotalMetrics" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="62" width="832" x="170" y="24"/>    
-    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
-  </package>  
-  <package id="8" language="java" name="tableClustering.clusterValidator.engine" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/engine" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="62" width="363" x="51" y="224"/>    
-    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
-  </package>  
-  <package id="9" language="java" name="tableClustering.clusterValidator.commons" project="PlutarchParallelLives" 
-    file="/PlutarchParallelLives/src/tableClustering/clusterValidator/commons" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="62" width="390" x="1181" y="-11"/>    
-    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
-  </package>  
-  <dependency id="10">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="7"/>  
-  </dependency>  
-  <dependency id="11">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="9"/>  
-  </dependency>  
-  <dependency id="12">    
+  <dependency id="4">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="1"/>  
   </dependency>  
-  <dependency id="13">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="2"/>  
-  </dependency>  
-  <dependency id="14">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="2"/>  
-  </dependency>  
-  <dependency id="15">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="4"/>  
-  </dependency>  
-  <dependency id="16">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="5"/>  
-  </dependency>  
-  <dependency id="17">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="9"/>  
-  </dependency>  
-  <dependency id="18">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="2"/>  
-  </dependency>  
-  <dependency id="19">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="2"/>  
-  </dependency>  
-  <dependency id="20">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="9"/>  
-  </dependency>  
-  <dependency id="21">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="6"/>  
-  </dependency>  
-  <dependency id="22">    
+  <dependency id="5">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="2"/>  
   </dependency>  
-  <dependency id="23">    
+  <dependency id="6">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="2"/>  
   </dependency>  

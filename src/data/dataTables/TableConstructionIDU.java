@@ -249,11 +249,7 @@ public class TableConstructionIDU extends PldConstruction {
 				oneRow[i]="";
 			}
 		}
-		String lala="";
-		for (int i = 0; i < oneRow.length; i++) {
-			lala=lala+oneRow[i]+",";
-		}	
-	
+
 		return oneRow;
 		
 	}

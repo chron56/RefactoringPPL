@@ -11,18 +11,21 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import org.antlr.v4.runtime.RecognitionException;
-
 import gui.dialogs.CreateProjectJDialog;
 import gui.mainEngine.Gui;
 
 public class mainFlowListener{
-	
-	public void createProject(Gui gui ) {
+	Gui gui;
+	public mainFlowListener(Gui gui) {
+		this.gui=gui;
+	}
+
+	public void createProject( ) {
 				CreateProjectJDialog createProjectDialog=new CreateProjectJDialog("","","","","","");
-	            setProjectDialog(createProjectDialog, gui);
+	            setProjectDialog(createProjectDialog);
 	}
 	
-	public void loadProject(Gui gui ) {
+	public void loadProject( ) {
 		String fileName=null;
 		File dir=new File("filesHandler/inis");
 		JFileChooser fcOpen1 = new JFileChooser();
@@ -42,10 +45,10 @@ public class mainFlowListener{
 		else{
 			return;
 		}
-		importData(gui,fileName);
+		importData(fileName);
 	}
 	
-	public void editProject(Gui gui ) {
+	public void editProject() {
 		String fileName=null;
 		File dir=new File("filesHandler/inis");
 		JFileChooser fcOpen1 = new JFileChooser();
@@ -108,7 +111,7 @@ public class mainFlowListener{
             System.out.println(gui.getProjectName());
 
             CreateProjectJDialog createProjectDialog = new CreateProjectJDialog(gui.getProjectName(), gui.getDatasetTxt(), gui.getInputCsv(), gui.getOutputAssessment1(), gui.getOutputAssessment2(), gui.getTransitionsFile());
-            setProjectDialog(createProjectDialog, gui);
+            setProjectDialog(createProjectDialog);
 
 			
 		}
@@ -118,7 +121,7 @@ public class mainFlowListener{
 	}
 	
 	
-	private void importData(Gui gui, String fileName) {
+	private void importData(String fileName) {
 		try {
             gui.importData(fileName);
 		} catch (IOException e) {
@@ -131,7 +134,7 @@ public class mainFlowListener{
 		}
 	}
 	
-	private void setProjectDialog(CreateProjectJDialog createProjectDialog, Gui gui) {
+	private void setProjectDialog(CreateProjectJDialog createProjectDialog) {
 		createProjectDialog.setModal(true);
 		
 		createProjectDialog.setVisible(true);
@@ -145,9 +148,11 @@ public class mainFlowListener{
             gui.setProject(file.getName());
             String fileName = file.toString();
             System.out.println("!!" + gui.getProject());
-            importData(gui, fileName);
+            importData(fileName);
 			
 			
 		}
 	}
+	
+
 }

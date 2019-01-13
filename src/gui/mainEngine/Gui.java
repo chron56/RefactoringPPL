@@ -142,10 +142,10 @@ public class Gui extends JFrame implements ActionListener{
 
         this.setResizable(false);
 
-        flowlistener = new mainFlowListener();
-        showlistener = new showListener();
-        menulistener = new menuButtonListener();
-        mouselistener = new mouseListener();
+        flowlistener = new mainFlowListener(this);
+        showlistener = new showListener(this);
+        menulistener = new menuButtonListener(this);
+        mouselistener = new mouseListener(this);
 		JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
 		
@@ -155,7 +155,7 @@ public class Gui extends JFrame implements ActionListener{
 		JMenuItem mntmCreateProject = new JMenuItem("Create Project");
 		mntmCreateProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				flowlistener.createProject(Gui.this);
+				flowlistener.createProject();
 			}
 		});
 		mnFile.add(mntmCreateProject);
@@ -163,7 +163,7 @@ public class Gui extends JFrame implements ActionListener{
 		JMenuItem mntmLoadProject = new JMenuItem("Load Project");
 		mntmLoadProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {			
-				flowlistener.loadProject(Gui.this);	
+				flowlistener.loadProject();	
 			}
 		});
 		mnFile.add(mntmLoadProject);
@@ -171,7 +171,7 @@ public class Gui extends JFrame implements ActionListener{
 		JMenuItem mntmEditProject = new JMenuItem("Edit Project");
 		mntmEditProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				flowlistener.editProject(Gui.this);	
+				flowlistener.editProject();	
 			}
 		});
 		mnFile.add(mntmEditProject);
@@ -183,14 +183,14 @@ public class Gui extends JFrame implements ActionListener{
 		JMenuItem mntmShowLifetimeTable = new JMenuItem("Show Full Detailed LifeTime Table");
 		mntmShowLifetimeTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				showlistener.showLifetimeTable(Gui.this, tlp);
+				showlistener.showLifetimeTable(tlp);
 			}
 		});
 		
 		JMenuItem mntmShowGeneralLifetimeIDU = new JMenuItem("Show PLD");
 		mntmShowGeneralLifetimeIDU.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-                showlistener.showGeneralLifetimeIDU(Gui.this, tlp);
+                showlistener.showGeneralLifetimeIDU( tlp);
 			}
 		});
 		mnTable.add(mntmShowGeneralLifetimeIDU);
@@ -198,7 +198,7 @@ public class Gui extends JFrame implements ActionListener{
 		JMenuItem mntmShowGeneralLifetimePhasesPLD = new JMenuItem("Show Phases PLD");
 		mntmShowGeneralLifetimePhasesPLD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				showlistener.showGeneralLifetimePhasesPLD(Gui.this, tlp);	
+				showlistener.showGeneralLifetimePhasesPLD( tlp);	
 			}
 		});
 		mnTable.add(mntmShowGeneralLifetimePhasesPLD);
@@ -206,7 +206,7 @@ public class Gui extends JFrame implements ActionListener{
 		JMenuItem mntmShowGeneralLifetimePhasesWithClustersPLD = new JMenuItem("Show Phases With Clusters PLD");
 		mntmShowGeneralLifetimePhasesWithClustersPLD.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				showlistener.showGeneralLifetimePhasesWithClustersPLD(Gui.this, tlp);
+				showlistener.showGeneralLifetimePhasesWithClustersPLD( tlp);
 			}
 		});
 		mnTable.add(mntmShowGeneralLifetimePhasesWithClustersPLD);
@@ -1141,7 +1141,7 @@ private void makeZoomAreaTable() {
 	    }
 	});
 
-	mouselistener.listenToRightClick2(this, zoomTable);
+	mouselistener.listenToRightClick2(zoomTable);
 
     this.tmpScrollPaneZoomArea.setViewportView(this.getZoomAreaTable());
     this.tmpScrollPaneZoomArea.setAlignmentX(0);
@@ -1341,7 +1341,7 @@ public void makeZoomAreaTableForCluster() {
 	    }
 	});
 
-	mouselistener.listenToRightClick3(this,zoomTable);
+	mouselistener.listenToRightClick3(zoomTable);
 
     this.tmpScrollPaneZoomArea.setViewportView(this.getZoomAreaTable());
     this.tmpScrollPaneZoomArea.setAlignmentX(0);
@@ -1731,7 +1731,7 @@ public void makeZoomAreaTableForCluster() {
         this.tablesTree = this.getGlobalDataKeeper().constructTree("General");
         tlp.writeTree("Tree with Versions",this.tablesTree);
         
-        mouselistener.listenTreeSelection(this, tablesTree);
+        mouselistener.listenTreeSelection(tablesTree);
         
         
 
@@ -1754,7 +1754,7 @@ public void makeZoomAreaTableForCluster() {
         this.tablesTree = this.getGlobalDataKeeper().constructTree("Phases");
         tlp.writeTree("Tree with Phases", this.tablesTree);
  
-        mouselistener.listenTreeSelection(this, tablesTree);
+        mouselistener.listenTreeSelection(tablesTree);
         
         this.treeScrollPane.setViewportView(this.tablesTree);
         this.treeScrollPane.setBounds(5, 5, 250, 170);
@@ -1774,7 +1774,7 @@ public void makeZoomAreaTableForCluster() {
         this.tablesTree =  this.getGlobalDataKeeper().constructTree("PhasesWithClusters");   
         tlp.writeTree("Tree with Clusters",this.tablesTree);      
        
-        mouselistener.listenTreeSelection(this, tablesTree);
+        mouselistener.listenTreeSelection(tablesTree);
         
         this.treeScrollPane.setViewportView(this.tablesTree);
 

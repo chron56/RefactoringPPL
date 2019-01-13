@@ -5,12 +5,15 @@ import javax.swing.JOptionPane;
 import gui.dialogs.ParametersJDialog;
 import gui.mainEngine.Gui;
 import gui.tableElements.commons.JvTable;
-import phaseAnalyzer.engine.PhaseAnalyzerMainEngine;
-import tableClustering.clusterExtractor.engine.TableClusteringMainEngine;
 import test.testEngine.TestLoadProject;
 
 public class showListener{
-	public void showLifetimeTable(Gui gui, TestLoadProject tlp ) {
+	Gui gui;
+	public showListener(Gui gui) {
+		this.gui=gui;
+	}
+
+	public void showLifetimeTable( TestLoadProject tlp ) {
 		if (!(gui.getCurrentProject() == null)) {
 			gui.getGlobalDataKeeper().constructTableWithAllSquares();
 			String[] columns=gui.getGlobalDataKeeper().getTableColumns("AllSquares");
@@ -28,7 +31,7 @@ public class showListener{
 		}
 	}
 	
-	public void showGeneralLifetimeIDU(Gui gui,TestLoadProject tlp) {
+	public void showGeneralLifetimeIDU(TestLoadProject tlp) {
 		if (!(gui.getCurrentProject() == null)) {               	
             gui.getZoomInButton().setVisible(true);
             gui.getZoomOutButton().setVisible(true);
@@ -52,7 +55,7 @@ public class showListener{
 		}
 	}
 	
-	public void showGeneralLifetimePhasesPLD(Gui gui, TestLoadProject tlp) {
+	public void showGeneralLifetimePhasesPLD( TestLoadProject tlp) {
 		if (!(gui.getProject() == null)) {
             gui.setWholeCol(-1);
 			ParametersJDialog jD=new ParametersJDialog(false);
@@ -71,16 +74,7 @@ public class showListener{
                 gui.setNumberOfPhases(jD.getNumberOfPhases());
                 tlp.writeString("\n-----[ BUTTON T2 ]-----\n");
                 System.out.println(gui.getTimeWeight() + " " + gui.getChangeWeight());
-               // PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(gui.getNumberOfPhases(),gui.getInputCsv(), gui.getOutputAssessment1(), gui.getOutputAssessment2(), gui.getTimeWeight(), gui.getChangeWeight(), gui.getPreProcessingTime(), gui.getPreProcessingChange());
-
-				//mainEngine.parseInput();		
-				//System.out.println("\n\n\n");
-                //mainEngine.extractPhases(gui.getNumberOfPhases());
-
-                //mainEngine.connectTransitionsWithPhases(gui.getGlobalDataKeeper());
-                //gui.getGlobalDataKeeper().setPhaseCollectors(mainEngine.getPhaseCollectors());
                 gui.getGlobalDataKeeper().setPhaseCollectors(gui.getNumberOfPhases(),gui.getInputCsv(), gui.getOutputAssessment1(), gui.getOutputAssessment2(), gui.getTimeWeight(), gui.getChangeWeight(), gui.getPreProcessingTime(), gui.getPreProcessingChange());
-
                 if (gui.getGlobalDataKeeper().getPhaseCollectors().size() != 0) {
             		gui.getGlobalDataKeeper().constructPhasesTable();
             		final String[] columns=gui.getGlobalDataKeeper().getTableColumns("Phases");
@@ -105,7 +99,7 @@ public class showListener{
 	
 	}
 	
-	public void showGeneralLifetimePhasesWithClustersPLD(Gui gui, TestLoadProject tlp ) {
+	public void showGeneralLifetimePhasesWithClustersPLD( TestLoadProject tlp ) {
 		
 		 gui.setWholeCol(-1);
          if (!(gui.getProject() == null)) {
@@ -126,20 +120,10 @@ public class showListener{
                  gui.setDeathWeight(jD.getDeathWeight());
                  gui.setChangeWeightCl(jD.getChangeWeightCluster());
                  tlp.writeString("\n-----[ BUTTON T3 ]-----\n");                      
-                 System.out.println(gui.getTimeWeight() + " " + gui.getChangeWeight());
-                // PhaseAnalyzerMainEngine mainEngine = new PhaseAnalyzerMainEngine(gui.getNumberOfPhases(),gui.getInputCsv(), gui.getOutputAssessment1(), gui.getOutputAssessment2(), gui.getTimeWeight(), gui.getChangeWeight(), gui.getPreProcessingTime(), gui.getPreProcessingChange());
-					
-					//mainEngine.parseInput();		
-					System.out.println("\n\n\n");
-                 //mainEngine.extractPhases(gui.getNumberOfPhases());
-
-
-                 //mainEngine.connectTransitionsWithPhases(gui.getGlobalDataKeeper());
+                 System.out.println(gui.getTimeWeight() + " " + gui.getChangeWeight());	
+				 System.out.println("\n\n\n");
                  gui.getGlobalDataKeeper().setPhaseCollectors(gui.getNumberOfPhases(),gui.getInputCsv(), gui.getOutputAssessment1(), gui.getOutputAssessment2(), gui.getTimeWeight(), gui.getChangeWeight(), gui.getPreProcessingTime(), gui.getPreProcessingChange());
-                 //gui.getGlobalDataKeeper().setPhaseCollectors(mainEngine.getPhaseCollectors());
                  gui.getGlobalDataKeeper().extractClusters(gui.getNumberOfClusters(),gui.getBirthWeight(), gui.getDeathWeight(), gui.getChangeWeightCl());
-				 //mainEngine2.print();
-
                  if (gui.getGlobalDataKeeper().getPhaseCollectors().size() != 0) {
                  	gui.getGlobalDataKeeper().constructTableWithClusters();
                     final String[] columns=gui.getGlobalDataKeeper().getTableColumns("Clusters");
@@ -167,7 +151,7 @@ public class showListener{
 			}
 	}
 	
-	public void showDetailsForPhase(Gui gui,JvTable generalTable ) {
+	public void showDetailsForPhase(JvTable generalTable ) {
 		String sSelectedRow = gui.getFinalRows()[0][0];
 		System.out.println("?"+sSelectedRow);
         gui.setTablesSelected(new ArrayList<String>());

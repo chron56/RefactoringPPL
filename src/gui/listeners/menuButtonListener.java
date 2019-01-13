@@ -6,6 +6,11 @@ import gui.dialogs.ProjectInfoDialog;
 import gui.mainEngine.Gui;
 
 public class menuButtonListener{
+	Gui gui;
+	public menuButtonListener(Gui gui) {
+		this.gui=gui;
+	}
+
 	public void getHelpButtonListener() {
 		String message ="To open a project, you must select a .txt file that contains the names ONLY of " +
 				"the SQL files of the dataset that you want to use."+"\n" +

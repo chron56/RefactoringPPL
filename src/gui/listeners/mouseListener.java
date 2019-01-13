@@ -21,7 +21,11 @@ import gui.tableElements.commons.JvTable;
 import gui.tableElements.tableRenderers.IDUTableRenderer;
 
 public class mouseListener {
-	
+	Gui gui;
+	public mouseListener(Gui gui) {
+		this.gui=gui;
+	}
+
 	public void listenZoomInButton(Gui gui) {
 		gui.getZoomInButton().setBounds(1000, 560, 100, 30);
 		gui.getZoomInButton().addMouseListener(new MouseAdapter() {
@@ -213,7 +217,7 @@ public class mouseListener {
 	}
 	
 	public void listenToRightClick(Gui gui, JvTable table) {
-		showListener showlistener = new showListener();
+		showListener showlistener = new showListener(gui);
 		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -320,7 +324,7 @@ public class mouseListener {
 					            @Override
 					            public void actionPerformed(ActionEvent e) {
 					            	
-									showlistener.showDetailsForPhase(gui,table);
+									showlistener.showDetailsForPhase(table);
 					            }
 					        });
 					        popupMenu.add(showDetailsItem);
@@ -336,7 +340,7 @@ public class mouseListener {
 	}
 	
 	
-	public void listenToRightClick2(Gui gui, JvTable zoomTable) {
+	public void listenToRightClick2(JvTable zoomTable) {
 		zoomTable.addMouseListener(new MouseAdapter() {
 			@Override
 			   public void mouseClicked(MouseEvent e) {
@@ -416,7 +420,7 @@ public class mouseListener {
 	    gui.setZoomAreaTable(zoomTable);
 	}
 	
-	public void listenToRightClick3(Gui gui, JvTable zoomTable) {
+	public void listenToRightClick3(JvTable zoomTable) {
 	    zoomTable.addMouseListener(new MouseAdapter() {
 			@Override
 			   public void mouseClicked(MouseEvent e) {
@@ -516,11 +520,9 @@ public class mouseListener {
 	    gui.setZoomAreaTable(zoomTable);
 	}
 	
-//	private void clearColumnSelection(Gui gui, JvTable table) {
-		
-//	}
+
 	
-	public void listenTreeSelection(Gui gui, JTree tree) {
+	public void listenTreeSelection(JTree tree) {
 		tree.addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent ae) {
 			    	TreePath selection = ae.getPath();
