@@ -3,7 +3,6 @@ package gui.mainEngine;
 //try to extract relationship between gui and pplSchema and pplTransition
 
 import data.dataKeeper.GlobalDataKeeper;
-import data.dataSorters.PldRowSorter;
 import gui.tableElements.commons.JvTable;
 import gui.tableElements.commons.MyTableModel;
 import gui.tableElements.tableRenderers.IDUHeaderTableRenderer;
@@ -395,15 +394,12 @@ public class Gui extends JFrame implements ActionListener{
 
 	public void makeGeneralTableIDU() {
 
-        PldRowSorter sorter = new PldRowSorter(this.getFinalRowsZoomArea(), this.getGlobalDataKeeper());
-
-        this.setFinalRowsZoomArea(sorter.sortRows());
+        String[][] sortedRows = this.getGlobalDataKeeper().getSortedRows(this.getFinalRowsZoomArea());
+        this.setFinalRowsZoomArea(sortedRows);
         this.setShowingPld(true);
         this.getZoomInButton().setVisible(true);
         this.getZoomOutButton().setVisible(true);
-
         this.getShowThisToPopup().setVisible(true);
-
         int numberOfColumns = this.getFinalRowsZoomArea()[0].length;
         int numberOfRows = this.getFinalRowsZoomArea().length;
 

@@ -17,6 +17,7 @@ import data.dataPPL.pplTransition.AtomicChange;
 import data.dataPPL.pplTransition.PPLTransition;
 import data.dataPPL.pplTransition.TableChange;
 import data.dataProccessing.DataImporter;
+import data.dataSorters.PldRowSorter;
 import data.dataTables.TableConstructionAllSquaresIncluded;
 import data.dataTables.TableConstructionClusterTablesPhasesZoomA;
 import data.dataTables.TableConstructionIDU;
@@ -284,6 +285,12 @@ public class GlobalDataKeeper {
 	
 	public ArrayList<Phase> getPhases(){
 		return mainEnginePhase.getPhases();
+	}
+	
+	public String[][] getSortedRows(String[][] finalRowsZoomArea) {
+		PldRowSorter sorter = new PldRowSorter(finalRowsZoomArea, getAllPPLTables());
+		String[][] sortedRows = sorter.sortRows();
+		return sortedRows;
 	}
 	//CHANGES
 	

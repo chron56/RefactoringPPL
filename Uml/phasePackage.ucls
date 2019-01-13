@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.2" icons="true" always-add-relationships="true" generalizations="true" realizations="true" 
+  associations="true" dependencies="true" nesting-relationships="true" router="FAN">  
+  <package id="1" language="java" name="phaseAnalyzer.analysis" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/phaseAnalyzer/analysis" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="62" width="230" x="173" y="114"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="2" language="java" name="phaseAnalyzer.commons" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/phaseAnalyzer/commons" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="62" width="245" x="729" y="128"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="3" language="java" name="phaseAnalyzer.engine" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/phaseAnalyzer/engine" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="273" y="391"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="4" language="java" name="phaseAnalyzer.parser" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/phaseAnalyzer/parser" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="62" width="214" x="900" y="360"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <dependency id="5">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="6">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="7">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="8">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="9">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
