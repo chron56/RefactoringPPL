@@ -1627,7 +1627,7 @@ public void makeZoomAreaTableForCluster() {
         logSentence += "Output Assessment2:" + this.getOutputAssessment2() + "\n";//testing Giorgos
         logSentence += "Transitions File:" + this.getTransitionsFile() + "\n";//testing Giorgos
         logSentence += this.getGlobalDataKeeper().getAllPPLTables().size() + "\n";//testing Giorgos
-		logSentence += fileName+ "\n";//testing Giorgos
+		
 		
 		tlp.writeString("-----[ Projects Details ]-----");
 		tlp.writeString(logSentence);
