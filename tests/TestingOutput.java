@@ -19,7 +19,7 @@ public class TestingOutput {
 	@Test
 	public void test() {
 		try {
-			BufferedReader expectedOutput= new BufferedReader(new FileReader("#wannabeTestingOutput.txt"));
+			BufferedReader expectedOutput= new BufferedReader(new FileReader("wannabeTestingOutput-Atlas.txt"));
 			BufferedReader actualOutput = new BufferedReader(new FileReader("wannabeTestingOutput.txt"));
 			assertReaders(expectedOutput,actualOutput);
 			System.out.println("Result was Successful");

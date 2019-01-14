@@ -1,4 +1,4 @@
-import org.junit.runner.JUnitCore;
+/*import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.RunWith;
 import org.junit.runner.notification.Failure;
@@ -33,4 +33,4 @@ public class AllTests {
 		}		
 		System.out.println("Result=="+result4.wasSuccessful());
    }		
-}
+}*/

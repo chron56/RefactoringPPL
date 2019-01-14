@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 import gui.dialogs.ParametersJDialog;
 import gui.mainEngine.Gui;
 import gui.tableElements.commons.JvTable;
-import test.testEngine.TestLoadProject;
+import outputSerializer.OutputSerializer;
 
 public class showListener{
 	Gui gui;
@@ -13,7 +13,7 @@ public class showListener{
 		this.gui=gui;
 	}
 
-	public void showLifetimeTable( TestLoadProject tlp ) {
+	public void showLifetimeTable( OutputSerializer tlp ) {
 		if (!(gui.getCurrentProject() == null)) {
 			gui.getGlobalDataKeeper().constructTableWithAllSquares();
 			String[] columns=gui.getGlobalDataKeeper().getTableColumns("AllSquares");
@@ -31,7 +31,7 @@ public class showListener{
 		}
 	}
 	
-	public void showGeneralLifetimeIDU(TestLoadProject tlp) {
+	public void showGeneralLifetimeIDU(OutputSerializer tlp) {
 		if (!(gui.getCurrentProject() == null)) {               	
             gui.getZoomInButton().setVisible(true);
             gui.getZoomOutButton().setVisible(true);
@@ -55,7 +55,7 @@ public class showListener{
 		}
 	}
 	
-	public void showGeneralLifetimePhasesPLD( TestLoadProject tlp) {
+	public void showGeneralLifetimePhasesPLD( OutputSerializer tlp) {
 		if (!(gui.getProject() == null)) {
             gui.setWholeCol(-1);
 			ParametersJDialog jD=new ParametersJDialog(false);
@@ -99,7 +99,7 @@ public class showListener{
 	
 	}
 	
-	public void showGeneralLifetimePhasesWithClustersPLD( TestLoadProject tlp ) {
+	public void showGeneralLifetimePhasesWithClustersPLD( OutputSerializer tlp ) {
 		
 		 gui.setWholeCol(-1);
          if (!(gui.getProject() == null)) {

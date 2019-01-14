@@ -1,4 +1,4 @@
-package test.testEngine;
+package outputSerializer;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -10,11 +10,10 @@ import java.util.Enumeration;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-public class TestLoadProject {
+public class OutputSerializer {
 	
 	PrintWriter writer;
-	int option=1;
-	public TestLoadProject(String filename) {
+	public OutputSerializer(String filename) {
 		
 		File file = new File(filename);
         FileWriter fileWriter;

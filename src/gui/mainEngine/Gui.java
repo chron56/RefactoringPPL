@@ -7,9 +7,10 @@ import gui.tableElements.commons.JvTable;
 import gui.tableElements.commons.MyTableModel;
 import gui.tableElements.tableRenderers.IDUHeaderTableRenderer;
 import gui.tableElements.tableRenderers.IDUTableRenderer;
+import outputSerializer.OutputSerializer;
+
 import org.antlr.v4.runtime.RecognitionException;
 
-import test.testEngine.TestLoadProject;
 import gui.listeners.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -109,7 +110,7 @@ public class Gui extends JFrame implements ActionListener{
     private Boolean preProcessingTime;
     private Boolean preProcessingChange;
     private boolean showingPld;
-	private TestLoadProject tlp= new TestLoadProject("wannabeTestingOutput.txt");
+	private OutputSerializer tlp= new OutputSerializer("wannabeTestingOutput.txt");
 	private mainFlowListener flowlistener;
 	private showListener showlistener;
 	private mouseListener mouselistener;
