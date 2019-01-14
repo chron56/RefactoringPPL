@@ -11,6 +11,7 @@ public abstract class PldConstruction {
 	public abstract void setSegmentSize();
 	public abstract ArrayList<String> setColumnLabel(ArrayList<String> columnsList);
 	public abstract void setColumnsNumber(int size);
+	public abstract int getMargin();
 	public abstract void setColumnId(Integer[][] schemaColumnId);
 	public abstract ArrayList<String[]> constructParticularRows(ArrayList<String[]> AllRows);
 
@@ -24,7 +25,7 @@ public abstract class PldConstruction {
 				schemaColumnId[i][1]=1;
 			}
 			else{
-				schemaColumnId[i][1]=schemaColumnId[i-1][1]+1;
+				schemaColumnId[i][1]=schemaColumnId[i-1][1]+getMargin();
 			}
 		}		
 		columnsList.add("Table name");	

@@ -334,4 +334,8 @@ public class TableConstructionAllSquaresIncluded extends PldConstruction {
 		segmentSize[2]=(int) Math.rint(maxD);
 
 	}
+	
+	public int getMargin() {
+		return 4;
+	}
 }

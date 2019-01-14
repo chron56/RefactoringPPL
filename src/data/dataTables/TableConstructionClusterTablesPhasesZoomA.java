@@ -315,4 +315,8 @@ public class TableConstructionClusterTablesPhasesZoomA extends PldConstruction {
 		float maxT=(float) maxTotalChangesForOneTr/4;
 		segmentSize[3]=(int) Math.rint(maxT);
 	}
+	
+	public int getMargin() {
+		return 1;
+	}
 }

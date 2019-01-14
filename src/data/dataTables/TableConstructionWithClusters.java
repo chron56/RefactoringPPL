@@ -239,4 +239,7 @@ public class TableConstructionWithClusters extends PldConstruction{
 		segmentSize[3]=(int) Math.rint(maxT);
 	}
 	
+	public int getMargin() {
+		return 1;
+	}
 }

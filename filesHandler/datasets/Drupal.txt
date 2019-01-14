@@ -1,0 +1,8 @@
+drupal-4.0.0.psql.sql
+drupal-4.1.0.psql.sql
+drupal-4.2.0.psql.sql
+drupal-4.3.1.psql.sql
+drupal-4.4.3.psql.sql
+drupal-4.5.8.psql.sql
+drupal-4.6.11.psql.sql
+drupal-4.7.11.psql.sql
