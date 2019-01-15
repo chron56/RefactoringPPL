@@ -1,0 +1,7 @@
+The purpose of the TestingOutput Test is to check if the serialized captured output after the refactoring (wannabeTestingOutput) is identical to the serialized captured output before the refactoring procedure.
+# Steps #
+1. On TestingOutput Test select the serialized output that you will use as ground truth between the 3 files of the serializedOutputsGroundTruth folder.
+2. In order to generate the serialized captured output (wannabeTestingOutput) load Atlas or Ensemble or phpBB project and make a set of moves after the loading. First click the "Show PLD" button, after the "Show Phases PLD" , after the "Show Phases with Clusters PLD" and final the "Show Full Detailed LifeTime Table".
+3. Run the TestingOutput Test
+
+*** the wannabeTestingOutput is a file with append character, so you must delete it you want to test an other project from the list.

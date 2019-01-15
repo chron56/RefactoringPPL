@@ -7,7 +7,6 @@ Output Assessment1:filesHandler/output/atlas_Assessment1.txt
 Output Assessment2:filesHandler/output/atlas_Assessment2.txt
 Transitions File:filesHandler/transitions/atlasTransitions.xml
 88
-C:\Users\George\git\RefactoringPPL\filesHandler\inis\Atlas.ini
 
 
 -----[ START General Table ]-----

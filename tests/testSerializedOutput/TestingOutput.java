@@ -1,3 +1,4 @@
+package testSerializedOutput;
 import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
@@ -22,7 +23,7 @@ public class TestingOutput {
 			BufferedReader expectedOutput= new BufferedReader(new FileReader("serializedOutputsGroundTruth/wannabeTestingOutput-Atlas.txt"));
 			BufferedReader actualOutput = new BufferedReader(new FileReader("wannabeTestingOutput.txt"));
 			assertReaders(expectedOutput,actualOutput);
-			System.out.println("Result was Successful");
+			System.out.println("The two files are identical");
 		} catch (IOException e) {			
 			e.printStackTrace();
 		}

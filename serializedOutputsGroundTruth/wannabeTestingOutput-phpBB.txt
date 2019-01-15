@@ -7,7 +7,6 @@ Output Assessment1:filesHandler/output/phpBB_Assessment1.txt
 Output Assessment2:filesHandler/output/phpBB_Assessment2.txt
 Transitions File:filesHandler/transitions/phpBBTransitions.xml
 70
-C:\Users\ar_ch\Desktop\SDE\Project\RefactoringPPL\filesHandler\inis\phpBB.ini
 
 
 -----[ START General Table ]-----
