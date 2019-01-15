@@ -6,11 +6,11 @@ import javax.swing.table.TableModel;
 
 import data.dataKeeper.GlobalDataKeeper;
 
-public class JvTable extends JTable {
+public class ExtendedJvTable extends JTable {
 
 	private static final long serialVersionUID = 1L;
 
-    public JvTable(TableModel dataModel)
+    public ExtendedJvTable(TableModel dataModel)
     {
         super(dataModel);
     }

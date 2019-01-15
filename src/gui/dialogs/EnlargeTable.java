@@ -1,7 +1,7 @@
 package gui.dialogs;
 
-import gui.tableElements.commons.JvTable;
-import gui.tableElements.commons.MyTableModel;
+import gui.tableElements.commons.ExtendedJvTable;
+import gui.tableElements.commons.ExtendedTableModel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,7 +27,7 @@ public class EnlargeTable extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private String[][] finalRowsZoomArea;
 	private String[] finalColumnsZoomArea;
-	private JvTable table;
+	private ExtendedJvTable table;
 	private int rowHeight=10;
 	private int columnWidth=1;
 	private Integer[] segmentSize=new Integer[4];
@@ -57,9 +57,9 @@ public class EnlargeTable extends JDialog {
 			
 		}
 		
-		MyTableModel zoomModel=new MyTableModel(finalColumnsZoomArea, rows);
+		ExtendedTableModel zoomModel=new ExtendedTableModel(finalColumnsZoomArea, rows);
 		
-		final JvTable generalTable=new JvTable(zoomModel);
+		final ExtendedJvTable generalTable=new ExtendedJvTable(zoomModel);
 		
 		generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		

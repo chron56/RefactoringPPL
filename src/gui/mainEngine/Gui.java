@@ -3,8 +3,8 @@ package gui.mainEngine;
 //try to extract relationship between gui and pplSchema and pplTransition
 
 import data.dataKeeper.GlobalDataKeeper;
-import gui.tableElements.commons.JvTable;
-import gui.tableElements.commons.MyTableModel;
+import gui.tableElements.commons.ExtendedJvTable;
+import gui.tableElements.commons.ExtendedTableModel;
 import gui.tableElements.tableRenderers.IDUHeaderTableRenderer;
 import gui.tableElements.tableRenderers.IDUTableRenderer;
 import outputSerializer.OutputSerializer;
@@ -64,11 +64,11 @@ public class Gui extends JFrame implements ActionListener{
 	private Integer[] segmentSizeDetailedTable=new Integer[3];
     private final JMenu mnProject;
     private final JMenuItem mntmInfo;
-    private MyTableModel detailedModel;
-    private MyTableModel generalModel;
-    private MyTableModel zoomModel;
-    private JvTable LifeTimeTable;
-    private JvTable zoomAreaTable;
+    private ExtendedTableModel detailedModel;
+    private ExtendedTableModel generalModel;
+    private ExtendedTableModel zoomModel;
+    private ExtendedJvTable LifeTimeTable;
+    private ExtendedJvTable zoomAreaTable;
     private GlobalDataKeeper globalDataKeeper;
 	
 	private String projectName="";
@@ -414,8 +414,8 @@ public class Gui extends JFrame implements ActionListener{
 
         }
 		
-        this.zoomModel = new MyTableModel(this.getFinalColumnsZoomArea(), rows);
-        final JvTable generalTable = new JvTable(this.zoomModel);
+        this.zoomModel = new ExtendedTableModel(this.getFinalColumnsZoomArea(), rows);
+        ExtendedJvTable generalTable = new ExtendedJvTable(this.zoomModel);
         
 		generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -676,10 +676,10 @@ public void makeGeneralTablePhases() {
 
     }
 
-    this.generalModel = new MyTableModel(this.getFinalColumns(), rows);
+    this.generalModel = new ExtendedTableModel(this.getFinalColumns(), rows);
    
     tlp.writeTable("Phases Table", this.getFinalColumns(), this.getFinalRows());
-    final JvTable generalTable = new JvTable(this.generalModel);
+    final ExtendedJvTable generalTable = new ExtendedJvTable(this.generalModel);
    
 	generalTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -974,9 +974,9 @@ private void makeZoomAreaTable() {
 
     }
 
-    this.zoomModel = new MyTableModel(this.getFinalColumnsZoomArea(), rowsZoom);
+    this.zoomModel = new ExtendedTableModel(this.getFinalColumnsZoomArea(), rowsZoom);
 
-    final JvTable zoomTable = new JvTable(this.zoomModel);
+    final ExtendedJvTable zoomTable = new ExtendedJvTable(this.zoomModel);
 
 	zoomTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -1173,9 +1173,9 @@ public void makeZoomAreaTableForCluster() {
 
     }
 
-    this.zoomModel = new MyTableModel(this.getFinalColumnsZoomArea(), rowsZoom);
+    this.zoomModel = new ExtendedTableModel(this.getFinalColumnsZoomArea(), rowsZoom);
 
-    final JvTable zoomTable = new JvTable(this.zoomModel);
+    ExtendedJvTable zoomTable = new ExtendedJvTable(this.zoomModel);
 
 	zoomTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -1361,9 +1361,9 @@ public void makeZoomAreaTableForCluster() {
 
 	public void makeDetailedTable(String[] columns , String[][] rows, final boolean levelized){
 
-        this.detailedModel = new MyTableModel(columns, rows);
+        this.detailedModel = new ExtendedTableModel(columns, rows);
 
-        final JvTable tmpLifeTimeTable = new JvTable(this.detailedModel);
+        ExtendedJvTable tmpLifeTimeTable = new ExtendedJvTable(this.detailedModel);
 
 		tmpLifeTimeTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
@@ -2041,11 +2041,11 @@ public void makeZoomAreaTableForCluster() {
 		this.columnWidth = columnWidth;
 	}
 
-	public JvTable getZoomAreaTable() {
+	public ExtendedJvTable getZoomAreaTable() {
 		return zoomAreaTable;
 	}
 
-	public void setZoomAreaTable(JvTable zoomAreaTable) {
+	public void setZoomAreaTable(ExtendedJvTable zoomAreaTable) {
 		this.zoomAreaTable = zoomAreaTable;
 	}
 
@@ -2073,11 +2073,11 @@ public void makeZoomAreaTableForCluster() {
 		this.firstLevelUndoRowsZoomArea = firstLevelUndoRowsZoomArea;
 	}
 
-	public JvTable getLifeTimeTable() {
+	public ExtendedJvTable getLifeTimeTable() {
 		return LifeTimeTable;
 	}
 
-	public void setLifeTimeTable(JvTable lifeTimeTable) {
+	public void setLifeTimeTable(ExtendedJvTable lifeTimeTable) {
 		LifeTimeTable = lifeTimeTable;
 	}
 

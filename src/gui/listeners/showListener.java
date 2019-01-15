@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import gui.dialogs.ParametersJDialog;
 import gui.mainEngine.Gui;
-import gui.tableElements.commons.JvTable;
+import gui.tableElements.commons.ExtendedJvTable;
 import outputSerializer.OutputSerializer;
 
 public class showListener{
@@ -151,7 +151,7 @@ public class showListener{
 			}
 	}
 	
-	public void showDetailsForPhase(JvTable generalTable ) {
+	public void showDetailsForPhase(ExtendedJvTable generalTable ) {
 		String sSelectedRow = gui.getFinalRows()[0][0];
 		System.out.println("?"+sSelectedRow);
         gui.setTablesSelected(new ArrayList<String>());

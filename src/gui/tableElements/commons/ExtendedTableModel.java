@@ -2,7 +2,7 @@ package gui.tableElements.commons;
 
 import javax.swing.table.AbstractTableModel;
 
-public class MyTableModel extends AbstractTableModel {
+public class ExtendedTableModel extends AbstractTableModel {
 	
 	/**
 	 * 
@@ -15,7 +15,7 @@ public class MyTableModel extends AbstractTableModel {
 	private String[][] rows=null;
 
 	
-	public MyTableModel(String[] tmpColumns, String [][] tmpRows){
+	public ExtendedTableModel(String[] tmpColumns, String [][] tmpRows){
 		
 		columns=tmpColumns;
 		rows=tmpRows;

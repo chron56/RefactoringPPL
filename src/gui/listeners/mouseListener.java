@@ -17,7 +17,7 @@ import javax.swing.tree.TreePath;
 
 import gui.dialogs.EnlargeTable;
 import gui.mainEngine.Gui;
-import gui.tableElements.commons.JvTable;
+import gui.tableElements.commons.ExtendedJvTable;
 import gui.tableElements.tableRenderers.IDUTableRenderer;
 
 public class mouseListener {
@@ -125,7 +125,7 @@ public class mouseListener {
         gui.getNotUniformlyDistributedButton().setVisible(false);
 	}
 	
-	public void listenToRightClick(Gui gui, JvTable generalTable , IDUTableRenderer renderer) {
+	public void listenToRightClick(Gui gui, ExtendedJvTable generalTable , IDUTableRenderer renderer) {
 		generalTable.addMouseListener(new MouseAdapter() {
 			@Override
 			   public void mouseClicked(MouseEvent e) {
@@ -216,7 +216,7 @@ public class mouseListener {
         gui.setZoomAreaTable(generalTable);
 	}
 	
-	public void listenToRightClick(Gui gui, JvTable table) {
+	public void listenToRightClick(Gui gui, ExtendedJvTable table) {
 		showListener showlistener = new showListener(gui);
 		
 		table.addMouseListener(new MouseAdapter() {
@@ -340,7 +340,7 @@ public class mouseListener {
 	}
 	
 	
-	public void listenToRightClick2(JvTable zoomTable) {
+	public void listenToRightClick2(ExtendedJvTable zoomTable) {
 		zoomTable.addMouseListener(new MouseAdapter() {
 			@Override
 			   public void mouseClicked(MouseEvent e) {
@@ -420,7 +420,7 @@ public class mouseListener {
 	    gui.setZoomAreaTable(zoomTable);
 	}
 	
-	public void listenToRightClick3(JvTable zoomTable) {
+	public void listenToRightClick3(ExtendedJvTable zoomTable) {
 	    zoomTable.addMouseListener(new MouseAdapter() {
 			@Override
 			   public void mouseClicked(MouseEvent e) {
