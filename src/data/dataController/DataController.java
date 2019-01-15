@@ -1,4 +1,4 @@
-package data.dataKeeper;
+package data.dataController;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import data.dataTrees.TreeConstructionGeneral;
 import data.dataTrees.TreeConstructionPhases;
 import data.dataTrees.TreeConstructionPhasesWithClusters;
 
-public class GlobalDataKeeper {
+public class DataController {
 
 	private TreeMap<String,PPLSchema> allPPLSchemas = null;
 	private TreeMap<String,PPLTable> allTables = null;
@@ -48,11 +48,11 @@ public class GlobalDataKeeper {
 	private TableConstructionIDU IDUTable;
 	ITableClustering mainEngine;
 	IPhase mainEnginePhase;
-	public GlobalDataKeeper() {
+	public DataController() {
 		
 	}
 	
-	public GlobalDataKeeper(String fl,String transitionsFile){
+	public DataController(String fl,String transitionsFile){
 		allPPLSchemas = new TreeMap<String,PPLSchema>();
 		allTables = new  TreeMap<String,PPLTable>();
 		atomicChanges = new ArrayList<AtomicChange>();
@@ -61,6 +61,7 @@ public class GlobalDataKeeper {
 		allPPLTransitions = new TreeMap<Integer,PPLTransition>();
 		filename=fl;
 		this.transitionsFile=transitionsFile;
+		setData();
 	}
 	
 	

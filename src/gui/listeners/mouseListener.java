@@ -117,7 +117,7 @@ public class mouseListener {
         gui.getNotUniformlyDistributedButton().addMouseListener(new MouseAdapter() {
 			@Override
 			   public void mouseClicked(MouseEvent e) {
-                gui.getLifeTimeTable().notUniformlyDistributed(gui.getGlobalDataKeeper());
+                gui.getLifeTimeTable().notUniformlyDistributed(gui.getDataController());
 
             }
 		});

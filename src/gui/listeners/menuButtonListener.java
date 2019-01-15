@@ -31,13 +31,13 @@ public class menuButtonListener{
             System.out.println("Output Assessment2:" + gui.getOutputAssessment2());
             System.out.println("Transitions File:" + gui.getTransitionsFile());
 
-            System.out.println("Schemas:" + gui.getGlobalDataKeeper().getAllPPLSchemas().size());
-            System.out.println("Transitions:" + gui.getGlobalDataKeeper().getAllPPLTransitions().size());
-            System.out.println("Tables:" + gui.getGlobalDataKeeper().getAllPPLTables().size());
+            System.out.println("Schemas:" + gui.getDataController().getAllPPLSchemas().size());
+            System.out.println("Transitions:" + gui.getDataController().getAllPPLTransitions().size());
+            System.out.println("Tables:" + gui.getDataController().getAllPPLTables().size());
 
 
-            ProjectInfoDialog infoDialog = new ProjectInfoDialog(gui.getProjectName(), gui.getDatasetTxt(), gui.getInputCsv(), gui.getTransitionsFile(), gui.getGlobalDataKeeper().getAllPPLSchemas().size(),
-                    gui.getGlobalDataKeeper().getAllPPLTransitions().size(), gui.getGlobalDataKeeper().getAllPPLTables().size());
+            ProjectInfoDialog infoDialog = new ProjectInfoDialog(gui.getProjectName(), gui.getDatasetTxt(), gui.getInputCsv(), gui.getTransitionsFile(), gui.getDataController().getAllPPLSchemas().size(),
+                    gui.getDataController().getAllPPLTransitions().size(), gui.getDataController().getAllPPLTables().size());
 
 			infoDialog.setVisible(true);
 		}

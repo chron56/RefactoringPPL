@@ -15,10 +15,10 @@ public class showListener{
 
 	public void showLifetimeTable( OutputSerializer tlp ) {
 		if (!(gui.getCurrentProject() == null)) {
-			gui.getGlobalDataKeeper().constructTableWithAllSquares();
-			String[] columns=gui.getGlobalDataKeeper().getTableColumns("AllSquares");
-			String [][] rows=gui.getGlobalDataKeeper().getTableRows("AllSquares");
-			gui.setSegmentSizeDetailedTable(gui.getGlobalDataKeeper().getSegmentSize("AllSquares"));
+			gui.getDataController().constructTableWithAllSquares();
+			String[] columns=gui.getDataController().getTableColumns("AllSquares");
+			String [][] rows=gui.getDataController().getTableRows("AllSquares");
+			gui.setSegmentSizeDetailedTable(gui.getDataController().getSegmentSize("AllSquares"));
             gui.getTabbedPane().setSelectedIndex(0);
             gui.makeDetailedTable(columns, rows, true);
 			tlp.writeString("\n-----[ BUTTON T4 ]-----\n");
@@ -35,11 +35,11 @@ public class showListener{
 		if (!(gui.getCurrentProject() == null)) {               	
             gui.getZoomInButton().setVisible(true);
             gui.getZoomOutButton().setVisible(true);
-    		gui.getGlobalDataKeeper().constructTableConstructionIDU();
-    		final String[] columns=gui.getGlobalDataKeeper().getTableColumns("IDU");
-    		final String[][] rows=gui.getGlobalDataKeeper().getTableRows("IDU");
-    		gui.setSegmentSizeZoomArea(gui.getGlobalDataKeeper().getSegmentSize("IDU"));
-            System.out.println("Schemas: " + gui.getGlobalDataKeeper().getAllPPLSchemas().size());
+    		gui.getDataController().constructTableConstructionIDU();
+    		final String[] columns=gui.getDataController().getTableColumns("IDU");
+    		final String[][] rows=gui.getDataController().getTableRows("IDU");
+    		gui.setSegmentSizeZoomArea(gui.getDataController().getSegmentSize("IDU"));
+            System.out.println("Schemas: " + gui.getDataController().getAllPPLSchemas().size());
 			System.out.println("C: "+columns.length+" R: "+rows.length);
             gui.setFinalColumnsZoomArea(columns);                
             gui.setFinalRowsZoomArea(rows);               
@@ -74,13 +74,13 @@ public class showListener{
                 gui.setNumberOfPhases(jD.getNumberOfPhases());
                 tlp.writeString("\n-----[ BUTTON T2 ]-----\n");
                 System.out.println(gui.getTimeWeight() + " " + gui.getChangeWeight());
-                gui.getGlobalDataKeeper().setPhaseCollectors(gui.getNumberOfPhases(),gui.getInputCsv(), gui.getOutputAssessment1(), gui.getOutputAssessment2(), gui.getTimeWeight(), gui.getChangeWeight(), gui.getPreProcessingTime(), gui.getPreProcessingChange());
-                if (gui.getGlobalDataKeeper().getPhaseCollectors().size() != 0) {
-            		gui.getGlobalDataKeeper().constructPhasesTable();
-            		final String[] columns=gui.getGlobalDataKeeper().getTableColumns("Phases");
-            		final String[][] rows=gui.getGlobalDataKeeper().getTableRows("Phases");
-                    gui.setSegmentSize(gui.getGlobalDataKeeper().getSegmentSize("Phases"));
-                    System.out.println("Schemas: " + gui.getGlobalDataKeeper().getAllPPLSchemas().size());
+                gui.getDataController().setPhaseCollectors(gui.getNumberOfPhases(),gui.getInputCsv(), gui.getOutputAssessment1(), gui.getOutputAssessment2(), gui.getTimeWeight(), gui.getChangeWeight(), gui.getPreProcessingTime(), gui.getPreProcessingChange());
+                if (gui.getDataController().getPhaseCollectors().size() != 0) {
+            		gui.getDataController().constructPhasesTable();
+            		final String[] columns=gui.getDataController().getTableColumns("Phases");
+            		final String[][] rows=gui.getDataController().getTableRows("Phases");
+                    gui.setSegmentSize(gui.getDataController().getSegmentSize("Phases"));
+                    System.out.println("Schemas: " + gui.getDataController().getAllPPLSchemas().size());
 					System.out.println("C: "+columns.length+" R: "+rows.length);						
                     gui.setFinalColumns(columns);
                     gui.setFinalRows(rows);
@@ -122,14 +122,14 @@ public class showListener{
                  tlp.writeString("\n-----[ BUTTON T3 ]-----\n");                      
                  System.out.println(gui.getTimeWeight() + " " + gui.getChangeWeight());	
 				 System.out.println("\n\n\n");
-                 gui.getGlobalDataKeeper().setPhaseCollectors(gui.getNumberOfPhases(),gui.getInputCsv(), gui.getOutputAssessment1(), gui.getOutputAssessment2(), gui.getTimeWeight(), gui.getChangeWeight(), gui.getPreProcessingTime(), gui.getPreProcessingChange());
-                 gui.getGlobalDataKeeper().extractClusters(gui.getNumberOfClusters(),gui.getBirthWeight(), gui.getDeathWeight(), gui.getChangeWeightCl());
-                 if (gui.getGlobalDataKeeper().getPhaseCollectors().size() != 0) {
-                 	gui.getGlobalDataKeeper().constructTableWithClusters();
-                    final String[] columns=gui.getGlobalDataKeeper().getTableColumns("Clusters");
-                    final String[][] rows=gui.getGlobalDataKeeper().getTableRows("Clusters");
-                    gui.setSegmentSize(gui.getGlobalDataKeeper().getSegmentSize("Clusters"));                        
-                    System.out.println("Schemas: " + gui.getGlobalDataKeeper().getAllPPLSchemas().size());
+                 gui.getDataController().setPhaseCollectors(gui.getNumberOfPhases(),gui.getInputCsv(), gui.getOutputAssessment1(), gui.getOutputAssessment2(), gui.getTimeWeight(), gui.getChangeWeight(), gui.getPreProcessingTime(), gui.getPreProcessingChange());
+                 gui.getDataController().extractClusters(gui.getNumberOfClusters(),gui.getBirthWeight(), gui.getDeathWeight(), gui.getChangeWeightCl());
+                 if (gui.getDataController().getPhaseCollectors().size() != 0) {
+                 	gui.getDataController().constructTableWithClusters();
+                    final String[] columns=gui.getDataController().getTableColumns("Clusters");
+                    final String[][] rows=gui.getDataController().getTableRows("Clusters");
+                    gui.setSegmentSize(gui.getDataController().getSegmentSize("Clusters"));                        
+                    System.out.println("Schemas: " + gui.getDataController().getAllPPLSchemas().size());
 					System.out.println("C: "+columns.length+" R: "+rows.length);							
                     gui.setFinalColumns(columns);
                     gui.setFinalRows(rows);                           

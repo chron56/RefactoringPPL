@@ -4,7 +4,7 @@ package gui.tableElements.commons;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataController.DataController;
 
 public class ExtendedJvTable extends JTable {
 
@@ -53,15 +53,15 @@ public class ExtendedJvTable extends JTable {
     }
    
     
-    public void notUniformlyDistributed(GlobalDataKeeper globalDataKeeper){
+    public void notUniformlyDistributed(DataController dataController){
     	for(int i=0; i<super.getColumnCount(); i++){
     		if(i==0){
     			super.getColumnModel().getColumn(0).setPreferredWidth(60);
     			
     		}
     		else{
-    			int tot=750/globalDataKeeper.getAllPPLTransitions().size();
-    			int sizeOfColumn=globalDataKeeper.getPhaseCollectors().get(0).getPhases().get(i-1).getSize()*tot;
+    			int tot=750/dataController.getAllPPLTransitions().size();
+    			int sizeOfColumn=dataController.getPhaseCollectors().get(0).getPhases().get(i-1).getSize()*tot;
     			super.getColumnModel().getColumn(i).setPreferredWidth(sizeOfColumn);
     			
     		}

@@ -2,7 +2,7 @@ package gui.mainEngine;
 
 //try to extract relationship between gui and pplSchema and pplTransition
 
-import data.dataKeeper.GlobalDataKeeper;
+import data.dataController.DataController;
 import gui.tableElements.commons.ExtendedJvTable;
 import gui.tableElements.commons.ExtendedTableModel;
 import gui.tableElements.tableRenderers.IDUHeaderTableRenderer;
@@ -25,11 +25,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class Gui extends JFrame implements ActionListener{
+public class Gui extends JFrame{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
     private final JPanel contentPane;
@@ -69,7 +66,7 @@ public class Gui extends JFrame implements ActionListener{
     private ExtendedTableModel zoomModel;
     private ExtendedJvTable LifeTimeTable;
     private ExtendedJvTable zoomAreaTable;
-    private GlobalDataKeeper globalDataKeeper;
+    private DataController dataController;
 	
 	private String projectName="";
 	private String datasetTxt="";
@@ -395,7 +392,7 @@ public class Gui extends JFrame implements ActionListener{
 
 	public void makeGeneralTableIDU() {
 
-        String[][] sortedRows = this.getGlobalDataKeeper().getSortedRows(this.getFinalRowsZoomArea());
+        String[][] sortedRows = this.getDataController().getSortedRows(this.getFinalRowsZoomArea());
         this.setFinalRowsZoomArea(sortedRows);
         this.setShowingPld(true);
         this.getZoomInButton().setVisible(true);
@@ -451,8 +448,8 @@ public class Gui extends JFrame implements ActionListener{
 		int end=-1;
 		
         if (this.getWholeCol() != -1 && this.getWholeCol() != 0) {
-            start = this.getGlobalDataKeeper().getPhases().get(this.getWholeCol() - 1).getStartPos();
-            end = this.getGlobalDataKeeper().getPhases().get(this.getWholeCol() - 1).getEndPos();
+            start = this.getDataController().getPhases().get(this.getWholeCol() - 1).getStartPos();
+            end = this.getDataController().getPhases().get(this.getWholeCol() - 1).getEndPos();
 		}
         
 
@@ -468,7 +465,7 @@ public class Gui extends JFrame implements ActionListener{
 			}
 		}
        
-        final IDUTableRenderer renderer = new IDUTableRenderer(Gui.this, this.getFinalRowsZoomArea(), this.getGlobalDataKeeper(), this.getSegmentSize());
+        final IDUTableRenderer renderer = new IDUTableRenderer(Gui.this, this.getFinalRowsZoomArea(), this.getDataController(), this.getSegmentSize());
 
        
 		generalTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer()
@@ -491,15 +488,15 @@ public class Gui extends JFrame implements ActionListener{
                 if (column == Gui.this.getWholeColZoomArea() && Gui.this.getWholeColZoomArea() != 0) {
 
 		        	String description="Transition ID:"+table.getColumnName(column)+"\n";
-                    description = description + "Old Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().
+                    description = description + "Old Version Name:" + Gui.this.getDataController().getAllPPLTransitions().
 	        				get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()+"\n";
-                    description = description + "New Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().
+                    description = description + "New Version Name:" + Gui.this.getDataController().getAllPPLTransitions().
                             get(Integer.parseInt(table.getColumnName(column))).getNewVersionName() + "\n";
 
-                    description = description + "Transition Changes:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfChangesForOneTr() + "\n";
-                    description = description + "Additions:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfAdditionsForOneTr() + "\n";
-                    description = description + "Deletions:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfDeletionsForOneTr() + "\n";
-                    description = description + "Updates:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfUpdatesForOneTr() + "\n";
+                    description = description + "Transition Changes:" + Gui.this.getDataController().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfChangesForOneTr() + "\n";
+                    description = description + "Additions:" + Gui.this.getDataController().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfAdditionsForOneTr() + "\n";
+                    description = description + "Deletions:" + Gui.this.getDataController().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfDeletionsForOneTr() + "\n";
+                    description = description + "Updates:" + Gui.this.getDataController().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfUpdatesForOneTr() + "\n";
 
                     Gui.this.descriptionText.setText(description);
                     
@@ -515,11 +512,11 @@ public class Gui extends JFrame implements ActionListener{
 		        		c.setBackground(cl);
 
                         String description = "Table:" + Gui.this.getFinalRowsZoomArea()[row][0] + "\n";
-                        description = description + "Birth Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirth() + "\n";
-                        description = description + "Birth Version ID:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirthVersionID() + "\n";
-                        description = description + "Death Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeath() + "\n";
-                        description = description + "Death Version ID:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeathVersionID() + "\n";
-                        description = description + "Total Changes:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getTotalChanges() + "\n";
+                        description = description + "Birth Version Name:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirth() + "\n";
+                        description = description + "Birth Version ID:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirthVersionID() + "\n";
+                        description = description + "Death Version Name:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeath() + "\n";
+                        description = description + "Death Version ID:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeathVersionID() + "\n";
+                        description = description + "Total Changes:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getTotalChanges() + "\n";
                         Gui.this.descriptionText.setText(description);
                                     
 		        		return c;
@@ -548,21 +545,21 @@ public class Gui extends JFrame implements ActionListener{
 		        		if(!table.getColumnName(column).contains("Table name")){
                             description = "Table:" + Gui.this.getFinalRowsZoomArea()[row][0] + "\n";
 
-                            description = description + "Old Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().
+                            description = description + "Old Version Name:" + Gui.this.getDataController().getAllPPLTransitions().
 			        				get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()+"\n";
-                            description = description + "New Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().
+                            description = description + "New Version Name:" + Gui.this.getDataController().getAllPPLTransitions().
                                     get(Integer.parseInt(table.getColumnName(column))).getNewVersionName() + "\n";
                             
                             
-                            if (Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
+                            if (Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
 			        				getTableChanges().getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column)))!=null){
-                                description = description + "Transition Changes:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
+                                description = description + "Transition Changes:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
 			        				getTableChanges().getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column))).size()+"\n";
-                                description = description + "Additions:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
+                                description = description + "Additions:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
 			        					getNumberOfAdditionsForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
-                                description = description + "Deletions:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
+                                description = description + "Deletions:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
 			        					getNumberOfDeletionsForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
-                                description = description + "Updates:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
+                                description = description + "Updates:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
 			        					getNumberOfUpdatesForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
 
                                 
@@ -719,17 +716,17 @@ public void makeGeneralTablePhases() {
             if (column == Gui.this.getWholeCol() && Gui.this.getWholeCol() != 0) {
 
 	        	String description=table.getColumnName(column)+"\n";
-                description = description + "First Transition ID:" + Gui.this.getGlobalDataKeeper().getPhases().
+                description = description + "First Transition ID:" + Gui.this.getDataController().getPhases().
         				get(column-1).getStartPos()+"\n";
-                description = description + "Last Transition ID:" + Gui.this.getGlobalDataKeeper().getPhases().
+                description = description + "Last Transition ID:" + Gui.this.getDataController().getPhases().
         				get(column-1).getEndPos()+"\n";
-                description = description + "Total Changes For This Phase:" + Gui.this.getGlobalDataKeeper().getPhases().
+                description = description + "Total Changes For This Phase:" + Gui.this.getDataController().getPhases().
         				get(column-1).getTotalUpdates()+"\n";
-                description = description + "Additions For This Phase:" + Gui.this.getGlobalDataKeeper().getPhases().
+                description = description + "Additions For This Phase:" + Gui.this.getDataController().getPhases().
         				get(column-1).getTotalAdditionsOfPhase()+"\n";
-                description = description + "Deletions For This Phase:" + Gui.this.getGlobalDataKeeper().getPhases().
+                description = description + "Deletions For This Phase:" + Gui.this.getDataController().getPhases().
         				get(column-1).getTotalDeletionsOfPhase()+"\n";
-                description = description + "Updates For This Phase:" + Gui.this.getGlobalDataKeeper().getPhases().
+                description = description + "Updates For This Phase:" + Gui.this.getDataController().getPhases().
         				get(column-1).getTotalUpdatesOfPhase()+"\n";
 
                 Gui.this.descriptionText.setText(description);
@@ -745,12 +742,12 @@ public void makeGeneralTablePhases() {
 	        		//row selection cluster case
                     if (Gui.this.getFinalRows()[row][0].contains("Cluster")) {
                         String description = "Cluster:" + Gui.this.getFinalRows()[row][0] + "\n";
-                        description = description + "Birth Version Name:" + Gui.this.getGlobalDataKeeper().getClusters().get(row).getBirthSqlFile() + "\n";
-                        description = description + "Birth Version ID:" + Gui.this.getGlobalDataKeeper().getClusters().get(row).getBirth() + "\n";
-                        description = description + "Death Version Name:" + Gui.this.getGlobalDataKeeper().getClusters().get(row).getDeathSqlFile() + "\n";
-                        description = description + "Death Version ID:" + Gui.this.getGlobalDataKeeper().getClusters().get(row).getDeath() + "\n";
-                        description = description + "Tables:" + Gui.this.getGlobalDataKeeper().getClusters().get(row).getNamesOfTables().size() + "\n";
-                        description = description + "Total Changes:" + Gui.this.getGlobalDataKeeper().getClusters().get(row).getTotalChanges() + "\n";
+                        description = description + "Birth Version Name:" + Gui.this.getDataController().getClusters().get(row).getBirthSqlFile() + "\n";
+                        description = description + "Birth Version ID:" + Gui.this.getDataController().getClusters().get(row).getBirth() + "\n";
+                        description = description + "Death Version Name:" + Gui.this.getDataController().getClusters().get(row).getDeathSqlFile() + "\n";
+                        description = description + "Death Version ID:" + Gui.this.getDataController().getClusters().get(row).getDeath() + "\n";
+                        description = description + "Tables:" + Gui.this.getDataController().getClusters().get(row).getNamesOfTables().size() + "\n";
+                        description = description + "Total Changes:" + Gui.this.getDataController().getClusters().get(row).getTotalChanges() + "\n";
                         
                         Gui.this.descriptionText.setText(description);
                        
@@ -759,11 +756,11 @@ public void makeGeneralTablePhases() {
 	        		}
 	        		else{// row selection table case
                         String description = "Table:" + Gui.this.getFinalRows()[row][0] + "\n";
-                        description = description + "Birth Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getBirth() + "\n";
-                        description = description + "Birth Version ID:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getBirthVersionID() + "\n";
-                        description = description + "Death Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getDeath() + "\n";
-                        description = description + "Death Version ID:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getDeathVersionID() + "\n";
-                        description = description + "Total Changes:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getTotalChanges() + "\n";
+                        description = description + "Birth Version Name:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getBirth() + "\n";
+                        description = description + "Birth Version ID:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getBirthVersionID() + "\n";
+                        description = description + "Death Version Name:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getDeath() + "\n";
+                        description = description + "Death Version ID:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getDeathVersionID() + "\n";
+                        description = description + "Total Changes:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getTotalChanges() + "\n";
                         Gui.this.descriptionText.setText(description);
                         
                      }
@@ -795,12 +792,12 @@ public void makeGeneralTablePhases() {
                         if (Gui.this.getFinalRows()[row][0].contains("Cluster")) {
 
                             description = Gui.this.getFinalRows()[row][0] + "\n";
-                            description = description + "Tables:" + Gui.this.getGlobalDataKeeper().getClusters().get(row).getNamesOfTables().size() + "\n\n";
+                            description = description + "Tables:" + Gui.this.getDataController().getClusters().get(row).getNamesOfTables().size() + "\n\n";
 
 			        		description=description+table.getColumnName(column)+"\n";
-                            description = description + "First Transition ID:" + Gui.this.getGlobalDataKeeper().getPhases().
+                            description = description + "First Transition ID:" + Gui.this.getDataController().getPhases().
 			        				get(column-1).getStartPos()+"\n";
-                            description = description + "Last Transition ID:" + Gui.this.getGlobalDataKeeper().getPhases().
+                            description = description + "Last Transition ID:" + Gui.this.getDataController().getPhases().
 			        				get(column-1).getEndPos()+"\n\n";
 			        		description=description+"totTotal Changes For This Phase:"+tmpValue+"\n";
 			        		
@@ -809,15 +806,15 @@ public void makeGeneralTablePhases() {
 		        		}
 		        		else{//each cell table case
 		        			description=table.getColumnName(column)+"\n";
-                            description = description + "First Transition ID:" + Gui.this.getGlobalDataKeeper().getPhases().
+                            description = description + "First Transition ID:" + Gui.this.getDataController().getPhases().
 			        				get(column-1).getStartPos()+"\n";
-                            description = description + "Last Transition ID:" + Gui.this.getGlobalDataKeeper().getPhases().
+                            description = description + "Last Transition ID:" + Gui.this.getDataController().getPhases().
 			        				get(column-1).getEndPos()+"\n\n";
                             description = description + "Table:" + Gui.this.getFinalRows()[row][0] + "\n";
-                            description = description + "Birth Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getBirth() + "\n";
-                            description = description + "Birth Version ID:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getBirthVersionID() + "\n";
-                            description = description + "Death Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getDeath() + "\n";
-                            description = description + "Death Version ID:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getDeathVersionID() + "\n";
+                            description = description + "Birth Version Name:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getBirth() + "\n";
+                            description = description + "Birth Version ID:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getBirthVersionID() + "\n";
+                            description = description + "Death Version Name:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getDeath() + "\n";
+                            description = description + "Death Version ID:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRows()[row][0]).getDeathVersionID() + "\n";
 			        		description=description+"Total Changes For This Phase:"+tmpValue+"\n";
 			        					        		
 		        		}
@@ -902,12 +899,12 @@ public void makeGeneralTablePhases() {
 
 
 public void showSelectionToZoomArea(int selectedColumn){
-	this.getGlobalDataKeeper().constructZoomAreaTable( this.getTablesSelected(), selectedColumn);
-	final String[] columns=this.getGlobalDataKeeper().getTableColumns("ZoomArea");
-	final String[][] rows=this.getGlobalDataKeeper().getTableRows("ZoomArea");
-    this.setSegmentSizeZoomArea(this.getGlobalDataKeeper().getSegmentSize("ZoomArea"));
+	this.getDataController().constructZoomAreaTable( this.getTablesSelected(), selectedColumn);
+	final String[] columns=this.getDataController().getTableColumns("ZoomArea");
+	final String[][] rows=this.getDataController().getTableRows("ZoomArea");
+    this.setSegmentSizeZoomArea(this.getDataController().getSegmentSize("ZoomArea"));
 
-    System.out.println("Schemas: " + this.getGlobalDataKeeper().getAllPPLSchemas().size());
+    System.out.println("Schemas: " + this.getDataController().getAllPPLSchemas().size());
 	System.out.println("C: "+columns.length+" R: "+rows.length);
 
     this.setFinalColumnsZoomArea(columns);
@@ -926,7 +923,7 @@ public void showClusterSelectionToZoomArea(int selectedColumn,String selectedClu
     for (int i = 0; i < this.getTablesSelected().size(); i++) {
         String[] selectedClusterSplit = this.getTablesSelected().get(i).split(" ");
 		int cluster=Integer.parseInt(selectedClusterSplit[1]);
-        ArrayList<String> namesOfTables = this.getGlobalDataKeeper().getClusters().get(cluster).getNamesOfTables();
+        ArrayList<String> namesOfTables = this.getDataController().getClusters().get(cluster).getNamesOfTables();
 		for(int j=0; j<namesOfTables.size(); j++){
 			tablesOfCluster.add(namesOfTables.get(j));
 		}
@@ -937,19 +934,19 @@ public void showClusterSelectionToZoomArea(int selectedColumn,String selectedClu
 	final String[] columns;
 	final String[][] rows;
 	if (selectedColumn==0) {
-		this.getGlobalDataKeeper().constructClusterTablesPhasesZoomA(tablesOfCluster);
-		columns=this.getGlobalDataKeeper().getTableColumns("PhasesZoomA");
-		rows=this.getGlobalDataKeeper().getTableRows("PhasesZoomA");
-		this.setSegmentSizeZoomArea(this.getGlobalDataKeeper().getSegmentSize("PhasesZoomA")); 
+		this.getDataController().constructClusterTablesPhasesZoomA(tablesOfCluster);
+		columns=this.getDataController().getTableColumns("PhasesZoomA");
+		rows=this.getDataController().getTableRows("PhasesZoomA");
+		this.setSegmentSizeZoomArea(this.getDataController().getSegmentSize("PhasesZoomA")); 
 	}
 	else{
-		this.getGlobalDataKeeper().constructZoomAreaTable( this.getTablesSelected(), selectedColumn);
-		columns=this.getGlobalDataKeeper().getTableColumns("ZoomArea");
-		rows=this.getGlobalDataKeeper().getTableRows("ZoomArea");
-	    this.setSegmentSizeZoomArea(this.getGlobalDataKeeper().getSegmentSize("ZoomArea"));
+		this.getDataController().constructZoomAreaTable( this.getTablesSelected(), selectedColumn);
+		columns=this.getDataController().getTableColumns("ZoomArea");
+		rows=this.getDataController().getTableRows("ZoomArea");
+	    this.setSegmentSizeZoomArea(this.getDataController().getSegmentSize("ZoomArea"));
 	}
 
-    System.out.println("Schemas: " + this.getGlobalDataKeeper().getAllPPLSchemas().size());
+    System.out.println("Schemas: " + this.getDataController().getAllPPLSchemas().size());
 	System.out.println("C: "+columns.length+" R: "+rows.length);
 
     this.setFinalColumnsZoomArea(columns);
@@ -1018,15 +1015,15 @@ private void makeZoomAreaTable() {
             if (column == Gui.this.getWholeColZoomArea()) {
 
 	        	String description="Transition ID:"+table.getColumnName(column)+"\n";
-                description = description + "Old Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().
+                description = description + "Old Version Name:" + Gui.this.getDataController().getAllPPLTransitions().
         				get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()+"\n";
-                description = description + "New Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().
+                description = description + "New Version Name:" + Gui.this.getDataController().getAllPPLTransitions().
                         get(Integer.parseInt(table.getColumnName(column))).getNewVersionName() + "\n";
 
-                description = description + "Transition Changes:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfClusterChangesForOneTr(rowsZoom) + "\n";
-                description = description + "Additions:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfClusterAdditionsForOneTr(rowsZoom) + "\n";
-                description = description + "Deletions:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfClusterDeletionsForOneTr(rowsZoom) + "\n";
-                description = description + "Updates:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfClusterUpdatesForOneTr(rowsZoom) + "\n";
+                description = description + "Transition Changes:" + Gui.this.getDataController().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfClusterChangesForOneTr(rowsZoom) + "\n";
+                description = description + "Additions:" + Gui.this.getDataController().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfClusterAdditionsForOneTr(rowsZoom) + "\n";
+                description = description + "Deletions:" + Gui.this.getDataController().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfClusterDeletionsForOneTr(rowsZoom) + "\n";
+                description = description + "Updates:" + Gui.this.getDataController().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNumberOfClusterUpdatesForOneTr(rowsZoom) + "\n";
 
 
                 Gui.this.descriptionText.setText(description);
@@ -1037,11 +1034,11 @@ private void makeZoomAreaTable() {
 	        } else if (Gui.this.getSelectedColumnZoomArea() == 0) {
 	        	if (isSelected){
                     String description = "Table:" + Gui.this.getFinalRowsZoomArea()[row][0] + "\n";
-                    description = description + "Birth Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirth() + "\n";
-                    description = description + "Birth Version ID:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirthVersionID() + "\n";
-                    description = description + "Death Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeath() + "\n";
-                    description = description + "Death Version ID:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeathVersionID() + "\n";
-                    description = description + "Total Changes:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
+                    description = description + "Birth Version Name:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirth() + "\n";
+                    description = description + "Birth Version ID:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirthVersionID() + "\n";
+                    description = description + "Death Version Name:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeath() + "\n";
+                    description = description + "Death Version ID:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeathVersionID() + "\n";
+                    description = description + "Total Changes:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
 	        				getTotalChangesForOnePhase(Integer.parseInt(table.getColumnName(1)), Integer.parseInt(table.getColumnName(table.getColumnCount()-1)))+"\n";
                     Gui.this.descriptionText.setText(description);
 
@@ -1058,19 +1055,19 @@ private void makeZoomAreaTable() {
 	        		if(!table.getColumnName(column).contains("Table name")){
                         description = "Table:" + Gui.this.getFinalRowsZoomArea()[row][0] + "\n";
 
-                        description = description + "Old Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().
+                        description = description + "Old Version Name:" + Gui.this.getDataController().getAllPPLTransitions().
 		        				get(Integer.parseInt(table.getColumnName(column))).getOldVersionName()+"\n";
-                        description = description + "New Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().
+                        description = description + "New Version Name:" + Gui.this.getDataController().getAllPPLTransitions().
                                 get(Integer.parseInt(table.getColumnName(column))).getNewVersionName() + "\n";
-                        if (Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
+                        if (Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
 		        				getTableChanges().getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column)))!=null){
-                            description = description + "Transition Changes:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
+                            description = description + "Transition Changes:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
 		        				getTableChanges().getTableAtChForOneTransition(Integer.parseInt(table.getColumnName(column))).size()+"\n";
-                            description = description + "Additions:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
+                            description = description + "Additions:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
 		        					getNumberOfAdditionsForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
-                            description = description + "Deletions:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
+                            description = description + "Deletions:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
 		        					getNumberOfDeletionsForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
-                            description = description + "Updates:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
+                            description = description + "Updates:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).
 		        					getNumberOfUpdatesForOneTr(Integer.parseInt(table.getColumnName(column)))+"\n";
 
 		        		}
@@ -1217,17 +1214,17 @@ public void makeZoomAreaTableForCluster() {
             if (column == Gui.this.getWholeColZoomArea() && Gui.this.getWholeColZoomArea() != 0) {
 
 	        	String description=table.getColumnName(column)+"\n";
-                description = description + "First Transition ID:" + Gui.this.getGlobalDataKeeper().getPhases().
+                description = description + "First Transition ID:" + Gui.this.getDataController().getPhases().
         				get(column-1).getStartPos()+"\n";
-                description = description + "Last Transition ID:" + Gui.this.getGlobalDataKeeper().getPhases().
+                description = description + "Last Transition ID:" + Gui.this.getDataController().getPhases().
         				get(column-1).getEndPos()+"\n";
-                description = description + "Total Changes For This Phase:" + Gui.this.getGlobalDataKeeper().getPhases().
+                description = description + "Total Changes For This Phase:" + Gui.this.getDataController().getPhases().
         				get(column-1).getTotalUpdates()+"\n";
-                description = description + "Additions For This Phase:" + Gui.this.getGlobalDataKeeper().getPhases().
+                description = description + "Additions For This Phase:" + Gui.this.getDataController().getPhases().
         				get(column-1).getTotalAdditionsOfPhase()+"\n";
-                description = description + "Deletions For This Phase:" + Gui.this.getGlobalDataKeeper().getPhases().
+                description = description + "Deletions For This Phase:" + Gui.this.getDataController().getPhases().
         				get(column-1).getTotalDeletionsOfPhase()+"\n";
-                description = description + "Updates For This Phase:" + Gui.this.getGlobalDataKeeper().getPhases().
+                description = description + "Updates For This Phase:" + Gui.this.getDataController().getPhases().
         				get(column-1).getTotalUpdatesOfPhase()+"\n";
 
                 Gui.this.descriptionText.setText(description);
@@ -1241,11 +1238,11 @@ public void makeZoomAreaTableForCluster() {
 
 
                     String description = "Table:" + Gui.this.getFinalRowsZoomArea()[row][0] + "\n";
-                    description = description + "Birth Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirth() + "\n";
-                    description = description + "Birth Version ID:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirthVersionID() + "\n";
-                    description = description + "Death Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeath() + "\n";
-                    description = description + "Death Version ID:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeathVersionID() + "\n";
-                    description = description + "Total Changes:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getTotalChanges() + "\n";
+                    description = description + "Birth Version Name:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirth() + "\n";
+                    description = description + "Birth Version ID:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirthVersionID() + "\n";
+                    description = description + "Death Version Name:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeath() + "\n";
+                    description = description + "Death Version ID:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeathVersionID() + "\n";
+                    description = description + "Total Changes:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getTotalChanges() + "\n";
                     Gui.this.descriptionText.setText(description);
 
 
@@ -1267,18 +1264,18 @@ public void makeZoomAreaTableForCluster() {
 
                         description="Transition "+table.getColumnName(column)+"\n";
 
-                        description = description + "Old Version:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getOldVersionName() + "\n";
-                        description = description + "New Version:" + Gui.this.getGlobalDataKeeper().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNewVersionName() + "\n\n";
+                        description = description + "Old Version:" + Gui.this.getDataController().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getOldVersionName() + "\n";
+                        description = description + "New Version:" + Gui.this.getDataController().getAllPPLTransitions().get(Integer.parseInt(table.getColumnName(column))).getNewVersionName() + "\n\n";
 
-	        			//description=description+"First Transition ID:"+globalDataKeeper.getPhases().
+	        			//description=description+"First Transition ID:"+DataController.getPhases().
 		        				//get(column-1).getStartPos()+"\n";
-		        		//description=description+"Last Transition ID:"+globalDataKeeper.getPhases().
+		        		//description=description+"Last Transition ID:"+DataController.getPhases().
 		        			//	get(column-1).getEndPos()+"\n\n";
                         description = description + "Table:" + Gui.this.getFinalRowsZoomArea()[row][0] + "\n";
-                        description = description + "Birth Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirth() + "\n";
-                        description = description + "Birth Version ID:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirthVersionID() + "\n";
-                        description = description + "Death Version Name:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeath() + "\n";
-                        description = description + "Death Version ID:" + Gui.this.getGlobalDataKeeper().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeathVersionID() + "\n";
+                        description = description + "Birth Version Name:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirth() + "\n";
+                        description = description + "Birth Version ID:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getBirthVersionID() + "\n";
+                        description = description + "Death Version Name:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeath() + "\n";
+                        description = description + "Death Version ID:" + Gui.this.getDataController().getAllPPLTables().get(Gui.this.getFinalRowsZoomArea()[row][0]).getDeathVersionID() + "\n";
 		        		description=description+"Total Changes For This Phase:"+tmpValue+"\n";
 
                         Gui.this.descriptionText.setText(description);
@@ -1614,19 +1611,18 @@ public void makeZoomAreaTableForCluster() {
         System.out.println("Output Assessment2:" + this.getOutputAssessment2());
         System.out.println("Transitions File:" + this.getTransitionsFile());
 
-        this.setGlobalDataKeeper(new GlobalDataKeeper(this.getDatasetTxt(), this.getTransitionsFile()));
-        this.getGlobalDataKeeper().setData();
-        System.out.println(this.getGlobalDataKeeper().getAllPPLTables().size());
+        this.setDataController(new DataController(this.getDatasetTxt(), this.getTransitionsFile()));
+        System.out.println(this.getDataController().getAllPPLTables().size());
 		System.out.println(fileName);
 
-        String logSentence="load project test \n ";//testing Giorgos
-        logSentence += "Project Name:" + this.getProjectName() + "\n";//testing Giorgos
-        logSentence += "Dataset txt:" + this.getDatasetTxt() + "\n";//testing Giorgos
-        logSentence += "Input Csv:" + this.getInputCsv() + "\n";//testing Giorgos
-        logSentence += "Output Assessment1:" + this.getOutputAssessment1() + "\n";//testing Giorgos
-        logSentence += "Output Assessment2:" + this.getOutputAssessment2() + "\n";//testing Giorgos
-        logSentence += "Transitions File:" + this.getTransitionsFile() + "\n";//testing Giorgos
-        logSentence += this.getGlobalDataKeeper().getAllPPLTables().size() + "\n";//testing Giorgos
+        String logSentence="load project test \n ";
+        logSentence += "Project Name:" + this.getProjectName() + "\n";
+        logSentence += "Dataset txt:" + this.getDatasetTxt() + "\n";
+        logSentence += "Input Csv:" + this.getInputCsv() + "\n";
+        logSentence += "Output Assessment1:" + this.getOutputAssessment1() + "\n";
+        logSentence += "Output Assessment2:" + this.getOutputAssessment2() + "\n";
+        logSentence += "Transitions File:" + this.getTransitionsFile() + "\n";
+        logSentence += this.getDataController().getAllPPLTables().size() + "\n";
 		
 		
 		tlp.writeString("-----[ Projects Details ]-----");
@@ -1648,18 +1644,12 @@ public void makeZoomAreaTableForCluster() {
 
         }
     }
-
-    @Override
-    public void actionPerformed(ActionEvent arg0) {
-        // TODO Auto-generated method stub
-
-    }
 	
 	private void fillTable() {
-		this.getGlobalDataKeeper().constructTableConstructionIDU();
-		final String[] columns=this.getGlobalDataKeeper().getTableColumns("IDU");
-		final String[][] rows=this.getGlobalDataKeeper().getTableRows("IDU");
-		this.setSegmentSizeZoomArea(this.getGlobalDataKeeper().getSegmentSize("IDU")); 
+		this.getDataController().constructTableConstructionIDU();
+		final String[] columns=this.getDataController().getTableColumns("IDU");
+		final String[][] rows=this.getDataController().getTableRows("IDU");
+		this.setSegmentSizeZoomArea(this.getDataController().getSegmentSize("IDU")); 
 
 
 
@@ -1675,7 +1665,7 @@ public void makeZoomAreaTableForCluster() {
         this.setChangeWeight((float) 0.5);
         this.setPreProcessingTime(false);
         this.setPreProcessingChange(false);
-        if (this.getGlobalDataKeeper().getAllPPLTransitions().size() < 56) {
+        if (this.getDataController().getAllPPLTransitions().size() < 56) {
             this.setNumberOfPhases(40);
         }
         else{
@@ -1685,7 +1675,6 @@ public void makeZoomAreaTableForCluster() {
 
         System.out.println(this.getTimeWeight() + " " + this.getChangeWeight());
 
-       // IPhase mainEngine = new PhaseAnalyzerMainEngine(this.getNumberOfPhases(),this.getInputCsv(), this.getOutputAssessment1(), this.getOutputAssessment2(), this.getTimeWeight(), this.getChangeWeight(), this.getPreProcessingTime(), this.getPreProcessingChange());
 
 		Double b=new Double(0.3);
 		Double d=new Double(0.3);
@@ -1695,31 +1684,31 @@ public void makeZoomAreaTableForCluster() {
 		System.out.println("\n\n\n");
         //mainEngine.extractPhases(this.getNumberOfPhases());
 
-       // mainEngine.connectTransitionsWithPhases(this.getGlobalDataKeeper());
-       // this.getGlobalDataKeeper().setPhaseCollectors(mainEngine.getPhaseCollectors());
-		this.getGlobalDataKeeper().setPhaseCollectors(this.getNumberOfPhases(),this.getInputCsv(), this.getOutputAssessment1(), this.getOutputAssessment2(), this.getTimeWeight(),this.getChangeWeight(), this.getPreProcessingTime(), this.getPreProcessingChange());
-        this.getGlobalDataKeeper().extractClusters(this.getNumberOfClusters(),b, d, c);
+       // mainEngine.connectTransitionsWithPhases(this.getDataController());
+       // this.getDataController().setPhaseCollectors(mainEngine.getPhaseCollectors());
+		this.getDataController().setPhaseCollectors(this.getNumberOfPhases(),this.getInputCsv(), this.getOutputAssessment1(), this.getOutputAssessment2(), this.getTimeWeight(),this.getChangeWeight(), this.getPreProcessingTime(), this.getPreProcessingChange());
+        this.getDataController().extractClusters(this.getNumberOfClusters(),b, d, c);
         
         //mainEngine2.print();
 
-        if (this.getGlobalDataKeeper().getPhaseCollectors().size() != 0) {
-        	this.getGlobalDataKeeper().constructTableWithClusters();
-            final String[] columnsP=this.getGlobalDataKeeper().getTableColumns("Clusters");;
-            final String[][] rowsP=this.getGlobalDataKeeper().getTableRows("Clusters");
-            this.setSegmentSize(this.getGlobalDataKeeper().getSegmentSize("Clusters"));
+        if (this.getDataController().getPhaseCollectors().size() != 0) {
+        	this.getDataController().constructTableWithClusters();
+            final String[] columnsP=this.getDataController().getTableColumns("Clusters");;
+            final String[][] rowsP=this.getDataController().getTableRows("Clusters");
+            this.setSegmentSize(this.getDataController().getSegmentSize("Clusters"));
             this.setFinalColumns(columnsP);
             this.setFinalRows(rowsP);      
             this.getTabbedPane().setSelectedIndex(0);
             this.makeGeneralTablePhases();
             this.fillClustersTree();
         }
-        System.out.println("Schemas:" + this.getGlobalDataKeeper().getAllPPLSchemas().size());
-        System.out.println("Transitions:" + this.getGlobalDataKeeper().getAllPPLTransitions().size());
-        System.out.println("Tables:" + this.getGlobalDataKeeper().getAllPPLTables().size());
+        System.out.println("Schemas:" + this.getDataController().getAllPPLSchemas().size());
+        System.out.println("Transitions:" + this.getDataController().getAllPPLTransitions().size());
+        System.out.println("Tables:" + this.getDataController().getAllPPLTables().size());
 
-        String logSentence = "Schemas:" + this.getGlobalDataKeeper().getAllPPLSchemas().size() + "\n";//testing Giorgos
-        logSentence += "Transitions:" + this.getGlobalDataKeeper().getAllPPLTransitions().size() + "\n";//testing Giorgos
-        logSentence += "Tables:" + this.getGlobalDataKeeper().getAllPPLTables().size() + "\n";//testing Giorgos
+        String logSentence = "Schemas:" + this.getDataController().getAllPPLSchemas().size() + "\n";//testing Giorgos
+        logSentence += "Transitions:" + this.getDataController().getAllPPLTransitions().size() + "\n";//testing Giorgos
+        logSentence += "Tables:" + this.getDataController().getAllPPLTables().size() + "\n";//testing Giorgos
 
         tlp.writeString("-----[ Overview Output ]-----");
         tlp.writeString(logSentence);
@@ -1729,7 +1718,7 @@ public void makeZoomAreaTableForCluster() {
 	
 
 	public void fillTree(){
-        this.tablesTree = this.getGlobalDataKeeper().constructTree("General");
+        this.tablesTree = this.getDataController().constructTree("General");
         tlp.writeTree("Tree with Versions",this.tablesTree);
         
         mouselistener.listenTreeSelection(tablesTree);
@@ -1752,7 +1741,7 @@ public void makeZoomAreaTableForCluster() {
 	
 	public void fillPhasesTree(){
 
-        this.tablesTree = this.getGlobalDataKeeper().constructTree("Phases");
+        this.tablesTree = this.getDataController().constructTree("Phases");
         tlp.writeTree("Tree with Phases", this.tablesTree);
  
         mouselistener.listenTreeSelection(tablesTree);
@@ -1772,7 +1761,7 @@ public void makeZoomAreaTableForCluster() {
 	
 	public void fillClustersTree(){
 
-        this.tablesTree =  this.getGlobalDataKeeper().constructTree("PhasesWithClusters");   
+        this.tablesTree =  this.getDataController().constructTree("PhasesWithClusters");   
         tlp.writeTree("Tree with Clusters",this.tablesTree);      
        
         mouselistener.listenTreeSelection(tablesTree);
@@ -1869,12 +1858,12 @@ public void makeZoomAreaTableForCluster() {
 		this.segmentSizeDetailedTable = segmentSizeDetailedTable;
 	}
 
-	public GlobalDataKeeper getGlobalDataKeeper() {
-		return globalDataKeeper;
+	public DataController getDataController() {
+		return dataController;
 	}
 
-	public void setGlobalDataKeeper(GlobalDataKeeper globalDataKeeper) {
-		this.globalDataKeeper = globalDataKeeper;
+	public void setDataController(DataController dataController) {
+		this.dataController = dataController;
 	}
 
 	public JTabbedPane getTabbedPane() {
