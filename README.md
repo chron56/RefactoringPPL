@@ -1,4 +1,6 @@
-# dokimastiko
+# Refactoring of Plutarch Parallel Lives
+
+The purpose of our project was the refactoring of the existing Plutarch Parallel Lives project. The project took place during the postgraduate course of Software & Data Evolution.
 
 
 # Plutarch Parallel Lives
