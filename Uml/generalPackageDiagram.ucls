@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.2.2" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <package id="1" language="java" name="tableClustering.clusterExtractor.analysis" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/analysis" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="163" y="172"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="2" language="java" name="tableClustering.clusterExtractor.commons" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/commons" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="-4" y="257"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="3" language="java" name="tableClustering.clusterExtractor.engine" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/tableClustering/clusterExtractor/engine" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="22" y="102"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="4" language="java" name="phaseAnalyzer.analysis" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/phaseAnalyzer/analysis" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1403" y="71"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="5" language="java" name="phaseAnalyzer.commons" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/phaseAnalyzer/commons" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1187" y="72"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="6" language="java" name="phaseAnalyzer.engine" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/phaseAnalyzer/engine" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1431" y="253"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="7" language="java" name="phaseAnalyzer.parser" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/phaseAnalyzer/parser" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1211" y="256"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="8" language="java" name="gui.dialogs" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/gui/dialogs" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="558" y="641"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="9" language="java" name="gui.listeners" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/gui/listeners" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="557" y="722"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="10" language="java" name="gui.tableElements.commons" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/gui/tableElements/commons" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="818" y="722"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="11" language="java" name="gui.tableElements.tableRenderers" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/gui/tableElements/tableRenderers" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="817" y="646"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="12" language="java" name="data.dataKeeper" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/data/dataKeeper" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="630" y="30"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="13" language="java" name="data.dataPPL.pplSQLSchema" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/data/dataPPL/pplSQLSchema" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="625" y="251"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="14" language="java" name="data.dataPPL.pplTransition" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/data/dataPPL/pplTransition" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="890" y="170"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="15" language="java" name="data.dataProccessing" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/data/dataProccessing" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="810" y="251"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="16" language="java" name="data.dataSorters" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/data/dataSorters" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="559" y="185"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="17" language="java" name="data.dataTables" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/data/dataTables" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="704" y="141"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="18" language="java" name="data.dataTrees" project="PlutarchParallelLives" 
+    file="/PlutarchParallelLives/src/data/dataTrees" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="863" y="19"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <dependency id="19">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="7"/>  
+  </dependency>  
+  <dependency id="20">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="8"/>  
+  </dependency>  
+  <dependency id="21">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="22">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="23">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <dependency id="24">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="25">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="26">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="6"/>  
+  </dependency>  
+  <dependency id="27">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="28">    
+    <end type="SOURCE" refId="16"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="29">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="17"/>  
+  </dependency>  
+  <dependency id="30">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="31">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="32">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="33">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="18"/>  
+  </dependency>  
+  <dependency id="34">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="35">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="11"/>  
+  </dependency>  
+  <dependency id="36">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="37">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="38">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="15"/>  
+  </dependency>  
+  <dependency id="39">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="40">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="41">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="42">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="43">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="44">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="45">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="46">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="47">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="48">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="49">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="14"/>  
+  </dependency>  
+  <dependency id="50">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="16"/>  
+  </dependency>  
+  <dependency id="51">    
+    <end type="SOURCE" refId="18"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="52">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="53">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="54">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="55">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <dependency id="56">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="13"/>  
+  </dependency>  
+  <dependency id="57">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="58">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="10"/>  
+  </dependency>  
+  <dependency id="59">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="12"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
