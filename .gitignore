@@ -1,6 +1,4 @@
 bin/
-filesHandler/transitions/typo3Transitions.xml
-*.xml
 filesHandler/output/phpBB_Assessment1.txt
 filesHandler/output/atlas_Assessment2.txt
 filesHandler/output/atlas_Assessment1.txt
